@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/06 17:36:56 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/07 10:06:18 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define VECTOR_HPP
 
 # include <memory>
+# include "reverse_iterator.hpp"
 
 namespace ft {
 
@@ -49,14 +50,24 @@ public:
 	// const_pointer	 Allocator::const_pointer	(until C++11)
 	typedef typename Allocator::const_pointer const_pointer;
 
-	// TODO: ITERATORS /////////////////////////////////////////////////////////
+	// ITERATOR TYPES //////////////////////////////////////////////////////////
 	// iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to value_type (until C++20)
-	//
 	// const_iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type (until C++20)
-	//
+	// ref: https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
+	// ref: https://en.cppreference.com/w/cpp/named_req/ContiguousIterator
+	template <class U>
+	class _iterator {
+		// TODO:
+	};
+
+	typedef _iterator<T> iterator;
+	typedef _iterator<const T> const_iterator;
+
 	// reverse_iterator	std::reverse_iterator<iterator>
-	//
+	typedef ft::reverse_iterator<iterator> reverse_iterator;
+
 	// const_reverse_iterator	std::reverse_iterator<const_iterator>
+	typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 	// MEMBER FUNCTIONS ////////////////////////////////////////////////////////
 	//
@@ -146,25 +157,25 @@ public:
 	// [swap](https://en.cppreference.com/w/cpp/container/vector/swap)
 	// swaps the contents
 
-	// NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////
-	//
-	// [operator==](https://en.cppreference.com/w/cpp/container/vector/operator_cmp)
-	// lexicographically compares the values in the vector (function template)
-	//
-	// operator!= (removed in C++20)
-	//
-	// operator< (removed in C++20)
-	//
-	// operator<= (removed in C++20)
-	//
-	// operator> (removed in C++20)
-	//
-	// operator>= (removed in C++20)
-	//
-	// [std::swap(std::vector)](https://en.cppreference.com/w/cpp/container/vector/swap2)
-	// specializes the [std::swap](https://en.cppreference.com/w/cpp/algorithm/swap) algorithm  (function template)
-
 };
+
+// NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////////
+//
+// [operator==](https://en.cppreference.com/w/cpp/container/vector/operator_cmp)
+// lexicographically compares the values in the vector (function template)
+//
+// operator!= (removed in C++20)
+//
+// operator< (removed in C++20)
+//
+// operator<= (removed in C++20)
+//
+// operator> (removed in C++20)
+//
+// operator>= (removed in C++20)
+//
+// [std::swap(std::vector)](https://en.cppreference.com/w/cpp/container/vector/swap2)
+// specializes the [std::swap](https://en.cppreference.com/w/cpp/algorithm/swap) algorithm  (function template)
 
 }
 
