@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/06 16:11:31 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/06 17:36:56 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,37 @@
 
 namespace ft {
 
-template <class T, class Allocator = std::allocator<T>>
+template <class T, class Allocator = std::allocator<T> >
 class vector {
 public:
 
 	// MEMBER TYPES ////////////////////////////////////////////////////////////
 	//
 	// value_type	T
-	//
+	typedef T value_type;
+
 	// allocator_type	Allocator
-	//
+	typedef Allocator allocator_type;
+
 	// size_type	Unsigned integer type (usually std::size_t)
-	//
+	typedef std::size_t size_type;
+
 	// difference_type	Signed integer type (usually std::ptrdiff_t)
-	//
+	typedef std::ptrdiff_t difference_type;
+
 	// reference	value_type&
-	//
+	typedef value_type& reference;
+
 	// const_reference	const value_type&
-	//
+	typedef const value_type& const_reference;
+
 	// pointer	 Allocator::pointer	(until C++11)
-	//
+	typedef typename Allocator::pointer pointer;
+
 	// const_pointer	 Allocator::const_pointer	(until C++11)
-	//
+	typedef typename Allocator::const_pointer const_pointer;
+
+	// TODO: ITERATORS /////////////////////////////////////////////////////////
 	// iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to value_type (until C++20)
 	//
 	// const_iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type (until C++20)
