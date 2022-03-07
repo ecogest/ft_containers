@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/07 17:36:37 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/07 18:36:42 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,23 +156,22 @@ public:
 		if (pos < _size)
 			return (_array[pos]);
 		else
-		{
-			std::ostringstream	error_stream;
-			error_stream << "vector::_M_range_check: __n (which is " << pos << ") >= this->size() (which is " << _size << ")";
-			throw (std::out_of_range(error_stream.str()));
-		}
+			throw (std::out_of_range(out_of_range_string(pos)));
 	}
-
 	const_reference at( size_type pos ) const {
 		if (pos < _size)
 			return (_array[pos]);
 		else
-		{
-			std::ostringstream	error_stream;
-			error_stream << "vector::_M_range_check: __n (which is " << pos << ") >= this->size() (which is " << _size << ")";
-			throw (std::out_of_range(error_stream.str()));
-		}
+			throw (std::out_of_range(out_of_range_string(pos)));
 	}
+private:
+	std::string	out_of_range_string(size_type pos) const {
+		std::ostringstream	error_stream;
+		error_stream << "vector::_M_range_check: __n (which is " << pos;
+		error_stream << ") >= this->size() (which is " << _size << ")";
+		return (error_stream.str());
+	}
+public:
 
 	// [operator[]](https://en.cppreference.com/w/cpp/container/vector/operator_at)
 	// access specified element (no bound checking)
