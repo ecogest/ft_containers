@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/07 14:08:12 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/07 16:15:31 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,64 @@ public:
 	// [(constructor)](https://en.cppreference.com/w/cpp/container/vector/vector)
 	// constructs the `vector`
 	// 1) Default constructor. Constructs an empty container with a default-constructed allocator.
-	vector(): _array(0), _allocator(allocator_type()), _size(0) { std::cout << "TEST" << std::endl; }
+	vector():
+		_array(0),
+		_allocator(allocator_type()),
+		_size(0)
+	{ }
+
 	// 2) Constructs an empty container with the given allocator alloc.
 	// explicit vector(const Allocator& alloc); // (until C++17)
-	explicit vector(const Allocator& alloc): _array(0), _allocator(alloc), _size(0) { }
+	explicit vector(const Allocator& alloc):
+		// _array(alloc.allocate(0)), // NO! we want our copy _allocator
+		_array(0),
+		_allocator(alloc),
+		_size(0)
+	{
+		// _array = _allocator.allocate(0); // actually null pointer seems fine
+	}
+
 	// 3) Constructs the container with count copies of elements with value value.
-	explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()); // (until C++11)
+	// (until C++11)
+	explicit vector(size_type count,
+				 const T& value = T(),
+				 const Allocator& alloc = Allocator()
+		):
+		_allocator(alloc),
+		_size(count)
+	{
+		_array = _allocator.allocate(count); // allocate with _allocator and not alloc !
+		for (size_type i = 0; i < count; i++)
+			_allocator.construct(_array + i, value);
+	}
+
 	// 5) Constructs the container with the contents of the range [first, last).
 	// This constructor has the same effect as:
 	// vector(static_cast<size_type>(first), static_cast<value_type>(last), a)
-	// if InputIt is an integral type.
+	// if InputIt is an integral type. // TODO:
 	template< class InputIt >
 	vector(InputIt first, InputIt last, const Allocator& alloc = Allocator()); // (until C++20)
+
 	// 6) Copy constructor. Constructs the container with the copy of the contents of other.
-	vector(const vector& other); // (until C++20)
+	// (until C++20)
+	vector(const vector& other):
+		_allocator(other.get_allocator()),
+		_size(other.size())
+	{
+		_array = _allocator.allocate(_size);
+		for (size_t i = 0; i < _size; i++)
+			_allocator.construct(_array + i, other.at(i));
+			// _array[i] = other.at(i); // NO! otherwise we have valgrind errors
+	}
+
 	// [(destructor)](https://en.cppreference.com/w/cpp/container/vector/~vector)
 	// destructs the `vector`
-	~vector() { }
+	~vector() {
+		for (size_type i = 0; i < _size; i++)
+			_allocator.destroy(_array + i);
+		_allocator.deallocate(_array, _size);
+	}
+
 	// [operator=](https://en.cppreference.com/w/cpp/container/vector/operator%3D)
 	// assigns values to the container
 	//
@@ -100,12 +141,22 @@ public:
 	//
 	// [get_allocator](https://en.cppreference.com/w/cpp/container/vector/get_allocator)
 	// returns the associated allocator
+	allocator_type get_allocator() const {
+		return (_allocator);
+	}
 
 	// ##### Element access ////////////////////////////////////////////////////
 	//
 	// [at](https://en.cppreference.com/w/cpp/container/vector/at)
 	// access specified element with bounds checking
-	//
+	reference at( size_type pos ) {
+		return (_array[pos]);
+	}
+
+	const_reference at( size_type pos ) const {
+		return (_array[pos]);
+	}
+
 	// [operator[]](https://en.cppreference.com/w/cpp/container/vector/operator_at)
 	// access specified element
 	//
@@ -139,7 +190,10 @@ public:
 	//
 	// [size](https://en.cppreference.com/w/cpp/container/vector/size)
 	// returns the number of elements
-	//
+	size_type size() const {
+		return (_size);
+	}
+
 	// [max_size](https://en.cppreference.com/w/cpp/container/vector/max_size)
 	// returns the maximum possible number of elements
 	//
