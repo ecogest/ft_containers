@@ -45,7 +45,7 @@ $(NAME): $(CONTAINERS) $(UTILS) $(TESTS) tests/tests.hpp
 	$(CXX) -DNS=ft $(CPPFLAGS) $(CXXFLAGS) $(TESTS) -o $@
 
 test: all
-	diff --color=always <(./$(NAME)) <(./std_containers)
+	diff --color=always <(valgrind -q --leak-check=full ./$(NAME) 2>&1) <(./std_containers)
 
 fclean:
 	$(RM) $(NAME) std_containers
