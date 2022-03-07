@@ -3,3 +3,5 @@ a.out
 *.swp
 compile_commands.json
 .cache
+ft_containers
+std_containers

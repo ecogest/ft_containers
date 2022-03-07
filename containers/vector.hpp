@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/07 11:10:25 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/07 14:08:12 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 # include <memory>
 # include "reverse_iterator.hpp"
-# include <vector>
+# include <iostream>
 
 namespace ft {
 
@@ -75,7 +75,7 @@ public:
 	// [(constructor)](https://en.cppreference.com/w/cpp/container/vector/vector)
 	// constructs the `vector`
 	// 1) Default constructor. Constructs an empty container with a default-constructed allocator.
-	vector(): _array(0), _allocator(allocator_type()), _size(0) { }
+	vector(): _array(0), _allocator(allocator_type()), _size(0) { std::cout << "TEST" << std::endl; }
 	// 2) Constructs an empty container with the given allocator alloc.
 	// explicit vector(const Allocator& alloc); // (until C++17)
 	explicit vector(const Allocator& alloc): _array(0), _allocator(alloc), _size(0) { }
