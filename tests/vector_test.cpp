@@ -28,4 +28,25 @@ void	test_vector(void) {
 
 	// 6) copy constuctor
 	NS::vector<std::string>	v_3_hello_copy(v_3_hello);
+	const NS::vector<std::string>	v_3_hello_copy_const(v_3_hello);
+
+/*
+** ============================= Element access ============================= **
+*/
+
+	std::cout << v_10float.at(0) << v_3_hello.at(2) << std::endl;
+	try {
+		std::cout << v_3_hello.at(42) << std::endl;
+	}
+	catch (std::out_of_range const &ex) {
+		std::cout << ex.what() << std::endl;
+	}
+
+	std::cout << v_3_hello_copy_const.at(1) << std::endl;
+	try {
+		std::cout << v_3_hello_copy_const.at(3) << std::endl;
+	}
+	catch (std::out_of_range const &ex) {
+		std::cout << ex.what() << std::endl;
+	}
 }
