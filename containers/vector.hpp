@@ -185,6 +185,12 @@ public:
 
 	// [front](https://en.cppreference.com/w/cpp/container/vector/front)
 	// access the first element
+	reference front() {
+		return (_array[0]);
+	}
+	const_reference front() const {
+		return (_array[0]);
+	}
 	//
 	// [back](https://en.cppreference.com/w/cpp/container/vector/back)
 	// access the last element
