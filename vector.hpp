@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/07 10:06:18 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/07 11:10:25 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include <memory>
 # include "reverse_iterator.hpp"
+# include <vector>
 
 namespace ft {
 
@@ -73,10 +74,24 @@ public:
 	//
 	// [(constructor)](https://en.cppreference.com/w/cpp/container/vector/vector)
 	// constructs the `vector`
-	//
+	// 1) Default constructor. Constructs an empty container with a default-constructed allocator.
+	vector(): _array(0), _allocator(allocator_type()), _size(0) { }
+	// 2) Constructs an empty container with the given allocator alloc.
+	// explicit vector(const Allocator& alloc); // (until C++17)
+	explicit vector(const Allocator& alloc): _array(0), _allocator(alloc), _size(0) { }
+	// 3) Constructs the container with count copies of elements with value value.
+	explicit vector(size_type count, const T& value = T(), const Allocator& alloc = Allocator()); // (until C++11)
+	// 5) Constructs the container with the contents of the range [first, last).
+	// This constructor has the same effect as:
+	// vector(static_cast<size_type>(first), static_cast<value_type>(last), a)
+	// if InputIt is an integral type.
+	template< class InputIt >
+	vector(InputIt first, InputIt last, const Allocator& alloc = Allocator()); // (until C++20)
+	// 6) Copy constructor. Constructs the container with the copy of the contents of other.
+	vector(const vector& other); // (until C++20)
 	// [(destructor)](https://en.cppreference.com/w/cpp/container/vector/~vector)
 	// destructs the `vector`
-	//
+	~vector() { }
 	// [operator=](https://en.cppreference.com/w/cpp/container/vector/operator%3D)
 	// assigns values to the container
 	//
@@ -157,6 +172,10 @@ public:
 	// [swap](https://en.cppreference.com/w/cpp/container/vector/swap)
 	// swaps the contents
 
+private:
+	value_type		*_array; // The elements are stored contiguously.
+	allocator_type	_allocator;
+	size_type		_size;
 };
 
 // NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////////
