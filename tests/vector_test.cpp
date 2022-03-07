@@ -35,6 +35,7 @@ void	test_vector(void) {
 */
 
 	std::cout << v_10float.at(0) << v_3_hello.at(2) << std::endl;
+	std::cout << v_10float[0] << v_3_hello[2] << std::endl;
 	try {
 		std::cout << v_3_hello.at(42) << std::endl;
 	}
@@ -43,6 +44,7 @@ void	test_vector(void) {
 	}
 
 	std::cout << v_3_hello_copy_const.at(1) << std::endl;
+	std::cout << v_3_hello_copy_const[1] << std::endl;
 	try {
 		std::cout << v_3_hello_copy_const.at(3) << std::endl;
 	}

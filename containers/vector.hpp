@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/07 16:58:42 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/07 17:36:37 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ public:
 	{
 		_array = _allocator.allocate(_size);
 		for (size_t i = 0; i < _size; i++)
-			_allocator.construct(_array + i, other.at(i));
-			// _array[i] = other.at(i); // NO! otherwise we have valgrind errors
+			_allocator.construct(_array + i, other[i]); // could use other.at(i) as well
+			// _array[i] = other[i]; // NO! otherwise we have valgrind errors
 	}
 
 	// [(destructor)](https://en.cppreference.com/w/cpp/container/vector/~vector)
@@ -175,8 +175,14 @@ public:
 	}
 
 	// [operator[]](https://en.cppreference.com/w/cpp/container/vector/operator_at)
-	// access specified element
-	//
+	// access specified element (no bound checking)
+	reference operator[]( size_type pos ) {
+		return (_array[pos]);
+	}
+	const_reference operator[]( size_type pos ) const {
+		return (_array[pos]);
+	}
+
 	// [front](https://en.cppreference.com/w/cpp/container/vector/front)
 	// access the first element
 	//
