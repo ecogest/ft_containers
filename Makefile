@@ -45,7 +45,12 @@ $(NAME): $(CONTAINERS) $(UTILS) $(TESTS) tests/tests.hpp
 	$(CXX) -DNS=ft $(CPPFLAGS) $(CXXFLAGS) $(TESTS) -o $@
 
 test: all
-	diff --color=always <(valgrind -q --leak-check=full ./$(NAME) 2>&1) <(./std_containers)
+	if [ type valgrind &> /dev/null ]; then \
+		diff --color=always <(valgrind -q --leak-check=full ./$(NAME) 2>&1) <(./std_containers); \
+	else \
+		diff --color=always <(./$(NAME) 2>&1) <(./std_containers); \
+	fi
+
 
 fclean:
 	$(RM) $(NAME) std_containers
