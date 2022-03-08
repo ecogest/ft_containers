@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/07 18:36:42 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/08 10:57:37 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,13 +148,18 @@ public:
 	}
 private:
 	std::string	out_of_range_string(size_type pos) const {
+#ifdef __APPLE__
+		(void)pos;
+		return ("vector");
+#else
 		std::ostringstream	error_stream;
 		error_stream << "vector::_M_range_check: __n (which is " << pos;
 		error_stream << ") >= this->size() (which is " << _size << ")";
 		return (error_stream.str());
+#endif
 	}
-public:
 
+public:
 	// [operator[]](https://en.cppreference.com/w/cpp/container/vector/operator_at)
 	// access specified element (no bound checking)
 	reference operator[]( size_type pos ) {
