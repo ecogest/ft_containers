@@ -94,7 +94,22 @@ void	test_vector(void) {
 		std::cout << e.what() << std::endl;
 		std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
 	}
-	v_3_hello.reserve(3);
+	v_3_hello_copy.reserve(3);
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+
+/*
+** =============================== Operator= ================================ **
+*/
+
+	for (size_t i = 0; i < v_3_hello_copy.size(); i++)
+		std::cout << v_3_hello_copy[i] << std::endl;
+	v_3_hello_copy = v_3_hello;
+	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	for (size_t i = 0; i < v_3_hello_copy.size(); i++)
+		std::cout << v_3_hello_copy[i] << std::endl;
+	v_3_hello_copy = v_3_hello_copy_const;
+	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	for (size_t i = 0; i < v_3_hello_copy.size(); i++)
+		std::cout << v_3_hello_copy[i] << std::endl;
 
 }
