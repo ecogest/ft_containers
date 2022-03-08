@@ -29,29 +29,14 @@ public:
 
 	// MEMBER TYPES ////////////////////////////////////////////////////////////
 	//
-	// value_type	T
-	typedef T value_type;
-
-	// allocator_type	Allocator
-	typedef Allocator allocator_type;
-
-	// size_type	Unsigned integer type (usually std::size_t)
-	typedef std::size_t size_type;
-
-	// difference_type	Signed integer type (usually std::ptrdiff_t)
-	typedef std::ptrdiff_t difference_type;
-
-	// reference	value_type&
-	typedef value_type& reference;
-
-	// const_reference	const value_type&
-	typedef const value_type& const_reference;
-
-	// pointer	 Allocator::pointer	(until C++11)
-	typedef typename Allocator::pointer pointer;
-
-	// const_pointer	 Allocator::const_pointer	(until C++11)
-	typedef typename Allocator::const_pointer const_pointer;
+	typedef T                                    value_type;
+	typedef Allocator                            allocator_type;
+	typedef std::size_t                          size_type; // Unsigned integer type (usually std::size_t)
+	typedef std::ptrdiff_t                       difference_type; // Signed integer type (usually std::ptrdiff_t)
+	typedef value_type&                          reference;
+	typedef const value_type&                    const_reference;
+	typedef typename Allocator::pointer          pointer; // (until C++11)
+	typedef typename Allocator::const_pointer    const_pointer ;// (until C++11)
 
 	// ITERATOR TYPES //////////////////////////////////////////////////////////
 	// iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to value_type (until C++20)
@@ -63,14 +48,11 @@ public:
 		// TODO:
 	};
 
-	typedef _iterator<T> iterator;
-	typedef _iterator<const T> const_iterator;
-
-	// reverse_iterator	std::reverse_iterator<iterator>
-	typedef ft::reverse_iterator<iterator> reverse_iterator;
-
-	// const_reverse_iterator	std::reverse_iterator<const_iterator>
-	typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
+	typedef _iterator<T>                            iterator;
+	typedef _iterator<const T>                      const_iterator;
+	// TODO: implement ft::reverse_iterator as std::reverse_iterator
+	typedef ft::reverse_iterator<iterator>          reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
 
 	// MEMBER FUNCTIONS ////////////////////////////////////////////////////////
 	//
