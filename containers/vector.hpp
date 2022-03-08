@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/08 13:15:20 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/08 15:00:28 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 namespace ft {
 
-template <class T, class Allocator = std::allocator<T> >
+template < class T, class Allocator = std::allocator<T> >
 class vector {
 public:
 
@@ -43,7 +43,7 @@ public:
 	// const_iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type (until C++20)
 	// ref: https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
 	// ref: https://en.cppreference.com/w/cpp/named_req/ContiguousIterator
-	template <class U>
+	template < class U >
 	class _iterator {
 		// TODO:
 	};
