@@ -114,4 +114,16 @@ void	test_vector(void) {
 	for (size_t i = 0; i < v_3_hello_copy.size(); i++)
 		std::cout << v_3_hello_copy[i] << std::endl;
 
+/*
+** ================================== Todo ================================== **
+*/
+
+	// int	arr[] = {0, 2, 4, 8};
+	// std::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+    //
+	// for (size_t	i = 0; i < v.size(); i++)
+	// 	std::cout << v[i] << std::endl;
+    //
+	// for (std::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+	// 	std::cout << *it << std::endl;
 }
