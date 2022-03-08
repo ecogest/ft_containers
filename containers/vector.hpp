@@ -202,7 +202,10 @@ public:
 	//
 	// [empty](https://en.cppreference.com/w/cpp/container/vector/empty)
 	// checks whether the container is empty
-	//
+	bool empty() const {
+		return (_size == 0);
+	}
+
 	// [size](https://en.cppreference.com/w/cpp/container/vector/size)
 	// returns the number of elements
 	size_type size() const {
