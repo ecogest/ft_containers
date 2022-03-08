@@ -56,6 +56,14 @@ void	test_vector(void) {
 		std::cout << ex.what() << std::endl;
 	}
 
+	std::cout << (v_int.data() == NULL) << std::endl;
+	std::cout << (v_3_hello.data() != NULL) << std::endl;
+	v_3_hello[2] = "world";
+	std::cout << v_3_hello.front() << std::endl;
+	std::cout << v_3_hello[1] << std::endl;
+	std::cout << v_3_hello[2] << std::endl;
+	std::cout << v_3_hello.back() << std::endl;
+
 /*
 ** ================================ Capacity ================================ **
 */
@@ -72,16 +80,21 @@ void	test_vector(void) {
 		v_3_hello_copy.reserve(v_3_hello_copy.max_size() - 1);
 	} catch (std::exception const &e) {
 		std::cout << e.what() << std::endl;
+	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
 	}
 	try {
 		v_3_hello_copy.reserve(v_3_hello_copy.max_size());
 	} catch (std::exception const &e) {
 		std::cout << e.what() << std::endl;
+		std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
 	}
 	try {
 		v_3_hello_copy.reserve(v_3_hello_copy.max_size() + 1);
 	} catch (std::exception const &e) {
 		std::cout << e.what() << std::endl;
+		std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
 	}
 	v_3_hello.reserve(3);
+	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+
 }

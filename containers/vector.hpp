@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/08 11:52:29 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/08 12:36:03 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,12 +181,24 @@ public:
 	const_reference front() const {
 		return (_array[0]);
 	}
-	//
+
 	// [back](https://en.cppreference.com/w/cpp/container/vector/back)
 	// access the last element
-	//
+	reference back() {
+		return (_array[_size - 1]);
+	}
+	const_reference back() const {
+		return (_array[_size - 1]);
+	}
+
 	// [data](https://en.cppreference.com/w/cpp/container/vector/data)
 	// direct access to the underlying array
+	T* data() {
+		return (_array);
+	}
+	const T* data() const {
+		return (_array);
+	}
 
 	// ##### Iterators /////////////////////////////////////////////////////////
 	//
