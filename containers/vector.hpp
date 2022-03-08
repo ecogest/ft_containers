@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/08 10:57:37 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/08 11:52:29 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ public:
 	vector():
 		_array(0),
 		_allocator(allocator_type()),
+		_capacity(0),
 		_size(0)
 	{ }
 
@@ -71,6 +72,7 @@ public:
 		// _array(alloc.allocate(0)), // NO! we want our copy _allocator
 		_array(0),
 		_allocator(alloc),
+		_capacity(0),
 		_size(0)
 	{
 		// _array = _allocator.allocate(0); // actually null pointer seems fine
@@ -83,6 +85,7 @@ public:
 				 const Allocator& alloc = Allocator()
 		):
 		_allocator(alloc),
+		_capacity(count),
 		_size(count)
 	{
 		_array = _allocator.allocate(count); // allocate with _allocator and not alloc !
@@ -101,6 +104,7 @@ public:
 	// (until C++20)
 	vector(const vector& other):
 		_allocator(other.get_allocator()),
+		_capacity(other.capacity()),
 		_size(other.size())
 	{
 		_array = _allocator.allocate(_size);
@@ -214,12 +218,36 @@ public:
 
 	// [max_size](https://en.cppreference.com/w/cpp/container/vector/max_size)
 	// returns the maximum possible number of elements
-	//
+	size_type max_size() const {
+		return (_allocator.max_size());
+		// for some reason the following returns half the max size (probably a matter of sign)
+		// return (std::numeric_limits<difference_type>::max());
+	}
+
 	// [reserve](https://en.cppreference.com/w/cpp/container/vector/reserve)
-	// reserves storage
-	//
+	// reserves storage if new_cap > capacity()
+	void reserve(size_type new_cap) {
+		if (new_cap > max_size())
+			throw (std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size"));
+		if (new_cap > _capacity) {
+			value_type	*new_array;
+
+			new_array = _allocator.allocate(new_cap);
+			for (size_type i = 0; i < _size; i++) {
+				_allocator.construct(new_array + i, _array[i]);
+				_allocator.destroy(_array + i);
+			}
+			_allocator.deallocate(_array, _capacity);
+			_capacity = new_cap;
+			_array = new_array;
+		}
+	}
+
 	// [capacity](https://en.cppreference.com/w/cpp/container/vector/capacity)
 	// returns the number of elements that can be held in currently allocated storage
+	size_type capacity() const {
+		return (_capacity);
+	}
 
 	// ##### Modifiers /////////////////////////////////////////////////////////
 	//
@@ -247,6 +275,7 @@ public:
 private:
 	value_type		*_array; // The elements are stored contiguously.
 	allocator_type	_allocator;
+	size_type		_capacity;
 	size_type		_size;
 };
 

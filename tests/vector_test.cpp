@@ -6,6 +6,7 @@
 #include <string>
 
 void	test_vector(void) {
+
 /*
 ** ============================== CONSTRUCTORS ============================== **
 */
@@ -54,4 +55,33 @@ void	test_vector(void) {
 	catch (std::out_of_range const &ex) {
 		std::cout << ex.what() << std::endl;
 	}
+
+/*
+** ================================ Capacity ================================ **
+*/
+	std::cout << "cap:" << v_int.capacity() << ",size:" << v_int.size() << ",max_size:" << v_int.max_size() << ",empty:" << v_int.empty() << std::endl;
+	std::cout << "cap:" << v_10float.capacity() << ",size:" << v_10float.size() << ",max_size:" << v_10float.max_size() << ",empty:" << v_10float.empty() << std::endl;
+	std::cout << "cap:" << v_3_hello_copy_const.capacity() << ",size:" << v_3_hello_copy_const.size() << ",max_size:" << v_3_hello_copy_const.max_size() << ",empty:" << v_3_hello_copy_const.empty() << std::endl;
+	v_3_hello_copy.reserve(142);
+	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	v_3_hello_copy.reserve(1);
+	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	v_3_hello_copy.reserve(9);
+	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	try {
+		v_3_hello_copy.reserve(v_3_hello_copy.max_size() - 1);
+	} catch (std::exception const &e) {
+		std::cout << e.what() << std::endl;
+	}
+	try {
+		v_3_hello_copy.reserve(v_3_hello_copy.max_size());
+	} catch (std::exception const &e) {
+		std::cout << e.what() << std::endl;
+	}
+	try {
+		v_3_hello_copy.reserve(v_3_hello_copy.max_size() + 1);
+	} catch (std::exception const &e) {
+		std::cout << e.what() << std::endl;
+	}
+	v_3_hello.reserve(3);
 }
