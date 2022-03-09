@@ -120,6 +120,7 @@ void	test_vector(void) {
 
 	// int	arr[] = {0, 2, 4, 8};
 	// std::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+	// std::vector<int>::iterator	it;
     //
 	// for (size_t	i = 0; i < v.size(); i++)
 	// 	std::cout << v[i] << std::endl;

@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/08 15:00:28 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/09 18:57:48 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@ public:
 	// ref: https://en.cppreference.com/w/cpp/named_req/ContiguousIterator
 	template < class U >
 	class _iterator {
+	public:
+		typedef typename vector<U>::difference_type      difference_type;
+		typedef U                                        value_type;
+		typedef value_type*                              pointer;
+		typedef value_type&                              reference;
+		typedef typename std::random_access_iterator_tag iterator_category;
+	private:
+		pointer	_ptr;
+	public:
 		// TODO:
 	};
 
