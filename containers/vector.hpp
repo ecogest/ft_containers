@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/10 10:56:15 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/10 11:31:12 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ template < class T, class Allocator = std::allocator<T> >
 class vector {
 public:
 
-	// MEMBER TYPES ////////////////////////////////////////////////////////{{{1
+	// MEMBER TYPES ////////////////////////////////////////////////////////////
 	//
 	typedef T                                    value_type;
 	typedef Allocator                            allocator_type;
@@ -38,7 +38,7 @@ public:
 	typedef typename Allocator::pointer          pointer; // (until C++11)
 	typedef typename Allocator::const_pointer    const_pointer ;// (until C++11)
 
-	// ITERATOR TYPES //////////////////////////////////////////////////////{{{2
+	// ITERATOR TYPES //////////////////////////////////////////////////////////
 	// iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to value_type (until C++20)
 	// const_iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type (until C++20)
 	// ref: https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
@@ -62,7 +62,7 @@ public:
 	typedef ft::reverse_iterator<iterator>          reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
 
-	// MEMBER FUNCTIONS ////////////////////////////////////////////////////{{{1
+	// MEMBER FUNCTIONS ////////////////////////////////////////////////////////
 	//
 	// [(constructor)](https://en.cppreference.com/w/cpp/container/vector/vector)
 	// constructs the `vector`
@@ -151,7 +151,7 @@ public:
 		return (_allocator);
 	}
 
-	// ##### Element access ////////////////////////////////////////////////{{{2
+	// ##### Element access ////////////////////////////////////////////////////
 	//
 	// [at](https://en.cppreference.com/w/cpp/container/vector/at)
 	// access specified element with bounds checking
@@ -218,7 +218,7 @@ public:
 		return (_array);
 	}
 
-	// ##### Iterators /////////////////////////////////////////////////////{{{2
+	// ##### Iterators /////////////////////////////////////////////////////////
 	//
 	// [begin](https://en.cppreference.com/w/cpp/container/vector/begin)
 	// returns an iterator to the beginning
@@ -232,7 +232,7 @@ public:
 	// [rend](https://en.cppreference.com/w/cpp/container/vector/rend)
 	// returns a reverse iterator to the end
 	//
-	// ##### Capacity //////////////////////////////////////////////////////{{{2
+	// ##### Capacity //////////////////////////////////////////////////////////
 	//
 	// [empty](https://en.cppreference.com/w/cpp/container/vector/empty)
 	// checks whether the container is empty
@@ -279,7 +279,7 @@ public:
 		return (_capacity);
 	}
 
-	// ##### Modifiers /////////////////////////////////////////////////////{{{2
+	// ##### Modifiers /////////////////////////////////////////////////////////
 	//
 	// [clear](https://en.cppreference.com/w/cpp/container/vector/clear)
 	// clears the contents (erase all, size = 0, capacity unchanged)
@@ -321,7 +321,7 @@ private:
 	size_type		_size;
 };
 
-// NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////{{{1
+// NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////////
 //
 // [operator==](https://en.cppreference.com/w/cpp/container/vector/operator_cmp)
 // lexicographically compares the values in the vector (function template)

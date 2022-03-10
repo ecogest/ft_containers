@@ -5,3 +5,5 @@ compile_commands.json
 .cache
 ft_containers
 std_containers
+.vscode
+tags
