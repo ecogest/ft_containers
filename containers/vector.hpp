@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/09 18:57:48 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/10 10:56:15 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define VECTOR_HPP
 
 # include <memory>
-# include "reverse_iterator.hpp"
+# include "iterator.hpp"
 # include <iostream>
 # include <stdexcept>
 # include <sstream>
@@ -27,7 +27,7 @@ template < class T, class Allocator = std::allocator<T> >
 class vector {
 public:
 
-	// MEMBER TYPES ////////////////////////////////////////////////////////////
+	// MEMBER TYPES ////////////////////////////////////////////////////////{{{1
 	//
 	typedef T                                    value_type;
 	typedef Allocator                            allocator_type;
@@ -38,7 +38,7 @@ public:
 	typedef typename Allocator::pointer          pointer; // (until C++11)
 	typedef typename Allocator::const_pointer    const_pointer ;// (until C++11)
 
-	// ITERATOR TYPES //////////////////////////////////////////////////////////
+	// ITERATOR TYPES //////////////////////////////////////////////////////{{{2
 	// iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to value_type (until C++20)
 	// const_iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type (until C++20)
 	// ref: https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
@@ -59,11 +59,10 @@ public:
 
 	typedef _iterator<T>                            iterator;
 	typedef _iterator<const T>                      const_iterator;
-	// TODO: implement ft::reverse_iterator as std::reverse_iterator
 	typedef ft::reverse_iterator<iterator>          reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
 
-	// MEMBER FUNCTIONS ////////////////////////////////////////////////////////
+	// MEMBER FUNCTIONS ////////////////////////////////////////////////////{{{1
 	//
 	// [(constructor)](https://en.cppreference.com/w/cpp/container/vector/vector)
 	// constructs the `vector`
@@ -152,7 +151,7 @@ public:
 		return (_allocator);
 	}
 
-	// ##### Element access ////////////////////////////////////////////////////
+	// ##### Element access ////////////////////////////////////////////////{{{2
 	//
 	// [at](https://en.cppreference.com/w/cpp/container/vector/at)
 	// access specified element with bounds checking
@@ -219,7 +218,7 @@ public:
 		return (_array);
 	}
 
-	// ##### Iterators /////////////////////////////////////////////////////////
+	// ##### Iterators /////////////////////////////////////////////////////{{{2
 	//
 	// [begin](https://en.cppreference.com/w/cpp/container/vector/begin)
 	// returns an iterator to the beginning
@@ -233,7 +232,7 @@ public:
 	// [rend](https://en.cppreference.com/w/cpp/container/vector/rend)
 	// returns a reverse iterator to the end
 	//
-	// ##### Capacity //////////////////////////////////////////////////////////
+	// ##### Capacity //////////////////////////////////////////////////////{{{2
 	//
 	// [empty](https://en.cppreference.com/w/cpp/container/vector/empty)
 	// checks whether the container is empty
@@ -280,7 +279,7 @@ public:
 		return (_capacity);
 	}
 
-	// ##### Modifiers /////////////////////////////////////////////////////////
+	// ##### Modifiers /////////////////////////////////////////////////////{{{2
 	//
 	// [clear](https://en.cppreference.com/w/cpp/container/vector/clear)
 	// clears the contents (erase all, size = 0, capacity unchanged)
@@ -322,7 +321,7 @@ private:
 	size_type		_size;
 };
 
-// NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////////
+// NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////{{{1
 //
 // [operator==](https://en.cppreference.com/w/cpp/container/vector/operator_cmp)
 // lexicographically compares the values in the vector (function template)
@@ -343,3 +342,4 @@ private:
 }
 
 #endif
+// vim: fdm=marker

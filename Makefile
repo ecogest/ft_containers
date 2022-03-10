@@ -16,22 +16,20 @@ CONTAINERS=$(addprefix containers/, \
 UTILS=$(addprefix utils/, \
 			enable_if.hpp \
 			equal.hpp \
-			iterator_traits.hpp \
+			iterator.hpp \
 			make_pair.hpp \
 			pair.hpp \
-			reverse_iterator.hpp \
 			)
 
 
 TESTS=$(addprefix tests/, \
 			enable_if_test.cpp \
 			equal_test.cpp \
-			iterator_traits_test.cpp \
+			iterator_test.cpp \
 			main.cpp \
 			make_pair_test.cpp \
 			map_test.cpp \
 			pair_test.cpp \
-			reverse_iterator_test.cpp \
 			stack_test.cpp \
 			vector_test.cpp \
 			)
