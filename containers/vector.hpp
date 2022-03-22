@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/22 13:50:18 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/22 13:52:12 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ public:
 	// 3) Constructs the container with count copies of elements with value value.
 	// (until C++11)
 	explicit vector(size_type count,
-				 const T& value = T(),
-				 const Allocator& alloc = Allocator()
-		):
+			const T& value = T(),
+			const Allocator& alloc = Allocator()
+			):
 		_allocator(alloc),
 		_capacity(count),
 		_size(count)
