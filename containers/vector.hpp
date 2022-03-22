@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/10 11:31:12 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/22 13:50:18 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,7 +258,11 @@ public:
 	// reserves storage if new_cap > capacity()
 	void reserve(size_type new_cap) {
 		if (new_cap > max_size())
+#ifdef __APPLE__
 			throw (std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size"));
+#else
+			throw (std::length_error("vector::reserve"));
+#endif
 		if (new_cap > _capacity) {
 			value_type	*new_array;
 
