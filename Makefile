@@ -2,7 +2,8 @@ NAME=ft_containers
 
 CXX=c++
 CPPFLAGS=-Icontainers -Iutils -Itest
-CXXFLAGS=-std=c++98 -Wall -Werror -Wextra
+CXXFLAGS=-std=c++98 -Wall -Werror -Wextra -g
+# TODO: remove -g
 # CXXFLAGS+=-fsanitize=address
 
 SHELL=/usr/bin/env zsh
