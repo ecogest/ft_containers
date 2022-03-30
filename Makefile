@@ -3,6 +3,7 @@ NAME=ft_containers
 CXX=c++
 CPPFLAGS=-Icontainers -Iutils -Itest
 CXXFLAGS=-std=c++98 -Wall -Werror -Wextra
+# CXXFLAGS+=-fsanitize=address
 
 SHELL=/usr/bin/env zsh
 
