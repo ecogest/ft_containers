@@ -166,10 +166,45 @@ static void iterators() {
 	NS::vector<std::string>	v2(v_3_hello.begin(), v_3_hello.end());
 }
 
+/*
+** =============================== Modifiers ================================ **
+*/
+
+static void	modifiers() {
+	std::string	arr[] = { "hello", "world", "42" };
+	NS::vector<std::string>	vector_of_strings(arr, arr + sizeof(arr) / sizeof(arr[0]));
+
+	// Clear
+	{
+		std::cout << "=== CLEAR ===" << std::endl;
+		NS::vector<std::string> vec(vector_of_strings);
+		std::cout << vec.size() << " " << vec.capacity() << std::endl;
+		for (size_t	i = 0; i < vec.size(); i++)
+			std::cout << vec[i] << std::endl;
+		vec.clear();
+		std::cout << vec.size() << " " << vec.capacity() << std::endl;
+		for (size_t	i = 0; i < vec.size(); i++)
+			std::cout << vec[i] << std::endl;
+	}
+	// Insert
+	{
+		std::cout << "=== INSERT ===" << std::endl;
+		// iterator insert( iterator pos, const T& value );
+		NS::vector<std::string> vec(vector_of_strings);
+		vec.insert(vec.begin(), "hi");
+		vec.insert(vec.begin() + 2, "xx");
+		for (size_t i = 0; i < vec.size(); i++)
+			std::cout << vec[i] << std::endl;
+	}
+
+
+}
+
 void	test_vector(void) {
 	constructors();
 	element_access();
 	capacity();
 	operator_eq();
 	iterators();
+	modifiers();
 }

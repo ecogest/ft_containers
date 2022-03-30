@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/30 12:42:53 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/30 15:11:29 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <iostream>
 # include <stdexcept>
 # include <sstream>
+# include <cstring>
+# include <vector>  // FIX: remove
 
 namespace ft {
 
@@ -46,6 +48,8 @@ public:
 	reference		operator[](size_t i) { return _ptr[i]; }
 	reference		operator*(void) { return *_ptr; }
 	vectorIterator	operator++(int) { _ptr++; return (vectorIterator(_ptr - 1)); }
+	vectorIterator	operator+(difference_type n) { return (_ptr + n); }
+	difference_type	operator-(vectorIterator a) { return (_ptr - a.base()); }
 	bool			operator!=(vectorIterator const &rhs) const { return (_ptr != rhs.base()); }
 	value_type		*base(void) const { return _ptr; }
 };
@@ -102,7 +106,6 @@ public:
 	{ }
 
 	// 2) Constructs an empty container with the given allocator alloc.
-	// explicit vector(const Allocator& alloc); // (until C++17)
 	explicit vector(const Allocator& alloc):
 		// _array(alloc.allocate(0)), // NO! we want our copy _allocator
 		_array(0),
@@ -114,7 +117,6 @@ public:
 	}
 
 	// 3) Constructs the container with count copies of elements with value value.
-	// (until C++11)
 	explicit vector(size_type count,
 			const T& value = T(),
 			const Allocator& alloc = Allocator()
@@ -339,7 +341,19 @@ public:
 	// [insert](https://en.cppreference.com/w/cpp/container/vector/insert)
 	// inserts elements
 	// 1) inserts value before pos. Return iterator pointing to the inserted value
-	// iterator insert( iterator pos, const T& value );
+	iterator insert( iterator pos, const T& value ) {
+		size_t	index = pos - iterator(_array);  // implicit casting from difference_type
+
+		if (_capacity < _size + 1)
+			reserve(_size + 1);
+		_size += 1;
+		for(size_t i = _size - 1; i > index; i--) {
+			_allocator.construct(_array + i, _array[i - 1]);
+			_allocator.destroy(&_array[i - 1]);
+		}
+		_allocator.construct(_array + index, value);
+		return (iterator(_array + index));
+	}
 	// 3) inserts count copies of the value before pos.
 	// void insert( iterator pos, size_type count, const T& value );
 	// 4) inserts elements from range [first, last) before pos.
