@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/22 13:52:12 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/30 11:34:24 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+# include <cstddef>
 # include <memory>
 # include "iterator.hpp"
 # include <iostream>
@@ -23,42 +24,68 @@
 
 namespace ft {
 
+	// 	vectorIterator should be a random access iterator to value_type
+	//  In the headers, it is a typedef to __gnu_cxx::__normal_iterator
+template < class T >
+class vectorIterator // public ft::iterator<T>  // TODO: check if we can use it
+{
+public:
+	typedef typename std::ptrdiff_t                  difference_type; // TODO: see if possible https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
+	typedef T                                        value_type;
+	typedef value_type*                              pointer;
+	typedef value_type&                              reference;
+	typedef typename std::random_access_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
+private:
+	pointer	_ptr;
+public:
+	// [RandomAccessIterator]
+	vectorIterator(): _ptr(0) { }
+	vectorIterator(pointer ptr): _ptr(ptr) { }  // useful ?
+	vectorIterator(vectorIterator const &it): _ptr(it.base()) { }
+	~vectorIterator() { }
+	reference		operator[](size_t i) { return _ptr[i]; }
+	reference		operator*(void) { return *_ptr; }
+	vectorIterator	operator++(int) { _ptr++; return (vectorIterator(_ptr - 1)); }
+	bool			operator!=(vectorIterator const &rhs) const { return (_ptr != rhs.base()); }
+	value_type		*base(void) const { return _ptr; }
+};
+
 template < class T, class Allocator = std::allocator<T> >
 class vector {
 public:
 
 	// MEMBER TYPES ////////////////////////////////////////////////////////////
-	//
+	//https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
+
 	typedef T                                    value_type;
 	typedef Allocator                            allocator_type;
-	typedef std::size_t                          size_type; // Unsigned integer type (usually std::size_t)
+	typedef std::size_t                          size_type;       // Unsigned integer type (usually std::size_t)
 	typedef std::ptrdiff_t                       difference_type; // Signed integer type (usually std::ptrdiff_t)
 	typedef value_type&                          reference;
 	typedef const value_type&                    const_reference;
-	typedef typename Allocator::pointer          pointer; // (until C++11)
-	typedef typename Allocator::const_pointer    const_pointer ;// (until C++11)
+	typedef typename Allocator::pointer          pointer;         // (until C++11)
+	typedef typename Allocator::const_pointer    const_pointer;   // (until C++11)
 
 	// ITERATOR TYPES //////////////////////////////////////////////////////////
 	// iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to value_type (until C++20)
 	// const_iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type (until C++20)
 	// ref: https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
 	// ref: https://en.cppreference.com/w/cpp/named_req/ContiguousIterator
-	template < class U >
-	class _iterator {
-	public:
-		typedef typename vector<U>::difference_type      difference_type;
-		typedef U                                        value_type;
-		typedef value_type*                              pointer;
-		typedef value_type&                              reference;
-		typedef typename std::random_access_iterator_tag iterator_category;
-	private:
-		pointer	_ptr;
-	public:
-		// TODO:
-	};
+	// template < class U >
+	// class _iterator {
+	// public:
+	// 	typedef typename vector<U>::difference_type      difference_type;
+	// 	typedef U                                        value_type;
+	// 	typedef value_type*                              pointer;
+	// 	typedef value_type&                              reference;
+	// 	typedef typename std::random_access_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
+	// private:
+	// 	pointer	_ptr;
+	// public:
+	// };
 
-	typedef _iterator<T>                            iterator;
-	typedef _iterator<const T>                      const_iterator;
+	typedef vectorIterator<T>                            iterator;
+	typedef vectorIterator<const T>                      const_iterator;
 	typedef ft::reverse_iterator<iterator>          reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
 
@@ -106,7 +133,19 @@ public:
 	// vector(static_cast<size_type>(first), static_cast<value_type>(last), a)
 	// if InputIt is an integral type. // TODO:
 	template< class InputIt >
-	vector(InputIt first, InputIt last, const Allocator& alloc = Allocator()); // (until C++20)
+	vector(InputIt first, InputIt last, const Allocator& alloc = Allocator()):
+		_allocator(alloc),
+		_size(0)
+	{
+		for (InputIt it = first; it != last; it++)
+			_size++;
+		_capacity = _size;
+		_array = _allocator.allocate(_size);  // alloc.allocate(_size) would be an error (alloc is const)
+		size_t	i = 0;
+		for (InputIt it = first; it != last; it++, i++) {
+			_allocator.construct(_array + i, *it);
+		}
+	}
 
 	// 6) Copy constructor. Constructs the container with the copy of the contents of other.
 	// (until C++20)
@@ -222,10 +261,14 @@ public:
 	//
 	// [begin](https://en.cppreference.com/w/cpp/container/vector/begin)
 	// returns an iterator to the beginning
+	iterator begin() { return (iterator(_array)); }
+	const_iterator begin() const { return (iterator(_array)); };
 	//
 	// [end](https://en.cppreference.com/w/cpp/container/vector/end)
-	// returns an iterator to the end
-	//
+	// returns an iterator to the end (actually past the end)
+	iterator end() { return (iterator(_array + _size)); }
+	const_iterator end() const { return (iterator(_array + _size));};
+
 	// [rbegin](https://en.cppreference.com/w/cpp/container/vector/rbegin)
 	// returns a reverse iterator to the beginning
 	//

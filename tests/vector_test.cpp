@@ -115,16 +115,18 @@ void	test_vector(void) {
 		std::cout << v_3_hello_copy[i] << std::endl;
 
 /*
-** ================================== Todo ================================== **
+** =============================== Iterators ================================ **
 */
 
-	// int	arr[] = {0, 2, 4, 8};
-	// std::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
-	// std::vector<int>::iterator	it;
-    //
-	// for (size_t	i = 0; i < v.size(); i++)
-	// 	std::cout << v[i] << std::endl;
-    //
-	// for (std::vector<int>::iterator it = v.begin(); it != v.end(); it++)
-	// 	std::cout << *it << std::endl;
+	int	arr[] = {0, 2, 4, 8};
+	NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+	NS::vector<int>::iterator	it;
+
+	for (size_t	i = 0; i < v.size(); i++)
+		std::cout << v[i] << std::endl;
+
+	for (NS::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+		std::cout << *it << std::endl;
+
+	NS::vector<std::string>	v2(v_3_hello.begin(), v_3_hello.end());
 }
