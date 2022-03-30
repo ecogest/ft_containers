@@ -6,6 +6,8 @@
 #include <string>
 
 #include <iterator>
+// #include <map>
+#include <deque>
 
 /*
 ** ============================== CONSTRUCTORS ============================== **
@@ -197,10 +199,33 @@ static void	modifiers() {
 	}
 	// Insert (3): void insert( iterator pos, size_type count, const T& value );
 	{
-		std::cout << "=== INSERT 2 ===" << std::endl;
+		std::cout << "=== INSERT 3 ===" << std::endl;
 		NS::vector<std::string> vec(vector_of_strings);
+		std::cout << vec.size() << " " << vec.capacity() << std::endl;
 		vec.insert(vec.begin(), 1, "hi");
 		vec.insert(vec.begin() + 2, 4, "xx");
+		for (size_t i = 0; i < vec.size(); i++)
+			std::cout << vec[i] << std::endl;
+		std::cout << vec.size() << " " << vec.capacity() << std::endl;
+	}
+	// Insert (4): void insert( iterator pos, InputIt first, InputIt last );
+	{
+		std::cout << "=== INSERT 4 ===" << std::endl;
+		NS::vector<std::string> vec(vector_of_strings);
+		// std::vector<std::string>	m;
+		// m.push_back("hello");
+		// m.push_back("world");
+		// m.push_back("!");
+		// std::map<std::string, std::string> m; // won't work even with this insert method
+		// m["a"] = "b";
+		// m["c"] = "d";
+		std::deque<std::string>	m;
+		m.push_back("hello");
+		m.push_back("world");
+		m.push_back("!");
+		std::cout << vec.size() << " " << vec.capacity() << std::endl;
+		vec.insert(vec.begin(), m.begin(), m.end());
+		vec.insert(vec.begin() + 2, m.begin(), m.end());
 		for (size_t i = 0; i < vec.size(); i++)
 			std::cout << vec[i] << std::endl;
 		std::cout << vec.size() << " " << vec.capacity() << std::endl;

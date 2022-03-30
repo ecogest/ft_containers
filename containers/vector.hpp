@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/30 16:17:54 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/30 20:49:32 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -362,8 +362,24 @@ public:
 			_allocator.construct(_array + index + i, value);
 	}
 	// 4) inserts elements from range [first, last) before pos.
-	// template< class InputIt >
-	// void insert( iterator pos, InputIt first, InputIt last );
+	template< class InputIt >
+	void insert( iterator pos, InputIt first, InputIt last ) {
+		// size_t	count = last - first; // not necessary implemented by a basic InputIt
+		size_t	count = 0;
+		for (InputIt it = first; it != last; it++)
+			count++;
+		size_t	index = pos - iterator(_array);  // implicit casting from difference_type
+
+		if (_capacity < _size + count)
+			reserve(_size + count);
+		_size += count;
+		for(size_t i = _size - 1; i >= index + count; i--) {
+			_allocator.construct(_array + i, _array[i - count]);
+			_allocator.destroy(&_array[i - count]);
+		}
+		for (size_t i = 0; i < count; i++, first++)
+			_allocator.construct(_array + index + i, *first);
+	}
 
 	// [erase](https://en.cppreference.com/w/cpp/container/vector/erase)
 	// erases elements
