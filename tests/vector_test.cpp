@@ -186,16 +186,16 @@ static void	modifiers() {
 		for (size_t	i = 0; i < vec.size(); i++)
 			std::cout << vec[i] << std::endl;
 	}
-	// Insert: iterator insert( iterator pos, const T& value );
+	// Insert (1): iterator insert( iterator pos, const T& value );
 	{
 		std::cout << "=== INSERT 1 ===" << std::endl;
 		NS::vector<std::string> vec(vector_of_strings);
-		vec.insert(vec.begin(), "hi");
-		vec.insert(vec.begin() + 2, "xx");
+		std::cout << *vec.insert(vec.begin(), "hi") << std::endl;
+		std::cout << *vec.insert(vec.begin() + 2, "xx") << std::endl;
 		for (size_t i = 0; i < vec.size(); i++)
 			std::cout << vec[i] << std::endl;
 	}
-	// Insert: void insert( iterator pos, size_type count, const T& value );
+	// Insert (3): void insert( iterator pos, size_type count, const T& value );
 	{
 		std::cout << "=== INSERT 2 ===" << std::endl;
 		NS::vector<std::string> vec(vector_of_strings);

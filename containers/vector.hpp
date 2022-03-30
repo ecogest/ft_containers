@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/30 15:32:23 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/30 16:17:54 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,14 +344,7 @@ public:
 	iterator insert( iterator pos, const T& value ) {
 		size_t	index = pos - iterator(_array);  // implicit casting from difference_type
 
-		if (_capacity < _size + 1)
-			reserve(_size + 1);
-		_size += 1;
-		for(size_t i = _size - 1; i > index; i--) {
-			_allocator.construct(_array + i, _array[i - 1]);
-			_allocator.destroy(&_array[i - 1]);
-		}
-		_allocator.construct(_array + index, value);
+		insert(pos, 1, value);
 		return (iterator(_array + index));
 	}
 	// 3) inserts count copies of the value before pos.
