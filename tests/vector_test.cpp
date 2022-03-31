@@ -9,6 +9,13 @@
 // #include <map>
 #include <deque>
 
+template <typename vec>
+void	print_vector(vec v) {
+	for (typename vec::iterator it = v.begin(); it !=v.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
+}
+
 /*
 ** ============================== CONSTRUCTORS ============================== **
 */
@@ -24,15 +31,21 @@ static void constructors() {
 
 	// 3) n elems with same value
 	NS::vector<float>	v_10float(10);
+	print_vector(v_10float);
 
 	std::string	hello("hello");
 	NS::vector<std::string>	v_3_hello(3, hello);
+	print_vector(v_3_hello);
 
-	// 5) TODO:
+	// 5) using iterators
+	NS::vector<std::string> copy_with_iterator(v_3_hello.begin(), v_3_hello.end());
+	print_vector(copy_with_iterator);
 
 	// 6) copy constuctor
 	NS::vector<std::string>	v_3_hello_copy(v_3_hello);
+	print_vector(v_3_hello_copy);
 	const NS::vector<std::string>	v_3_hello_copy_const(v_3_hello);
+	print_vector(v_3_hello_copy_const);
 }
 
 
@@ -133,18 +146,15 @@ static void	operator_eq() {
 	NS::vector<std::string>	v_3_hello(3, hello);
 	NS::vector<std::string>	v_3_hello_copy(v_3_hello);
 
-	for (size_t i = 0; i < v_3_hello_copy.size(); i++)
-		std::cout << v_3_hello_copy[i] << std::endl;
+	print_vector(v_3_hello_copy);
 	v_3_hello_copy = v_3_hello;
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
-	for (size_t i = 0; i < v_3_hello_copy.size(); i++)
-		std::cout << v_3_hello_copy[i] << std::endl;
+	print_vector(v_3_hello_copy);
 
 	const NS::vector<std::string>	v_3_hello_copy_const(v_3_hello);
 	v_3_hello_copy = v_3_hello_copy_const;
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
-	for (size_t i = 0; i < v_3_hello_copy.size(); i++)
-		std::cout << v_3_hello_copy[i] << std::endl;
+	print_vector(v_3_hello_copy);
 }
 
 
@@ -157,15 +167,13 @@ static void iterators() {
 	NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
 	NS::vector<int>::iterator	it;
 
-	for (size_t	i = 0; i < v.size(); i++)
-		std::cout << v[i] << std::endl;
-
 	for (NS::vector<int>::iterator it = v.begin(); it != v.end(); it++)
 		std::cout << *it << std::endl;
 
 	std::string	hello("hello");
 	NS::vector<std::string>	v_3_hello(3, hello);
 	NS::vector<std::string>	v2(v_3_hello.begin(), v_3_hello.end());
+	print_vector(v2);
 }
 
 /*
@@ -181,12 +189,10 @@ static void	modifiers() {
 		std::cout << "=== CLEAR ===" << std::endl;
 		NS::vector<std::string> vec(vector_of_strings);
 		std::cout << vec.size() << " " << vec.capacity() << std::endl;
-		for (size_t	i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << std::endl;
+		print_vector(vec);
 		vec.clear();
 		std::cout << vec.size() << " " << vec.capacity() << std::endl;
-		for (size_t	i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << std::endl;
+		print_vector(vec);
 	}
 	// Insert (1): iterator insert( iterator pos, const T& value );
 	{
@@ -194,8 +200,7 @@ static void	modifiers() {
 		NS::vector<std::string> vec(vector_of_strings);
 		std::cout << *vec.insert(vec.begin(), "hi") << std::endl;
 		std::cout << *vec.insert(vec.begin() + 2, "xx") << std::endl;
-		for (size_t i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << std::endl;
+		print_vector(vec);;
 	}
 	// Insert (3): void insert( iterator pos, size_type count, const T& value );
 	{
@@ -204,31 +209,20 @@ static void	modifiers() {
 		std::cout << vec.size() << " " << vec.capacity() << std::endl;
 		vec.insert(vec.begin(), 1, "hi");
 		vec.insert(vec.begin() + 2, 4, "xx");
-		for (size_t i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << std::endl;
+		print_vector(vec);
 		std::cout << vec.size() << " " << vec.capacity() << std::endl;
 	}
 	// Insert (4): void insert( iterator pos, InputIt first, InputIt last );
 	{
 		std::cout << "=== INSERT 4 ===" << std::endl;
 		NS::vector<std::string> vec(vector_of_strings);
-		// std::vector<std::string>	m;
-		// m.push_back("hello");
-		// m.push_back("world");
-		// m.push_back("!");
-		// std::map<std::string, std::string> m; // won't work even with this insert method
-		// m["a"] = "b";
-		// m["c"] = "d";
 		std::deque<std::string>	m;
-		m.push_back("hello");
-		m.push_back("world");
-		m.push_back("!");
+		m.push_back("hello"); m.push_back("world"); m.push_back("!");
 		std::cout << vec.size() << " " << vec.capacity() << std::endl;
 		vec.insert(vec.begin(), m.begin(), m.end());
 		vec.insert(vec.begin() + 2, m.begin(), m.end());
-		for (size_t i = 0; i < vec.size(); i++)
-			std::cout << vec[i] << std::endl;
-		// std::cout << vec.size() << " " << vec.capacity() << std::endl;
+		print_vector(vec);
+		// std::cout << vec.size() << " " << vec.capacity() << std::endl; // capacity behaviour is not specified
 	}
 
 
