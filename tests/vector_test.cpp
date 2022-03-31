@@ -297,13 +297,26 @@ static void	modifiers() {
 		std::string	arr[] = { "hello", "world", "42", "!" };
 		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
 		std::string	arr2[] = { "xx", "pp" };
-		NS::vector<std::string>	v2(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		NS::vector<std::string>	v2(arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]));
 		v.swap(v2);
 		print_vector(v);
 		std::cout << v.size() << " " << v.capacity() << std::endl;
 		print_vector(v2);
 		std::cout << v2.size() << " " << v2.capacity() << std::endl;
 	}
+}
+
+static void	non_member() {
+	// operator==
+	{
+		std::string	arr[] = { "hello", "world", "42", "!" };
+		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		std::string	arr2[] = { "xx", "pp" };
+		NS::vector<std::string>	v2(arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]));
+		NS::vector<std::string>	v3(arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]));
+		std::cout << (v == v2) << " " << (v2 == v3) << std::endl;
+	}
+	
 }
 
 void	test_vector(void) {
@@ -313,4 +326,5 @@ void	test_vector(void) {
 	operator_eq();
 	iterators();
 	modifiers();
+	non_member();
 }

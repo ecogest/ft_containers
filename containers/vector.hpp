@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 11:23:20 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 11:49:11 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,17 +459,30 @@ private:
 //
 // [operator==](https://en.cppreference.com/w/cpp/container/vector/operator_cmp)
 // lexicographically compares the values in the vector (function template)
-//
+template< class T, class Alloc >
+bool operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+	if (lhs.size() != rhs.size())
+		return (false);
+	for (size_t i = 0; i < lhs.size(); i++)
+		if (lhs[i] != rhs[i])
+			return (false);
+	return (true);
+}
 // operator!= (removed in C++20)
-//
+template< class T, class Alloc >
+bool operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 // operator< (removed in C++20)
-//
+template< class T, class Alloc >
+bool operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 // operator<= (removed in C++20)
-//
+template< class T, class Alloc >
+bool operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 // operator> (removed in C++20)
-//
+template< class T, class Alloc >
+bool operator>( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 // operator>= (removed in C++20)
-//
+template< class T, class Alloc >
+bool operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 // [std::swap(std::vector)](https://en.cppreference.com/w/cpp/container/vector/swap2)
 // specializes the [std::swap](https://en.cppreference.com/w/cpp/algorithm/swap) algorithm  (function template)
 
