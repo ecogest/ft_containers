@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 11:10:19 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 11:23:20 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -441,6 +441,12 @@ public:
 	}
 	// [swap](https://en.cppreference.com/w/cpp/container/vector/swap)
 	// swaps the contents
+	void swap( vector& other ) {
+		std::swap(_array, other._array);  // allowed, defined in <move.h>, standard library, not the container method
+		std::swap(_allocator, other._allocator);
+		std::swap(_capacity, other._capacity);
+		std::swap(_size, other._size);
+	}
 
 private:
 	value_type		*_array; // The elements are stored contiguously.

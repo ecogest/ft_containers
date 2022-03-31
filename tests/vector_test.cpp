@@ -292,6 +292,18 @@ static void	modifiers() {
 		v.resize(1, "end");
 		print_vector(v);
 	}
+	// swap
+	{
+		std::string	arr[] = { "hello", "world", "42", "!" };
+		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		std::string	arr2[] = { "xx", "pp" };
+		NS::vector<std::string>	v2(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		v.swap(v2);
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		print_vector(v2);
+		std::cout << v2.size() << " " << v2.capacity() << std::endl;
+	}
 }
 
 void	test_vector(void) {
