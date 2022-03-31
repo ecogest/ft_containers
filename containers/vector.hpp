@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 11:49:11 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 13:22:51 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <cstddef>
 # include <memory>
 # include "iterator.hpp"
+# include "equal.hpp"
 # include <iostream>
 # include <stdexcept>
 # include <sstream>
@@ -51,6 +52,7 @@ public:
 	vectorIterator	operator+(difference_type n) const { return (_ptr + n); }
 	vectorIterator	operator-(difference_type n) const { return (_ptr - n); }
 	difference_type	operator-(vectorIterator a) const { return (_ptr - a.base()); }
+	bool			operator==(vectorIterator const &rhs) const { return (_ptr == rhs.base()); }
 	bool			operator!=(vectorIterator const &rhs) const { return (_ptr != rhs.base()); }
 	value_type		*base(void) const { return _ptr; }
 };
@@ -89,8 +91,8 @@ public:
 	// public:
 	// };
 
-	typedef vectorIterator<T>                            iterator;
-	typedef vectorIterator<const T>                      const_iterator;
+	typedef vectorIterator<T>                       iterator;
+	typedef vectorIterator<const T>                 const_iterator;
 	typedef ft::reverse_iterator<iterator>          reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>    const_reverse_iterator;
 
@@ -265,12 +267,12 @@ public:
 	// [begin](https://en.cppreference.com/w/cpp/container/vector/begin)
 	// returns an iterator to the beginning
 	iterator begin() { return (iterator(_array)); }
-	const_iterator begin() const { return (iterator(_array)); };
+	const_iterator begin() const { return (const_iterator(_array)); };
 	//
 	// [end](https://en.cppreference.com/w/cpp/container/vector/end)
 	// returns an iterator to the end (actually past the end)
 	iterator end() { return (iterator(_array + _size)); }
-	const_iterator end() const { return (iterator(_array + _size));};
+	const_iterator end() const { return (const_iterator(_array + _size));};
 
 	// [rbegin](https://en.cppreference.com/w/cpp/container/vector/rbegin)
 	// returns a reverse iterator to the beginning
@@ -468,21 +470,36 @@ bool operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
 			return (false);
 	return (true);
 }
-// operator!= (removed in C++20)
+// operator!=
 template< class T, class Alloc >
-bool operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
-// operator< (removed in C++20)
+bool operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs )  {
+	return (!(lhs == rhs));
+}
+// operator<
 template< class T, class Alloc >
-bool operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
-// operator<= (removed in C++20)
+bool operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+	return (ft::lexicographical_compare(
+				lhs.begin(),
+				lhs.end(),
+				rhs.begin(),
+				rhs.end()
+				));
+}
+// operator<=
 template< class T, class Alloc >
-bool operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
-// operator> (removed in C++20)
+bool operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+	return (operator==(lhs, rhs) || operator<(lhs, rhs));
+}
+// operator>
 template< class T, class Alloc >
-bool operator>( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
-// operator>= (removed in C++20)
+bool operator>( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+	return (operator>=(lhs, rhs) && operator!=(lhs, rhs));
+}
+// operator>=
 template< class T, class Alloc >
-bool operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+bool operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+	return (!operator<(lhs, rhs));
+}
 // [std::swap(std::vector)](https://en.cppreference.com/w/cpp/container/vector/swap2)
 // specializes the [std::swap](https://en.cppreference.com/w/cpp/algorithm/swap) algorithm  (function template)
 

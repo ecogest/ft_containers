@@ -307,7 +307,7 @@ static void	modifiers() {
 }
 
 static void	non_member() {
-	// operator==
+	// operator==, !=
 	{
 		std::string	arr[] = { "hello", "world", "42", "!" };
 		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
@@ -315,8 +315,30 @@ static void	non_member() {
 		NS::vector<std::string>	v2(arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]));
 		NS::vector<std::string>	v3(arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]));
 		std::cout << (v == v2) << " " << (v2 == v3) << std::endl;
+		std::cout << (v != v2) << " " << (v2 != v3) << std::endl;
+		v.clear(); v2.clear();
+		std::cout << (v == v2) << " " << (v2 == v3) << std::endl;
+		std::cout << (v != v2) << " " << (v2 != v3) << std::endl;
 	}
-	
+	// operators <, >, <=, >=
+	{
+		NS::vector<std::string> v1;
+		NS::vector<std::string> v2;
+		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+		v1.push_back("hello");
+		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+		v2.push_back("hello");
+		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+		v1.push_back("world");
+		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+		v2.push_back("wOrld");
+		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+		v2.pop_back();
+		v2.push_back("world");
+		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+		v2.push_back("!");
+		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+	}
 }
 
 void	test_vector(void) {
