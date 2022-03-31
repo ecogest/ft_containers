@@ -224,8 +224,40 @@ static void	modifiers() {
 		print_vector(vec);
 		// std::cout << vec.size() << " " << vec.capacity() << std::endl; // capacity behaviour is not specified
 	}
-
-
+	// Erase (1)
+	{
+		std::string	arr[] = { "hello", "world", "42", "!" };
+		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		v.erase(v.begin() + 2);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		print_vector(v);
+		v.erase(v.begin());
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		v.erase(v.end() - 1);
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+	}
+	// Erase (2)
+	{
+		std::string	arr[] = { "hello", "world", "42", "!", "more", "words", "a", "b", "c", "d", "e" };
+		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		v.erase(v.begin(), v.begin());
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		v.erase(v.end(), v.end());
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		v.erase(v.begin(), v.begin() + 1);
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		v.erase(v.begin() + 1, v.begin() + 4);
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		v.erase(v.begin(), v.end());
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+	}
 }
 
 void	test_vector(void) {

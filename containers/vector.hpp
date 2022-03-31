@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 09:42:52 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:27:19 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ public:
 	reference		operator*(void) const { return *_ptr; }
 	vectorIterator	operator++(int) { _ptr++; return (vectorIterator(_ptr - 1)); }
 	vectorIterator	operator+(difference_type n) const { return (_ptr + n); }
+	vectorIterator	operator-(difference_type n) const { return (_ptr - n); }
 	difference_type	operator-(vectorIterator a) const { return (_ptr - a.base()); }
 	bool			operator!=(vectorIterator const &rhs) const { return (_ptr != rhs.base()); }
 	value_type		*base(void) const { return _ptr; }
@@ -382,8 +383,27 @@ public:
 	}
 
 	// [erase](https://en.cppreference.com/w/cpp/container/vector/erase)
-	// erases elements
-	//
+	// erases elements. returns the iterator following the last removed element
+	// 1) Removes the element at pos.
+	iterator erase( iterator pos ) {
+		return (erase(pos, pos + 1));
+	}
+	// 2) Removes the elements in the range [first, last).
+	iterator erase( iterator first, iterator last ) {
+		size_type start = first - this->begin();
+		size_type end = last - this->begin();
+		if (end == start)
+			return (first);
+		for (size_type i = start; i < end; i++) {
+			_allocator.destroy(_array + i);
+		}
+		for (size_type i = 0; end + i < _size; i++) {
+			_allocator.construct(_array + start + i, _array[end + i]);
+		}
+		_size -= (end - start);
+		return (first + 1);
+	}
+
 	// [push_back](https://en.cppreference.com/w/cpp/container/vector/push_back)
 	// adds an element to the end
 	//
