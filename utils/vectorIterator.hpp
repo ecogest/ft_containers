@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:35:45 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 16:38:52 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 17:28:00 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ public:
 	vectorIterator(): _ptr(0)                                     { }
 	vectorIterator(pointer ptr): _ptr(ptr)                        { }
 	vectorIterator(vectorIterator const &it): _ptr(it.base())     { }
-	vectorIterator	operator=(vectorIterator const &it)           { _ptr = it._ptr; }
+	vectorIterator	&operator=(vectorIterator const &it)          { _ptr = it._ptr; return (*this); }
 	~vectorIterator()                                             { }
 	// [LegacyRandomAccessIterator] < LegacyBidirectionalIterator
 	vectorIterator	&operator+=(difference_type n)                { _ptr += n; return (*this); }

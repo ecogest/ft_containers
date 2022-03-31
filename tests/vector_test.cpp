@@ -181,29 +181,42 @@ static void	operator_eq() {
 */
 
 static void iterators() {
-	int	arr[] = {0, 2, 4, 8};
-	NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
-	NS::vector<int>::iterator	it;
+	{
+		int	arr[] = {0, 2, 4, 8};
+		NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
 
-	for (NS::vector<int>::iterator it = v.begin(); it != v.end(); it++)
-		std::cout << *it << std::endl;
+		for (NS::vector<int>::iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
 
-	// operator-
-	std::cout << (v.begin() - v.end()) << " " << (v.end() - v.begin()) << std::endl;
-	// operator of comparison
-	std::cout << (v.begin() == v.begin()) << " " << (v.begin() != v.begin()) << std::endl;
-	std::cout << (v.begin() == v.end()) << " " << (v.end() != v.begin()) << std::endl;
-	std::cout << (v.begin() < v.end()) << " " << (v.end() < v.begin()) << std::endl;
-	std::cout << (v.begin() > v.end()) << " " << (v.end() > v.begin()) << std::endl;
-	std::cout << (v.begin() <= v.end()) << " " << (v.end() <= v.begin()) << std::endl;
-	std::cout << (v.begin() >= v.end()) << " " << (v.end() >= v.begin()) << std::endl;
+		// operator-
+		std::cout << (v.begin() - v.end()) << " " << (v.end() - v.begin()) << std::endl;
+		// operator of comparison
+		std::cout << (v.begin() == v.begin()) << " " << (v.begin() != v.begin()) << std::endl;
+		std::cout << (v.begin() == v.end()) << " " << (v.end() != v.begin()) << std::endl;
+		std::cout << (v.begin() < v.end()) << " " << (v.end() < v.begin()) << std::endl;
+		std::cout << (v.begin() > v.end()) << " " << (v.end() > v.begin()) << std::endl;
+		std::cout << (v.begin() <= v.end()) << " " << (v.end() <= v.begin()) << std::endl;
+		std::cout << (v.begin() >= v.end()) << " " << (v.end() >= v.begin()) << std::endl;
 
-	std::string	hello("hello");
-	NS::vector<std::string>	v_3_hello(3, hello);
-	NS::vector<std::string>	v2(v_3_hello.begin(), v_3_hello.end());
-	print_vector(v2);
-	// operator->
-	std::cout << (v_3_hello.begin())->length() << std::endl;
+		std::string	hello("hello");
+		NS::vector<std::string>	v_3_hello(3, hello);
+		NS::vector<std::string>	v2(v_3_hello.begin(), v_3_hello.end());
+		print_vector(v2);
+		// operator->
+		std::cout << (v_3_hello.begin())->length() << std::endl;
+	}
+	{
+		// reverse_iterator
+		int	arr[] = {0, 2, 4, 8};
+		NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		NS::reverse_iterator<NS::vector<int>::iterator> it(v.end());
+		NS::reverse_iterator<NS::vector<int>::iterator> begin(v.begin());
+
+		while (it != begin) {
+			std::cout << *it << std::endl;
+			it++;
+		}
+	}
 }
 
 /*
