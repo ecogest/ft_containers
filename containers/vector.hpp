@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/30 20:49:32 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 09:42:52 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ public:
 	vectorIterator(pointer ptr): _ptr(ptr) { }  // useful ?
 	vectorIterator(vectorIterator const &it): _ptr(it.base()) { }
 	~vectorIterator() { }
-	reference		operator[](size_t i) { return _ptr[i]; }
-	reference		operator*(void) { return *_ptr; }
+	reference		operator[](size_t i) const { return _ptr[i]; }
+	reference		operator*(void) const { return *_ptr; }
 	vectorIterator	operator++(int) { _ptr++; return (vectorIterator(_ptr - 1)); }
-	vectorIterator	operator+(difference_type n) { return (_ptr + n); }
-	difference_type	operator-(vectorIterator a) { return (_ptr - a.base()); }
+	vectorIterator	operator+(difference_type n) const { return (_ptr + n); }
+	difference_type	operator-(vectorIterator a) const { return (_ptr - a.base()); }
 	bool			operator!=(vectorIterator const &rhs) const { return (_ptr != rhs.base()); }
 	value_type		*base(void) const { return _ptr; }
 };
@@ -371,7 +371,7 @@ public:
 		size_t	index = pos - iterator(_array);  // implicit casting from difference_type
 
 		if (_capacity < _size + count)
-			reserve(_size + count);
+			reserve(_size + count);  // some implementations reserve more, OS dependant, no such behaviour required in the doc
 		_size += count;
 		for(size_t i = _size - 1; i >= index + count; i--) {
 			_allocator.construct(_array + i, _array[i - count]);

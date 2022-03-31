@@ -228,7 +228,7 @@ static void	modifiers() {
 		vec.insert(vec.begin() + 2, m.begin(), m.end());
 		for (size_t i = 0; i < vec.size(); i++)
 			std::cout << vec[i] << std::endl;
-		std::cout << vec.size() << " " << vec.capacity() << std::endl;
+		// std::cout << vec.size() << " " << vec.capacity() << std::endl;
 	}
 
 
