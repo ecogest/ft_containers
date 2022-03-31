@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 10:58:48 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 11:10:19 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,8 +421,24 @@ public:
 		}
 	}
 	// [resize](https://en.cppreference.com/w/cpp/container/vector/resize)
-	// changes the number of elements stored
-	//
+	// changes the number of elements stored.
+	// if the current size is greater than count, the container is reduced to its first count elements.
+	// If the current size is less than count, additional copies of value are appended.
+	void resize( size_type count, T value = T() ) {
+		if (count == _size)
+			return ;
+		else if (count > _size) {
+			if (count > _capacity)
+				reserve(count);
+			for (size_t i = _size; i < count; i++)
+				_allocator.construct(_array + i, value);
+		}
+		else {
+			for (size_t i = count; i < _size; i++)
+				_allocator.destroy(_array + i);
+		}
+		_size = count;
+	}
 	// [swap](https://en.cppreference.com/w/cpp/container/vector/swap)
 	// swaps the contents
 

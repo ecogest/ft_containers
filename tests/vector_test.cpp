@@ -275,6 +275,23 @@ static void	modifiers() {
 		v.pop_back();
 		print_vector(v);
 	}
+	// resize
+	{
+		std::string	arr[] = { "hello", "world", "42", "!", "more", "words", "a", "b", "c", "d", "e" };
+		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		v.resize(v.size());
+		print_vector(v);
+		v.resize(v.size() + 3);
+		print_vector(v);
+		v.resize(v.size() + 2, "heelllo");
+		print_vector(v);
+		v.resize(v.size() - 2, "heelllo");
+		print_vector(v);
+		v.resize(0);
+		print_vector(v);
+		v.resize(1, "end");
+		print_vector(v);
+	}
 }
 
 void	test_vector(void) {
