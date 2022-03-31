@@ -320,6 +320,11 @@ static void	modifiers() {
 		std::cout << v.size() << " " << v.capacity() << std::endl;
 		print_vector(v2);
 		std::cout << v2.size() << " " << v2.capacity() << std::endl;
+		NS::swap(v, v2);
+		print_vector(v);
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		print_vector(v2);
+		std::cout << v2.size() << " " << v2.capacity() << std::endl;
 	}
 }
 

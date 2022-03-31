@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 14:16:02 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 14:31:35 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,10 +499,14 @@ template< class T, class Alloc >
 bool operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
 	return (!operator<(lhs, rhs));
 }
+
 // [std::swap(std::vector)](https://en.cppreference.com/w/cpp/container/vector/swap2)
 // specializes the [std::swap](https://en.cppreference.com/w/cpp/algorithm/swap) algorithm  (function template)
-
+template< class T, class Alloc >
+void swap( vector<T,Alloc>& lhs, vector<T,Alloc>& rhs ) {
+	lhs.swap(rhs);
 }
 
+}
 #endif
 // vim: fdm=marker
