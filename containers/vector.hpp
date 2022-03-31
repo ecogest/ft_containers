@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 14:07:03 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 14:16:02 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,18 @@ public:
 
 	// [assign](https://en.cppreference.com/w/cpp/container/vector/assign)
 	// assigns values to the container
-	//
+	// 1) Replaces the contents with count copies of value value
+	void assign( size_type count, const T& value ) {
+		clear();
+		insert(begin(), count, value);
+	}
+	// 2) Replaces the contents with copies of those in the range [first, last).
+	template< class InputIt >
+	void assign( InputIt first, InputIt last ) {
+		clear();
+		insert(begin(), first, last);
+	}
+
 	// [get_allocator](https://en.cppreference.com/w/cpp/container/vector/get_allocator)
 	// returns the associated allocator
 	allocator_type get_allocator() const {

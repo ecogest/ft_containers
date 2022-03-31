@@ -48,6 +48,21 @@ static void constructors() {
 	print_vector(v_3_hello_copy);
 	const NS::vector<std::string>	v_3_hello_copy_const(v_3_hello);
 	print_vector(v_3_hello_copy_const);
+
+	// assign, operator =
+	{
+		std::string	arr[] = { "hello", "world", "42", "!" };
+		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
+		std::string	arr2[] = { "xx", "pp" };
+		NS::vector<std::string>	v2(arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]));
+		v2.assign(v.begin(), v.end());
+		print_vector(v2);
+		NS::vector<std::string> v3;
+		v3.assign(4, "helloworld");
+		print_vector(v3);
+		v3 = v;
+		print_vector(v3);
+	}
 }
 
 
