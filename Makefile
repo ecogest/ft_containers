@@ -21,6 +21,7 @@ UTILS=$(addprefix utils/, \
 			iterator.hpp \
 			make_pair.hpp \
 			pair.hpp \
+			vectorIterator.hpp \
 			)
 
 
