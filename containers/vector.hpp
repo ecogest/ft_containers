@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 10:27:19 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:45:10 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,12 @@ public:
 
 	// [push_back](https://en.cppreference.com/w/cpp/container/vector/push_back)
 	// adds an element to the end
-	//
+	void push_back( const T& value ) {
+		if (_size <= _capacity)
+			reserve(_size + 1);  // some implementations reserve more, OS dependant, no such behaviour required in the doc
+		_allocator.construct(_array + _size, value);
+		_size++;
+	}
 	// [pop_back](https://en.cppreference.com/w/cpp/container/vector/pop_back)
 	// removes the last element
 	//

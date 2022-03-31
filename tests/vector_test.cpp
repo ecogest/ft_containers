@@ -258,6 +258,18 @@ static void	modifiers() {
 		print_vector(v);
 		std::cout << v.size() << " " << v.capacity() << std::endl;
 	}
+	// push_back
+	{
+		NS::vector<std::string> v;
+		v.push_back("hello");
+		v.push_back("world");
+		v.push_back("!");
+		print_vector(v);
+		v.reserve(42);
+		v.push_back("more");
+		std::cout << v.size() << " " << v.capacity() << std::endl;
+		print_vector(v);
+	}
 }
 
 void	test_vector(void) {
