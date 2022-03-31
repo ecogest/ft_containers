@@ -6,12 +6,14 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:15:28 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 13:22:00 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 14:00:55 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EQUAL_HPP
 # define EQUAL_HPP
+
+//NOTE: tested in vector_test
 
 namespace ft {
 
@@ -25,21 +27,30 @@ bool lexicographical_compare( InputIt1 first1, InputIt1 last1,
 			first1++;
 			first2++;
 		}
-		else if (*first1 < *first2)
-			return (true);
-		else
-			return (false);
+		else return (*first1 < *first2);
 	}
-	if (first1 == last1 && first2 != last2)
-		return (true);
-	return (false);
+	return (first1 == last1 && first2 != last2);
 }
 
-}
 	// 3) Elements are compared using the given binary comparison function comp.
+	//  bool cmp(const Type1 &a, const Type2 &b); returns true if the first argument is less than the second.
 template< class InputIt1, class InputIt2, class Compare >
 bool lexicographical_compare( InputIt1 first1, InputIt1 last1,
                               InputIt2 first2, InputIt2 last2,
-                              Compare comp );
+                              Compare comp ) {
+	while (first1 != last1 && first2 != last2) {
+		if (comp(*first1, *first2))
+			return (true);
+		else if (comp(*first2, *first1))
+			return (false);
+		else {
+			first1++;
+			first2++;
+		}
+	}
+	return (first1 == last1 && first2 != last2);
+}
+
+}
 
 #endif

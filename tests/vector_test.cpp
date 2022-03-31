@@ -5,6 +5,8 @@
 
 #include <string>
 
+#include "equal.hpp"
+
 #include <iterator>
 // #include <map>
 #include <deque>
@@ -338,6 +340,26 @@ static void	non_member() {
 		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
 		v2.push_back("!");
 		std::cout << (v1 < v2) << (v1 > v2) << (v1 <= v2) << (v1 >= v2) << std::endl;
+	}
+	// lexicographical_compare (3)
+	{
+		bool (*comp)(std::string const &, std::string const &) = std::operator<;
+		NS::vector<std::string> v1;
+		NS::vector<std::string> v2;
+		std::cout << NS::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), comp) << std::endl;
+		v1.push_back("hello");
+		std::cout << NS::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), comp) << std::endl;
+		v2.push_back("hello");
+		std::cout << NS::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), comp) << std::endl;
+		v1.push_back("world");
+		std::cout << NS::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), comp) << std::endl;
+		v2.push_back("wOrld");
+		std::cout << NS::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), comp) << std::endl;
+		v2.pop_back();
+		v2.push_back("world");
+		std::cout << NS::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), comp) << std::endl;
+		v2.push_back("!");
+		std::cout << NS::lexicographical_compare(v1.begin(), v1.end(), v2.begin(), v2.end(), comp) << std::endl;
 	}
 }
 
