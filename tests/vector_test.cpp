@@ -258,7 +258,7 @@ static void	modifiers() {
 		print_vector(v);
 		std::cout << v.size() << " " << v.capacity() << std::endl;
 	}
-	// push_back
+	// push_back - pop_back
 	{
 		NS::vector<std::string> v;
 		v.push_back("hello");
@@ -268,6 +268,11 @@ static void	modifiers() {
 		v.reserve(42);
 		v.push_back("more");
 		std::cout << v.size() << " " << v.capacity() << std::endl;
+		print_vector(v);
+		v.pop_back();
+		print_vector(v);
+		v.pop_back();
+		v.pop_back();
 		print_vector(v);
 	}
 }

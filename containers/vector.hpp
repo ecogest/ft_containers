@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 10:45:10 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 10:58:48 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -414,7 +414,12 @@ public:
 	}
 	// [pop_back](https://en.cppreference.com/w/cpp/container/vector/pop_back)
 	// removes the last element
-	//
+	void pop_back() {
+		if (_size) {
+			_allocator.destroy(_array + _size -1);
+			_size--;
+		}
+	}
 	// [resize](https://en.cppreference.com/w/cpp/container/vector/resize)
 	// changes the number of elements stored
 	//
