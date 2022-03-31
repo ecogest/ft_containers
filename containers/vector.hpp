@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 13:22:51 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/03/31 14:07:03 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 namespace ft {
 
-	// 	vectorIterator should be a random access iterator to value_type
-	//  In the headers, it is a typedef to __gnu_cxx::__normal_iterator
+// 	vectorIterator should be a random access iterator to value_type
+//  In the headers, it is a typedef to __gnu_cxx::__normal_iterator
 template < class T >
 class vectorIterator // public ft::iterator<T>  // TODO: check if we can use it
 {
@@ -78,18 +78,6 @@ public:
 	// const_iterator	 LegacyRandomAccessIterator and LegacyContiguousIterator to const value_type (until C++20)
 	// ref: https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
 	// ref: https://en.cppreference.com/w/cpp/named_req/ContiguousIterator
-	// template < class U >
-	// class _iterator {
-	// public:
-	// 	typedef typename vector<U>::difference_type      difference_type;
-	// 	typedef U                                        value_type;
-	// 	typedef value_type*                              pointer;
-	// 	typedef value_type&                              reference;
-	// 	typedef typename std::random_access_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
-	// private:
-	// 	pointer	_ptr;
-	// public:
-	// };
 
 	typedef vectorIterator<T>                       iterator;
 	typedef vectorIterator<const T>                 const_iterator;
