@@ -131,27 +131,28 @@ static void capacity() {
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
 	v_3_hello_copy.reserve(9);
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
-	try {
-		v_3_hello_copy.reserve(v_3_hello_copy.max_size() - 1);
-	} catch (std::exception const &e) {
-		std::cout << e.what() << std::endl;
-	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
-	}
-	try {
-		v_3_hello_copy.reserve(v_3_hello_copy.max_size());
-	} catch (std::exception const &e) {
-		std::cout << e.what() << std::endl;
-		std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
-	}
-	try {
-		v_3_hello_copy.reserve(v_3_hello_copy.max_size() + 1);
-	} catch (std::exception const &e) {
-		std::cout << e.what() << std::endl;
-		std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
-	}
+	// works all right but valgrind does not like (even with std::)
+	// try {
+	// 	v_3_hello_copy.reserve(v_3_hello_copy.max_size() - 1);
+	// } catch (std::exception const &e) {
+	// 	std::cout << e.what() << std::endl;
+	// std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	// }
+	// try {
+	// 	v_3_hello_copy.reserve(v_3_hello_copy.max_size());
+	// } catch (std::exception const &e) {
+	// 	std::cout << e.what() << std::endl;
+	// 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	// }
+	// try {
+	// 	v_3_hello_copy.reserve(v_3_hello_copy.max_size() + 1);
+	// } catch (std::exception const &e) {
+	// 	std::cout << e.what() << std::endl;
+	// 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	// }
 	v_3_hello_copy.reserve(3);
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
-	}
+}
 
 
 /*
