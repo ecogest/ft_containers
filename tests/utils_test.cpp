@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 17:01:29 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 17:17:05 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,56 @@ static void test_pair() {
 	{
 		// Make_pair
 		std::cout << NS::make_pair(24, "hello").first << " " << NS::make_pair(42, "world").second << std::endl;
+	}
+	{
+		// Operators
+		NS::pair<int, std::string> p(42, "fortytwo");
+		NS::pair<int, std::string> q;
+		std::cout << (p == q) << " " << (p != q) << std::endl;
+		std::cout << (p <= q) << " " << (p >= q) << std::endl;
+		std::cout << (p < q) << " " << (p > q) << std::endl;
+	}
+	{
+		NS::pair<int, std::string> q(42, "fortytwo");
+		NS::pair<int, std::string> p;
+		std::cout << (p == q) << " " << (p != q) << std::endl;
+		std::cout << (p <= q) << " " << (p >= q) << std::endl;
+		std::cout << (p < q) << " " << (p > q) << std::endl;
+	}
+	{
+		NS::pair<int, std::string> p(42, "fortytwo");
+		NS::pair<int, std::string> q(24, "fortytwo");
+		std::cout << (p == q) << " " << (p != q) << std::endl;
+		std::cout << (p <= q) << " " << (p >= q) << std::endl;
+		std::cout << (p < q) << " " << (p > q) << std::endl;
+	}
+	{
+		NS::pair<int, std::string> p(42, "fortytwo");
+		NS::pair<int, std::string> q(442, "fortytwo");
+		std::cout << (p == q) << " " << (p != q) << std::endl;
+		std::cout << (p <= q) << " " << (p >= q) << std::endl;
+		std::cout << (p < q) << " " << (p > q) << std::endl;
+	}
+	{
+		NS::pair<int, std::string> p(42, "fortytwo");
+		NS::pair<int, std::string> q(42, "fortytwo");
+		std::cout << (p == q) << " " << (p != q) << std::endl;
+		std::cout << (p <= q) << " " << (p >= q) << std::endl;
+		std::cout << (p < q) << " " << (p > q) << std::endl;
+	}
+	{
+		NS::pair<int, std::string> p(42, "fortytwo");
+		NS::pair<int, std::string> q(42, "fortytw");
+		std::cout << (p == q) << " " << (p != q) << std::endl;
+		std::cout << (p <= q) << " " << (p >= q) << std::endl;
+		std::cout << (p < q) << " " << (p > q) << std::endl;
+	}
+	{
+		NS::pair<int, std::string> p(42, "fortytwo");
+		NS::pair<int, std::string> q(42, "luffy");
+		std::cout << (p == q) << " " << (p != q) << std::endl;
+		std::cout << (p <= q) << " " << (p >= q) << std::endl;
+		std::cout << (p < q) << " " << (p > q) << std::endl;
 	}
 }
 
