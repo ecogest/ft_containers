@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 17:17:05 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 17:20:46 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ static void	test_enable_if() {
 }
 
 static void test_is_integral() {
-	std::cout << std::boolalpha;
+	std::cout << "=== IS_INTEGRAL ===" << std::boolalpha << std::endl;
 	std::cout << ft::is_integral<bool>::value << std::endl;
 	std::cout << ft::is_integral<long long>::value << std::endl;
 	std::cout << !ft::is_integral<float>::value << std::endl;
+	std::cout << !ft::is_integral<std::string>::value << std::endl;
 	std::cout << std::noboolalpha;
 }
 
