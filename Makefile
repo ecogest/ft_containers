@@ -26,15 +26,11 @@ UTILS=$(addprefix utils/, \
 
 
 TESTS=$(addprefix tests/, \
-			enable_if_test.cpp \
-			equal_test.cpp \
-			iterator_test.cpp \
 			main.cpp \
-			make_pair_test.cpp \
 			map_test.cpp \
-			pair_test.cpp \
 			stack_test.cpp \
 			vector_test.cpp \
+			utils_test.cpp \
 			)
 
 all: $(NAME) std_containers

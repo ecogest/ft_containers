@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   utils_test.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/06 16:26:53 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 14:55:18 by mjacq            ###   ########.fr       */
+/*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
+/*   Updated: 2022/04/01 14:54:16 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.hpp"
+static void	test_enable_if() {
+}
 
-int	main(void) {
-	test_vector();
-	test_utils();
+static void test_equal() {
+}
 
-	return (0);
+static void test_pair() {
+}
+
+void	test_utils(void) {
+	test_enable_if();
+	test_equal();
+	test_pair();
 }

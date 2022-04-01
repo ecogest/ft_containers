@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:20:04 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/07 14:53:00 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 14:48:35 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 # include <iostream>
 
 void	test_vector(void);
+void	test_utils(void);
 
 #endif
