@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 17:48:28 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 17:57:34 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ public:
 template<
     class Key,
     class T,
-    class Compare = std::less<Key>,
+    class Compare = std::less<Key>, // check if allowed
     class Allocator = std::allocator<ft::pair<const Key, T> >
 > class map {
 public:
@@ -47,7 +47,111 @@ public:
 	 typedef mapIterator<const Key, const T>      	 const_iterator; // not sure
 	 typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
 	 typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
+
+	 //### Member classes
+	 //
+	 //[value_compare](https://en.cppreference.com/w/cpp/container/map/value_compare "cpp/container/map/value compare")
+	 //compares objects of type `value_type`  
+
+
+	 //### Member functions
+	 //
+	 //[(constructor)](https://en.cppreference.com/w/cpp/container/map/map "cpp/container/map/map")
+	 //constructs the `map`  
+
+	 //[(destructor)](https://en.cppreference.com/w/cpp/container/map/~map "cpp/container/map/~map")
+	 //destructs the `map`  
+
+	 //[operator=](https://en.cppreference.com/w/cpp/container/map/operator%3D "cpp/container/map/operator=")
+	 //assigns values to the container  
+
+	 //[get_allocator](https://en.cppreference.com/w/cpp/container/map/get_allocator "cpp/container/map/get allocator")
+	 //returns the associated allocator  
+
+
+	 //##### Element access
+	 //
+	 //[at](https://en.cppreference.com/w/cpp/container/map/at "cpp/container/map/at")
+	 //access specified element with bounds checking  
+
+	 //[operator[]](https://en.cppreference.com/w/cpp/container/map/operator_at "cpp/container/map/operator at")
+	 //access or insert specified element  
+
+
+	 //##### Iterators
+	 //
+	 //[begin](https://en.cppreference.com/w/cpp/container/map/begin "cpp/container/map/begin")
+	 //returns an iterator to the beginning  
+
+	 //[end](https://en.cppreference.com/w/cpp/container/map/end "cpp/container/map/end")
+	 //returns an iterator to the end  
+
+	 //[rbegin](https://en.cppreference.com/w/cpp/container/map/rbegin "cpp/container/map/rbegin")
+	 //returns a reverse iterator to the beginning  
+
+	 //[rend](https://en.cppreference.com/w/cpp/container/map/rend "cpp/container/map/rend")
+	 //returns a reverse iterator to the end  
+
+
+	 //##### Capacity
+	 //
+	 //[empty](https://en.cppreference.com/w/cpp/container/map/empty "cpp/container/map/empty")
+	 //checks whether the container is empty  
+
+	 //[size](https://en.cppreference.com/w/cpp/container/map/size "cpp/container/map/size")
+	 //returns the number of elements  
+
+	 //[max_size](https://en.cppreference.com/w/cpp/container/map/max_size "cpp/container/map/max size")
+	 //returns the maximum possible number of elements  
+
+
+	 //##### Modifiers
+	 //
+	 //[clear](https://en.cppreference.com/w/cpp/container/map/clear "cpp/container/map/clear")
+	 //clears the contents  
+
+	 //[insert](https://en.cppreference.com/w/cpp/container/map/insert "cpp/container/map/insert")
+	 //inserts elements or nodes (since C++17)  
+
+	 //[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
+	 //erases elements  
+
+	 //[swap](https://en.cppreference.com/w/cpp/container/map/swap "cpp/container/map/swap")
+	 //swaps the contents  
+
+
+	 //##### Lookup
+	 //
+	 //[count](https://en.cppreference.com/w/cpp/container/map/count "cpp/container/map/count")
+	 //returns the number of elements matching specific key  
+
+	 //[find](https://en.cppreference.com/w/cpp/container/map/find "cpp/container/map/find")
+	 //finds element with specific key  
+
+	 //[equal_range](https://en.cppreference.com/w/cpp/container/map/equal_range "cpp/container/map/equal range")
+	 //returns range of elements matching a specific key  
+
+	 //[lower_bound](https://en.cppreference.com/w/cpp/container/map/lower_bound "cpp/container/map/lower bound")
+	 //returns an iterator to the first element _not less_ than the given key  
+
+	 //[upper_bound](https://en.cppreference.com/w/cpp/container/map/upper_bound "cpp/container/map/upper bound")
+	 //returns an iterator to the first element _greater_ than the given key  
+
+
+	 //##### Observers
+	 //
+	 //[key_comp](https://en.cppreference.com/w/cpp/container/map/key_comp "cpp/container/map/key comp")
+	 //returns the function that compares keys  
+
+	 //[value_comp](https://en.cppreference.com/w/cpp/container/map/value_comp "cpp/container/map/value comp")
+	 //returns the function that compares keys in objects of type value_type  
+
 };
+
+ //### Non-member functions
+ //
+ //[operators](https://en.cppreference.com/w/cpp/container/map/operator_cmp "cpp/container/map/operator cmp")
+ //lexicographically compares the values in the map  
 
 }
 #endif
