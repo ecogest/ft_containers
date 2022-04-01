@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 16:52:06 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 17:01:29 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ static void test_pair() {
 		NS::pair<int, std::string> q;
 		q = p;
 		std::cout << q.first << " " << q.second << std::endl;
+	}
+	{
+		// Make_pair
+		std::cout << NS::make_pair(24, "hello").first << " " << NS::make_pair(42, "world").second << std::endl;
 	}
 }
 
