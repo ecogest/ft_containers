@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 16:46:48 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 16:52:06 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ static void test_pair() {
 
 		// 9) Copy constructor is implicitly declared (until C++11) defaulted, and is constexpr
 		NS::pair<float, const char *> q(p);
+		std::cout << q.first << " " << q.second << std::endl;
+	}
+	{
+		// Assign
+		NS::pair<int, std::string> p(42, "fortytwo");
+		NS::pair<int, std::string> q;
+		q = p;
 		std::cout << q.first << " " << q.second << std::endl;
 	}
 }

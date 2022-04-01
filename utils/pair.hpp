@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:16:16 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 16:40:22 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 16:55:41 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,26 @@ public:
 
 	//[operator=](https://en.cppreference.com/w/cpp/utility/pair/operator%3D "cpp/utility/pair/operator=")
 	//assigns the contents
+	// 1) Copy assignment operator. Replaces the contents with a copy of the contents of other.
+	// The assignment operator is implicitly declared. (until c++11)
+	// Using this assignment operator makes the program ill-formed if either T1 or T2 is a const-qualified type,
+	// or a reference type, or a class type with an inaccessible copy assignment operator, or an array type of such class.
+	// Example of explicit definition:
+	// pair& operator=( const pair& other ) {
+	// 	if (&other == this)
+	// 		return (*this);
+	// 	first = other.first;
+	// 	second = other.second;
+	// 	return (*this);
+	// }
 };
 
 //### Non-member functions
 //[make_pair](https://en.cppreference.com/w/cpp/utility/pair/make_pair "cpp/utility/pair/make pair")
 //creates a `pair` object of type, defined by the argument types
-//
+
 //[operators](https://en.cppreference.com/w/cpp/utility/pair/operator_cmp "cpp/utility/pair/operator cmp")
-//
 //lexicographically compares the values in the pair
-//(function template)
 
 }
 
