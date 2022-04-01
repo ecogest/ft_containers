@@ -188,10 +188,47 @@ static void iterators() {
 		for (NS::vector<int>::iterator it = v.begin(); it != v.end(); it++)
 			std::cout << *it << std::endl;
 
-		// for (NS::vector<int>::const_iterator it = v.begin(); it != v.end(); it++);
+		for (NS::vector<int>::const_iterator it = v.begin(); it != v.end(); it++)
+			std::cout << *it << std::endl;
 
-		// for (NS::vector<int>::const_iterator it = v.begin(); it != v.end(); it++)
-		// 	std::cout << *it << std::endl;
+		NS::vector<int>::iterator it = v.begin();
+		NS::vector<int>::const_iterator it_const = it;
+		std::cout << (it == it) << " " << (it_const == it_const) << std::endl;
+		std::cout << (it == it_const) << " " << (it_const == it) << std::endl;
+		std::cout << (it != it) << " " << (it_const != it_const) << std::endl;
+		std::cout << (it != it_const) << " " << (it_const != it) << std::endl;
+		std::cout << (it <= it) << std::endl;
+		std::cout << (it <= it_const) << std::endl;
+		std::cout << (it < it) << std::endl;
+		std::cout << (it < it_const) << std::endl;
+		std::cout << *(it + 2) << std::endl;
+		std::cout << *(it_const + 2) << std::endl;
+		std::cout << *(it_const + 2) << std::endl;
+		it++;
+		std::cout << (it == it) << " " << (it_const == it_const) << std::endl;
+		std::cout << (it == it_const) << " " << (it_const == it) << std::endl;
+		std::cout << (it != it) << " " << (it_const != it_const) << std::endl;
+		std::cout << (it != it_const) << " " << (it_const != it) << std::endl;
+		std::cout << (it <= it) << std::endl;
+		std::cout << (it <= it_const) << std::endl;
+		std::cout << (it < it) << std::endl;
+		std::cout << (it < it_const) << std::endl;
+		std::cout << (it >= it) << std::endl;
+		std::cout << (it >= it_const) << std::endl;
+		std::cout << (it > it) << std::endl;
+		std::cout << (it > it_const) << std::endl;
+		it_const++;
+		std::cout << it[0] << " " << it_const[0] << std::endl;
+		std::cout << it[1] << " " << it_const[1] << std::endl;
+		it--;
+		it_const--;
+		std::cout << it[0] << " " << it_const[0] << std::endl;
+		std::cout << it[1] << " " << it_const[1] << std::endl;
+
+		// THIS SHOULD NOT COMPILE (const_iterator -> iterator)
+		// NS::vector<int>::const_iterator it_const = v.begin();
+		// NS::vector<int>::iterator it = it_const;
+		// (void)it;
 
 		// operator-
 		std::cout << (v.begin() - v.end()) << " " << (v.end() - v.begin()) << std::endl;
@@ -216,12 +253,16 @@ static void iterators() {
 		NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
 		for (NS::vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); it++)
 			std::cout << *it << std::endl;
-		// NS::reverse_iterator<NS::vector<int>::iterator> it(v.end());
-		// NS::reverse_iterator<NS::vector<int>::iterator> begin(v.begin());
-		// while (it != begin) {
-		// 	std::cout << *it << std::endl;
-		// 	it++;
-		// }
+		for (NS::vector<int>::const_reverse_iterator it = v.rbegin(); it != v.rend(); it++)
+			std::cout << *it << std::endl;
+		NS::reverse_iterator<NS::vector<int>::iterator> it(v.end());
+		it++;
+		std::cout << *it << std::endl;
+		it++;
+		std::cout << it[1] << std::endl;
+		it--;
+		std::cout << *(it + 1) << std::endl;
+		// std::cout << (it <= it + 1) << std::endl;
 	}
 }
 
