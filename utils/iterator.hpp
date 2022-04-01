@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:14:19 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 18:01:30 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 14:32:37 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,28 +115,28 @@ bool operator==(const reverse_iterator<Iterator1>& x, const reverse_iterator<Ite
 }
 
 template <class Iterator1, class Iterator2>
-bool operator<(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {
-	return (x.base() < y.base());
-}
-
-template <class Iterator1, class Iterator2>
 bool operator!=(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {
 	return (x.base() != y.base());
 }
 
 template <class Iterator1, class Iterator2>
-bool operator>(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {
+bool operator<(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {
 	return (x.base() > y.base());
 }
 
 template <class Iterator1, class Iterator2>
+bool operator>(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {
+	return (x.base() < y.base());
+}
+
+template <class Iterator1, class Iterator2>
 bool operator>=(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {
-	return (x.base() >= y.base());
+	return (x.base() <= y.base());
 }
 
 template <class Iterator1, class Iterator2>
 bool operator<=(const reverse_iterator<Iterator1>& x, const reverse_iterator<Iterator2>& y) {
-	return (x.base() <= y.base());
+	return (x.base() >= y.base());
 }
 
 template< class Iterator >
