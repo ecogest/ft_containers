@@ -6,11 +6,13 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 15:36:24 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 16:08:32 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "type_traits.hpp"
+#include "pair.hpp"
+#include <utility> // pair
 #include <iostream>
 
 #define DEBUG_TEST true
@@ -31,16 +33,12 @@ static void test_is_integral() {
 	std::cout << std::noboolalpha;
 }
 
-
-static void test_equal() {
-}
-
 static void test_pair() {
+	NS::pair<int, std::string> p;
 }
 
 void	test_utils(void) {
 	test_enable_if();
 	test_is_integral();
-	test_equal();
 	test_pair();
 }
