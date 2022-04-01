@@ -1,4 +1,4 @@
 #include <map>
 
-void	map_test(void) {
+void	test_map(void) {
 }
