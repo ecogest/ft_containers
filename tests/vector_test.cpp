@@ -188,6 +188,11 @@ static void iterators() {
 		for (NS::vector<int>::iterator it = v.begin(); it != v.end(); it++)
 			std::cout << *it << std::endl;
 
+		// for (NS::vector<int>::const_iterator it = v.begin(); it != v.end(); it++);
+
+		// for (NS::vector<int>::const_iterator it = v.begin(); it != v.end(); it++)
+		// 	std::cout << *it << std::endl;
+
 		// operator-
 		std::cout << (v.begin() - v.end()) << " " << (v.end() - v.begin()) << std::endl;
 		// operator of comparison
@@ -209,13 +214,14 @@ static void iterators() {
 		// reverse_iterator
 		int	arr[] = {0, 2, 4, 8};
 		NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
-		NS::reverse_iterator<NS::vector<int>::iterator> it(v.end());
-		NS::reverse_iterator<NS::vector<int>::iterator> begin(v.begin());
-
-		while (it != begin) {
+		for (NS::vector<int>::reverse_iterator it = v.rbegin(); it != v.rend(); it++)
 			std::cout << *it << std::endl;
-			it++;
-		}
+		// NS::reverse_iterator<NS::vector<int>::iterator> it(v.end());
+		// NS::reverse_iterator<NS::vector<int>::iterator> begin(v.begin());
+		// while (it != begin) {
+		// 	std::cout << *it << std::endl;
+		// 	it++;
+		// }
 	}
 }
 

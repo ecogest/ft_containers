@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 16:37:29 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 09:35:11 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,14 +243,24 @@ public:
 	// [end](https://en.cppreference.com/w/cpp/container/vector/end)
 	// returns an iterator to the end (actually past the end)
 	iterator end() { return (iterator(_array + _size)); }
-	const_iterator end() const { return (const_iterator(_array + _size));};
+	const_iterator end() const { return (const_iterator(_array + _size)); }
 
 	// [rbegin](https://en.cppreference.com/w/cpp/container/vector/rbegin)
 	// returns a reverse iterator to the beginning
-	//
+	reverse_iterator rbegin() {
+		return (reverse_iterator(end()));
+	}
+	const_reverse_iterator rbegin() const {
+		return (const_reverse_iterator(end()));
+	}
 	// [rend](https://en.cppreference.com/w/cpp/container/vector/rend)
 	// returns a reverse iterator to the end
-	//
+	reverse_iterator rend() {
+		return (reverse_iterator(begin()));
+	}
+	const_reverse_iterator rend() const {
+		return (const_reverse_iterator(begin()));
+	}
 	// ##### Capacity //////////////////////////////////////////////////////////
 	//
 	// [empty](https://en.cppreference.com/w/cpp/container/vector/empty)
