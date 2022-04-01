@@ -17,7 +17,7 @@ CONTAINERS=$(addprefix containers/, \
 
 UTILS=$(addprefix utils/, \
 			type_traits.hpp \
-			equal.hpp \
+			lexicographical_compare.hpp \
 			iterator.hpp \
 			make_pair.hpp \
 			pair.hpp \

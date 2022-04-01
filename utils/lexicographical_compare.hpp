@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   equal.hpp                                          :+:      :+:    :+:   */
+/*   lexicographical_compare.hpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:15:28 by mjacq             #+#    #+#             */
-/*   Updated: 2022/03/31 14:00:55 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 15:38:40 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EQUAL_HPP
-# define EQUAL_HPP
+#ifndef LEXICOGRAPHICAL_COMPARE_HPP
+# define LEXICOGRAPHICAL_COMPARE_HPP
 
 //NOTE: tested in vector_test
 
