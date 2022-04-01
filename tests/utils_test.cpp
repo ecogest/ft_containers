@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 16:08:32 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 16:46:48 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,24 @@ static void test_is_integral() {
 }
 
 static void test_pair() {
-	NS::pair<int, std::string> p;
+	{
+		// 1) Default constructor. Value-initializes both elements of the pair, first and second.
+		NS::pair<float, const char *> p;
+		p.first = 42.42; p.second = "fortytwo";
+		std::cout << p.first << " " << p.second << std::endl;
+
+		// 2) Initializes first with x and second with y.
+		NS::pair<float, const char *> pp(42.42, "fortytwo");
+		std::cout << pp.first << " " << pp.second << std::endl;
+
+		// 5) Initializes first with p.first and second with p.second.
+		NS::pair<int, std::string> l(p);
+		std::cout << l.first << " " << l.second << std::endl;
+
+		// 9) Copy constructor is implicitly declared (until C++11) defaulted, and is constexpr
+		NS::pair<float, const char *> q(p);
+		std::cout << q.first << " " << q.second << std::endl;
+	}
 }
 
 void	test_utils(void) {
