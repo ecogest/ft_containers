@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:35:45 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 14:16:34 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 14:58:31 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,6 @@
 // # include <type_traits>
 
 namespace ft {
-
-// template<bool B, class T = void>
-// struct enable_if {};
-//
-// template<class T>
-// struct enable_if<true, T> { typedef T type; };
-//
-// template<class T, class U>
-// struct is_same { enum { value = 0 }; };
-//
-// template<class T>
-// struct is_same<T, T> { enum { value = 1 }; };
-//
-// template< class T >
-// struct remove_const                { typedef T type; };
-//
-// template< class T >
-// struct remove_const<const T>       { typedef T type; };
-//
-// template<bool B, class T, class F>
-// struct conditional { typedef T type; };
-//
-// template<class T, class F>
-// struct conditional<false, T, F> { typedef F type; };
-//
-// template <typename T>
-// struct is_const: public is_same<T, const T> { };
 
 // 	Satisfies: LegacyRandomAccessIterator and LegacyContiguousIterator to value_type
 //  In the headers, it is a typedef to __gnu_cxx::__normal_iterator

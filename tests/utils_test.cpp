@@ -6,11 +6,21 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 14:46:33 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 14:54:16 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 15:05:04 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "enable_if.hpp"
+#include <iostream>
+
+#define DEBUG_TEST true
+
+ft::enable_if<DEBUG_TEST>::type	echo_debug(void) {
+	std::cout << "DEBUG" << std::endl;
+}
+
 static void	test_enable_if() {
+	echo_debug();
 }
 
 static void test_equal() {
