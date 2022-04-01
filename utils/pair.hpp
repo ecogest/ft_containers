@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:16:16 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 16:58:56 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/01 17:03:26 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,23 @@ pair<T1,T2> make_pair( T1 t, T2 u ) {
 
 //[operators](https://en.cppreference.com/w/cpp/utility/pair/operator_cmp "cpp/utility/pair/operator cmp")
 //lexicographically compares the values in the pair
+template< class T1, class T2 >
+bool operator==( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
+
+template< class T1, class T2 >
+bool operator==( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
+
+template< class T1, class T2 >
+bool operator<( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
+
+template< class T1, class T2 >
+bool operator<=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
+
+template< class T1, class T2 >
+bool operator>( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
+
+template< class T1, class T2 >
+bool operator>=( const pair<T1,T2>& lhs, const pair<T1,T2>& rhs );
 
 }
 
