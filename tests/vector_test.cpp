@@ -22,7 +22,7 @@ void	print_vector(vec v) {
 ** ============================== CONSTRUCTORS ============================== **
 */
 
-static void constructors() {
+void constructors() {
 	// 1) Default constructor
 	NS::vector<int>	v_int;
 
@@ -70,7 +70,7 @@ static void constructors() {
 ** ============================= Element access ============================= **
 */
 
-static void element_access() {
+void element_access() {
 	NS::vector<float>	v_10float(10);
 	std::string			hello("hello");
 	NS::vector<std::string>	v_3_hello(3, hello);
@@ -113,7 +113,7 @@ static void element_access() {
 ** ================================ Capacity ================================ **
 */
 
-static void capacity() {
+void capacity() {
 	NS::vector<int>	v_int;
 	std::cout << "cap:" << v_int.capacity() << ",size:" << v_int.size() << ",max_size:" << v_int.max_size() << ",empty:" << v_int.empty() << std::endl;
 
@@ -159,7 +159,7 @@ static void capacity() {
 ** =============================== Operator= ================================ **
 */
 
-static void	operator_eq() {
+void	operator_eq() {
 	std::string	hello("hello");
 	NS::vector<std::string>	v_3_hello(3, hello);
 	NS::vector<std::string>	v_3_hello_copy(v_3_hello);
@@ -180,7 +180,7 @@ static void	operator_eq() {
 ** =============================== Iterators ================================ **
 */
 
-static void iterators() {
+void iterators() {
 	{
 		int	arr[] = {0, 2, 4, 8};
 		NS::vector<int>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
@@ -285,7 +285,7 @@ static void iterators() {
 ** =============================== Modifiers ================================ **
 */
 
-static void	modifiers() {
+void	modifiers() {
 	std::string	arr[] = { "hello", "world", "42" };
 	NS::vector<std::string>	vector_of_strings(arr, arr + sizeof(arr) / sizeof(arr[0]));
 
@@ -315,7 +315,8 @@ static void	modifiers() {
 		vec.insert(vec.begin(), 1, "hi");
 		vec.insert(vec.begin() + 2, 4, "xx");
 		print_vector(vec);
-		std::cout << vec.size() << " " << vec.capacity() << std::endl;
+		std::cout << vec.size() << std::endl;
+		// std::cout << vec.size() << " " << vec.capacity() << std::endl;  // capacity behaviour is implementation dependant
 	}
 	// Insert (4): void insert( iterator pos, InputIt first, InputIt last );
 	{
@@ -416,7 +417,7 @@ static void	modifiers() {
 	}
 }
 
-static void	non_member() {
+void	non_member() {
 	// operator==, !=
 	{
 		std::string	arr[] = { "hello", "world", "42", "!" };
