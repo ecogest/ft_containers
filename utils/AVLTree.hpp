@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/04 19:31:56 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 10:31:32 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,40 +22,24 @@ template <class Data>
 struct AVLNode {
 	typedef AVLNode	Node;
 
-	Data		_data;
-	Node		*_left;
-	Node		*_right;
-	Node		*_parent;
+	Data		data;
+	Node		*left;
+	Node		*right;
+	Node		*parent;
 
-	AVLNode(void): _data(), _left(NULL), _right(NULL) { }
-	AVLNode(const Data &data): _data(data), _left(NULL), _right(NULL) { }
-	AVLNode(Node const &copy): _data(), _left(copy._left), _right(copy._right) { }
+	AVLNode(void): data(), left(NULL), right(NULL) { }
+	AVLNode(const Data &data): data(data), left(NULL), right(NULL) { }
+	AVLNode(Node const &copy): data(), left(copy.left), right(copy.right) { }
 	Node	&operator=(Node const &copy) {
 		if (this == &copy)
 			return (*this);
-		_data = copy._data;
-		_left = copy._left;
-		_right = copy._right;
+		data = copy.data;
+		left = copy.left;
+		right = copy.right;
 		return (*this);
 	}
 	virtual ~AVLNode() { }
 
-	void	insert(Data const &data) {
-		Node	**anode = NULL;
-		Node	*node = this;
-		Node	*parent = NULL;
-
-		while (node) {
-			parent = node;
-			if (data < node->_data)
-				anode = &node->_left;
-			else
-				anode = &node->_right;
-			node = *anode;
-		}
-		*anode = new Node(data);
-		(*anode)->_parent = parent;
-	}
 };
 
 template <class Data>
@@ -64,7 +48,7 @@ public:
 
 	typedef AVLNode<Data>	Node;
 
-	//CANONICAL FORM ///////////////////////////////////////////////////////////
+	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
 	AVLTree(void): _head(NULL) { }
 	AVLTree(AVLTree const &copy): _head(copy.head) { }
@@ -72,29 +56,44 @@ public:
 		if (this == &copy)
 			return (*this);
 		_head = copy._head;
+		return (*this);
 	}
 	virtual ~AVLTree(void) { }
 
+	// METHODS /////////////////////////////////////////////////////////////////
 	void		print_infix(void) const {
 		if (_head)
-			_print_infix_recurse(_head);
+			_print_infix(_head);
 	}
 
 	void	insert(Data const &data) {
 		if (!_head)
 			_head = new Node(data);
-		else
-			_head->insert(data);
+		else {
+			Node	*node = _head;
+			Node	*parent = NULL;
+			Node	**anode = NULL;
+			while (node) {
+				parent = node;
+				if (data < node->data)
+					anode = &node->left;
+				else
+					anode = &node->right;
+				node = *anode;
+			}
+			*anode = new Node(data);
+			(*anode)->parent = parent;
+		}
 	}
 
 private:
-
-	void	_print_infix_recurse(Node *node) const {
+	// PRIVATE METHODS /////////////////////////////////////////////////////////
+	void	_print_infix(Node *node) const {
 		if (!node)
 			return ;
-		_print_infix_recurse(node->_left);
-		std::cout << node->_data << std::endl;
-		_print_infix_recurse(node->_right);
+		_print_infix(node->left);
+		std::cout << node->data << std::endl;
+		_print_infix(node->right);
 	}
 
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
