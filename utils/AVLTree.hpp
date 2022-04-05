@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 14:53:28 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 15:43:02 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,15 @@ public:
 			for (size_t i = 0; i < output_vector.size(); i++)
 				std::cout << output_vector[i] << std::endl;
 		}
+	}
+
+	size_t	height(void) {
+		return(height(_head));
+	}
+	size_t	height(Node *node) {
+		if (!node)
+			return (0);
+		return (1 + std::max(height(node->left), height(node->right)));
 	}
 
 	void	insert(Data const &data) {

@@ -8,6 +8,7 @@ void	testAVLTree(void) {
 	tree.insert("d");
 	tree.insert("a");
 	tree.insert("b");
+	std::cout << "height: " << tree.height() << std::endl;
 	std::cout << "-------------------" << std::endl;
 	tree.print_infix();
 	tree.print_2d();
@@ -19,6 +20,7 @@ void	testAVLTree(void) {
 	tree.insert("b");
 	tree.insert("c");
 	tree.insert("d");
+	std::cout << "height: " << tree.height() << std::endl;
 	tree.print_infix();
 	tree.print_2d();
 	std::cout << "-------------------" << std::endl;
@@ -32,6 +34,7 @@ void	testAVLTree(void) {
 	tree.insert(32);
 	tree.insert(12);
 	tree.insert(42);
+	std::cout << "height: " << tree.height() << std::endl;
 	tree.print_infix();
 	tree.print_2d();
 	std::cout << "-------------------" << std::endl;
@@ -45,6 +48,7 @@ void	testAVLTree(void) {
 	tree.insert(32000);
 	tree.insert(12000);
 	tree.insert(42000);
+	std::cout << "height: " << tree.height() << std::endl;
 	tree.print_infix();
 	tree.print_2d();
 	std::cout << "-------------------" << std::endl;
