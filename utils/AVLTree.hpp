@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 17:24:03 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 17:40:34 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,16 @@ public:
 		// LEFT IMBALANCE / RIGHT ROTATION
 		else if (height(node->left) > height(node->right) + 1 && height(node->left->left) >= height(node->left->right))
 			node = right_rotate(node);
+		// RL IMBALANCE / RL ROTATION
+		else if (height(node->right) > height(node->left) + 1 && height(node->right->right) < height(node->right->left)) {
+			right_rotate(node->right);
+			node = left_rotate(node);
+		}
+		// LR IMBALANCE / LR ROTATION
+		else if (height(node->left) > height(node->right) + 1 && height(node->left->left) < height(node->left->right)) {
+			left_rotate(node->left);
+			node = right_rotate(node);
+		}
 
 		if (node->parent)
 			balance(node->parent);
