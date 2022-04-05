@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 12:54:08 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 13:43:10 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,23 @@ public:
 		std::cout << node->data << std::endl;
 		_print_infix(node->right);
 	}
+	static size_t	utf8_len(std::string s) {
+		size_t	i = 0;
+		size_t len = 0;
+		unsigned char c;
+		while ((c = s[i])) {
+			if (c <= 0x7F)
+				i++;
+			else if (c <= 0xDF)
+				i += 2;
+			else if (c <= 0xEF)
+				i += 3;
+			else
+				i += 4;
+			len++;
+		}
+		return (len);
+	}
 	void	_print_2d(Node *node, ft::vector<std::string> &v, size_t level) const {
 		if (!node)
 			return ;
@@ -113,15 +130,15 @@ public:
 
 		if (v.size() == level)
 			v.push_back("");
-		if (node->left)
-			data = std::string(".") + data;
 		_print_2d(node->left, v, level + 1);
 		if ((!node->parent || node == node->parent->left) && level + 1 < v.size())
-			left_padding = std::string(v[level + 1].size() + 1 - v[level].size(), ' ');
+			left_padding = std::string(utf8_len(v[level + 1])  - utf8_len(v[level]), ' ');
 		else
-			left_padding = std::string(v[level - 1].size() + 1 - v[level].size(), ' ');
+			left_padding = std::string(utf8_len(v[level - 1])  - utf8_len(v[level]), ' ');
 		if (node->right)
-			data = data + ".";
+			data = data + "⬎";
+		if (node->left)
+			data = std::string("⬐") + data;
 		v[level] = v[level] + left_padding + data;
 		_print_2d(node->right, v, level + 1);
 	}
