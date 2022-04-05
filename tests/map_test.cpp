@@ -20,9 +20,34 @@ void	testAVLTree(void) {
 	tree.insert("b");
 	tree.insert("c");
 	tree.insert("d");
+	tree.insert("e");
+	tree.insert("f");
+	tree.insert("g");
+	tree.insert("h");
+	tree.insert("i");
 	std::cout << "height: " << tree.height() << std::endl;
 	tree.print_infix();
 	tree.print_2d();
+	std::cout << std::endl;
+	tree.print_infix();
+	std::cout << "-------------------" << std::endl;
+	}
+	{
+	ft::AVLTree<std::string>	tree;
+	tree.insert("i");
+	tree.insert("h");
+	tree.insert("g");
+	tree.insert("f");
+	tree.insert("e");
+	tree.insert("d");
+	tree.insert("c");
+	tree.insert("b");
+	tree.insert("a");
+	std::cout << "height: " << tree.height() << std::endl;
+	tree.print_infix();
+	tree.print_2d();
+	std::cout << std::endl;
+	tree.print_infix();
 	std::cout << "-------------------" << std::endl;
 	}
 	{

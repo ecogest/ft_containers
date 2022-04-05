@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 15:43:02 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 16:36:06 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,31 @@ public:
 		return (1 + std::max(height(node->left), height(node->right)));
 	}
 
+	Node	**get_node_root(Node *node) {
+		Node	**root;
+		if (node == _head)
+			root = &_head;
+		else if (node == node->parent->left)
+			root = &node->parent->left;
+		else
+			root = &node->parent->right;
+		return (root);
+	}
+	Node	*left_rotate(Node *node) {
+		Node	**root = get_node_root(node);
+		*root = node->right;
+		node->right = (*root)->left;
+		(*root)->left = node;
+		return (*root);
+	}
+	void	balance(Node *node) {
+		// RIGHT IMBALANCE / LEFT_ROTATION
+		if (height(node->right) > height(node->left) + 1 && height(node->right->right) >= height(node->right->left))
+			node = left_rotate(node);
+
+		if (node->parent)
+			balance(node->parent);
+	}
 	void	insert(Data const &data) {
 		if (!_head)
 			_head = new Node(data);
@@ -105,6 +130,8 @@ public:
 			}
 			*anode = new Node(data);
 			(*anode)->parent = parent;
+			if (parent->parent)
+				balance(parent->parent);
 		}
 	}
 
