@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 13:54:27 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 14:53:28 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <iostream>
 # include <sstream>
 # include "vector.hpp"
+# include <algorithm>
 
 namespace ft {
 
@@ -71,6 +72,7 @@ public:
 		if (_head) {
 			ft::vector<std::string> output_vector;
 			_print_2d(_head, output_vector, 0);
+			std::cout << std::endl;
 			for (size_t i = 0; i < output_vector.size(); i++)
 				std::cout << output_vector[i] << std::endl;
 		}
@@ -106,7 +108,7 @@ public:
 		std::cout << "[" << node->data << "]  ";
 		_print_infix(node->right);
 	}
-	static size_t	utf8_len(std::string s) {
+	static size_t	_utf8_len(std::string s) {
 		size_t	i = 0, len = 0;
 		unsigned char c;
 		while ((c = s[i])) {
@@ -115,21 +117,21 @@ public:
 		}
 		return (len);
 	}
+	static bool _utf8_cmp(std::string a, std::string b) {
+		return _utf8_len(a) < _utf8_len(b);
+	}
 	void	_print_2d(Node *node, ft::vector<std::string> &v, size_t level) const {
 		if (!node)
 			return ;
 		std::string	left_padding(" ");
 		std::ostringstream	oss;
-		oss << node->data;
+		oss << '|' << node->data << '|';
 		std::string data(oss.str());
 
 		if (v.size() == level)
 			v.push_back("");
 		_print_2d(node->left, v, level + 1);
-		if ((!node->parent || node == node->parent->left) && level + 1 < v.size())
-			left_padding = std::string(utf8_len(v[level + 1])  - utf8_len(v[level]), ' ');
-		else
-			left_padding = std::string(utf8_len(v[level - 1])  - utf8_len(v[level]), ' ');
+		left_padding = std::string(_utf8_len(*std::max_element(v.begin(), v.end(), _utf8_cmp))  - _utf8_len(v[level]), ' ');
 		if (node->right)
 			data = data + "⬎";
 		if (node->left)

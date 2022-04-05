@@ -36,6 +36,19 @@ void	testAVLTree(void) {
 	tree.print_2d();
 	std::cout << "-------------------" << std::endl;
 	}
+	{
+	ft::AVLTree<int>	tree;
+	tree.insert(1000);
+	tree.insert(-1000);
+	tree.insert(-4000);
+	tree.insert(-2000);
+	tree.insert(32000);
+	tree.insert(12000);
+	tree.insert(42000);
+	tree.print_infix();
+	tree.print_2d();
+	std::cout << "-------------------" << std::endl;
+	}
 }
 
 void	test_map(void) {
