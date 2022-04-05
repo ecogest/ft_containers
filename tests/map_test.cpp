@@ -4,13 +4,20 @@
 void	testAVLTree(void) {
 	{
 	ft::AVLTree<std::string>	tree;
-	// ft::AVLTree<int>	tree;
 
-	// tree.insert(1);
 	tree.insert("c");
 	tree.insert("d");
 	tree.insert("a");
 	tree.insert("b");
+	// tree.print_infix();
+	tree.print_2d();
+	}
+	{
+	ft::AVLTree<std::string>	tree;
+	tree.insert("a");
+	tree.insert("b");
+	tree.insert("c");
+	tree.insert("d");
 	// tree.print_infix();
 	tree.print_2d();
 	}

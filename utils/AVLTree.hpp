@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 13:43:10 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 13:47:45 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,10 @@ public:
 		_print_infix(node->right);
 	}
 	static size_t	utf8_len(std::string s) {
-		size_t	i = 0;
-		size_t len = 0;
+		size_t	i = 0, len = 0;
 		unsigned char c;
 		while ((c = s[i])) {
-			if (c <= 0x7F)
-				i++;
-			else if (c <= 0xDF)
-				i += 2;
-			else if (c <= 0xEF)
-				i += 3;
-			else
-				i += 4;
+			i += 1 + (c > 0x7F) + (c > 0xDF) + (c > 0xEF);
 			len++;
 		}
 		return (len);
