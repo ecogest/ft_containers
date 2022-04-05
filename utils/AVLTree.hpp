@@ -32,15 +32,16 @@ class AVLTree {
 		Node		*right;
 		Node		*parent;
 
-		AVLNode(void): data(), left(NULL), right(NULL) { }
-		AVLNode(const Data &data): data(data), left(NULL), right(NULL) { }
-		AVLNode(Node const &copy): data(copy.data), left(copy.left), right(copy.right) { }
+		AVLNode(void): data(), left(NULL), right(NULL), parent(NULL) { }
+		AVLNode(const Data &data): data(data), left(NULL), right(NULL), parent(NULL) { }
+		AVLNode(Node const &copy): data(copy.data), left(copy.left), right(copy.right), parent(copy.parent) { }
 		Node	&operator=(Node const &copy) {
 			if (this == &copy)
 				return (*this);
 			data = copy.data;
 			left = copy.left;
 			right = copy.right;
+			parent = copy.parent;
 			return (*this);
 		}
 		virtual ~AVLNode() { }
