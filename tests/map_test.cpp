@@ -28,8 +28,6 @@ void	testAVLTree(void) {
 	std::cout << "height: " << tree.height() << std::endl;
 	tree.print_infix();
 	tree.print_2d();
-	std::cout << std::endl;
-	tree.print_infix();
 	std::cout << "-------------------" << std::endl;
 	}
 	{
@@ -46,8 +44,6 @@ void	testAVLTree(void) {
 	std::cout << "height: " << tree.height() << std::endl;
 	tree.print_infix();
 	tree.print_2d();
-	std::cout << std::endl;
-	tree.print_infix();
 	std::cout << "-------------------" << std::endl;
 	}
 	{

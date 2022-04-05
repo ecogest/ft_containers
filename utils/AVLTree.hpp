@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 16:36:06 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 17:24:03 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,33 @@ public:
 			root = &node->parent->right;
 		return (root);
 	}
+	// Right son takes place of the node
 	Node	*left_rotate(Node *node) {
 		Node	**root = get_node_root(node);
 		*root = node->right;
 		node->right = (*root)->left;
 		(*root)->left = node;
+		(*root)->parent = node->parent;
+		node->parent = (*root);
+		return (*root);
+	}
+	// Left son takes place of the node
+	Node	*right_rotate(Node *node) {
+		Node	**root = get_node_root(node);
+		*root = node->left;
+		node->left = (*root)->right;
+		(*root)->right = node;
+		(*root)->parent = node->parent;
+		node->parent = (*root);
 		return (*root);
 	}
 	void	balance(Node *node) {
-		// RIGHT IMBALANCE / LEFT_ROTATION
+		// RIGHT IMBALANCE / LEFT ROTATION
 		if (height(node->right) > height(node->left) + 1 && height(node->right->right) >= height(node->right->left))
 			node = left_rotate(node);
+		// LEFT IMBALANCE / RIGHT ROTATION
+		else if (height(node->left) > height(node->right) + 1 && height(node->left->left) >= height(node->left->right))
+			node = right_rotate(node);
 
 		if (node->parent)
 			balance(node->parent);
