@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 10:37:23 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 12:54:08 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <string> // TODO: Remove
 # include <iostream>
+# include <sstream>
+# include "vector.hpp"
 
 namespace ft {
 
@@ -64,6 +66,14 @@ public:
 		if (_head)
 			_print_infix(_head);
 	}
+	void	print_2d(void) const {
+		if (_head) {
+			ft::vector<std::string> output_vector;
+			_print_2d(_head, output_vector, 0);
+			for (size_t i = 0; i < output_vector.size(); i++)
+				std::cout << output_vector[i] << std::endl;
+		}
+	}
 
 	void	insert(Data const &data) {
 		if (!_head)
@@ -94,6 +104,26 @@ public:
 		_print_infix(node->left);
 		std::cout << node->data << std::endl;
 		_print_infix(node->right);
+	}
+	void	_print_2d(Node *node, ft::vector<std::string> &v, size_t level) const {
+		if (!node)
+			return ;
+		std::string	left_padding(" ");
+		std::string data(node->data);
+
+		if (v.size() == level)
+			v.push_back("");
+		if (node->left)
+			data = std::string(".") + data;
+		_print_2d(node->left, v, level + 1);
+		if ((!node->parent || node == node->parent->left) && level + 1 < v.size())
+			left_padding = std::string(v[level + 1].size() + 1 - v[level].size(), ' ');
+		else
+			left_padding = std::string(v[level - 1].size() + 1 - v[level].size(), ' ');
+		if (node->right)
+			data = data + ".";
+		v[level] = v[level] + left_padding + data;
+		_print_2d(node->right, v, level + 1);
 	}
 
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
