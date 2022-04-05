@@ -34,7 +34,7 @@ class AVLTree {
 
 		AVLNode(void): data(), left(NULL), right(NULL) { }
 		AVLNode(const Data &data): data(data), left(NULL), right(NULL) { }
-		AVLNode(Node const &copy): data(), left(copy.left), right(copy.right) { }
+		AVLNode(Node const &copy): data(copy.data), left(copy.left), right(copy.right) { }
 		Node	&operator=(Node const &copy) {
 			if (this == &copy)
 				return (*this);
