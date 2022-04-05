@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 13:47:45 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 13:54:27 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ public:
 	void		print_infix(void) const {
 		if (_head)
 			_print_infix(_head);
+		std::cout << std::endl;
 	}
 	void	print_2d(void) const {
 		if (_head) {
@@ -102,7 +103,7 @@ public:
 		if (!node)
 			return ;
 		_print_infix(node->left);
-		std::cout << node->data << std::endl;
+		std::cout << "[" << node->data << "]  ";
 		_print_infix(node->right);
 	}
 	static size_t	utf8_len(std::string s) {
@@ -118,7 +119,9 @@ public:
 		if (!node)
 			return ;
 		std::string	left_padding(" ");
-		std::string data(node->data);
+		std::ostringstream	oss;
+		oss << node->data;
+		std::string data(oss.str());
 
 		if (v.size() == level)
 			v.push_back("");
