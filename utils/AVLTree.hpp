@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 10:31:32 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/05 10:37:23 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,33 @@
 namespace ft {
 
 template <class Data>
-struct AVLNode {
-	typedef AVLNode	Node;
-
-	Data		data;
-	Node		*left;
-	Node		*right;
-	Node		*parent;
-
-	AVLNode(void): data(), left(NULL), right(NULL) { }
-	AVLNode(const Data &data): data(data), left(NULL), right(NULL) { }
-	AVLNode(Node const &copy): data(), left(copy.left), right(copy.right) { }
-	Node	&operator=(Node const &copy) {
-		if (this == &copy)
-			return (*this);
-		data = copy.data;
-		left = copy.left;
-		right = copy.right;
-		return (*this);
-	}
-	virtual ~AVLNode() { }
-
-};
-
-template <class Data>
 class AVLTree {
+
+	struct AVLNode {
+		typedef AVLNode	Node;
+
+		Data		data;
+		Node		*left;
+		Node		*right;
+		Node		*parent;
+
+		AVLNode(void): data(), left(NULL), right(NULL) { }
+		AVLNode(const Data &data): data(data), left(NULL), right(NULL) { }
+		AVLNode(Node const &copy): data(), left(copy.left), right(copy.right) { }
+		Node	&operator=(Node const &copy) {
+			if (this == &copy)
+				return (*this);
+			data = copy.data;
+			left = copy.left;
+			right = copy.right;
+			return (*this);
+		}
+		virtual ~AVLNode() { }
+	};
+
 public:
 
-	typedef AVLNode<Data>	Node;
+	typedef AVLNode	Node;
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
@@ -86,7 +85,8 @@ public:
 		}
 	}
 
-private:
+	private:
+
 	// PRIVATE METHODS /////////////////////////////////////////////////////////
 	void	_print_infix(Node *node) const {
 		if (!node)
