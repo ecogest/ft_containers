@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/05 17:40:34 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/06 22:20:01 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,23 @@
 # include <sstream>
 # include "vector.hpp"
 # include <algorithm>
+# include "pair.hpp"
 
 namespace ft {
 
-template <class Data>
+template <class Pair>
 class AVLTree {
 
 	struct AVLNode {
 		typedef AVLNode	Node;
 
-		Data		data;
+		Pair		data;
 		Node		*left;
 		Node		*right;
 		Node		*parent;
 
 		AVLNode(void): data(), left(NULL), right(NULL), parent(NULL) { }
-		AVLNode(const Data &data): data(data), left(NULL), right(NULL), parent(NULL) { }
+		AVLNode(const Pair &data): data(data), left(NULL), right(NULL), parent(NULL) { }
 		AVLNode(Node const &copy): data(copy.data), left(copy.left), right(copy.right), parent(copy.parent) { }
 		Node	&operator=(Node const &copy) {
 			if (this == &copy)
@@ -50,6 +51,8 @@ class AVLTree {
 public:
 
 	typedef AVLNode	Node;
+	typedef Pair	value_type;
+	typedef typename Pair::first_type	key_type;
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
@@ -62,6 +65,11 @@ public:
 		return (*this);
 	}
 	virtual ~AVLTree(void) { }
+
+	// static Key const	&key(Key const &data) { return (data); }
+	// template <class Value>
+	// static Key const	&key(ft::pair<Key, Value> const &data) { return (data.first); }
+	static key_type const	&key(value_type const &data) { return (data.first); }
 
 	// METHODS /////////////////////////////////////////////////////////////////
 	void		print_infix(void) const {
@@ -139,7 +147,7 @@ public:
 		if (node->parent)
 			balance(node->parent);
 	}
-	void	insert(Data const &data) {
+	void	insert(value_type const &data) {
 		if (!_head)
 			_head = new Node(data);
 		else {
@@ -148,7 +156,7 @@ public:
 			Node	**anode = NULL;
 			while (node) {
 				parent = node;
-				if (data < node->data)
+				if (key(data) < key(node->data))
 					anode = &node->left;
 				else
 					anode = &node->right;
@@ -168,7 +176,7 @@ public:
 		if (!node)
 			return ;
 		_print_infix(node->left);
-		std::cout << "[" << node->data << "]  ";
+		std::cout << "[" << key(node->data) << "]  ";
 		_print_infix(node->right);
 	}
 	static size_t	_utf8_len(std::string s) {
@@ -188,7 +196,7 @@ public:
 			return ;
 		std::string	left_padding(" ");
 		std::ostringstream	oss;
-		oss << '|' << node->data << '|';
+		oss << '|' << key(node->data) << '|';
 		std::string data(oss.str());
 
 		if (v.size() == level)

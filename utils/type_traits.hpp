@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:15:00 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 15:35:27 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/06 22:17:56 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ template <> struct is_integral<unsigned long long> : public true_type { };
 
 // More type traits
 // template<class T, class U>
-// struct is_same { enum { value = 0 }; }; // could use a static const bool value = false; (prettier)
-//
+// struct is_same { static const bool value = false; };
+// struct is_same { enum { value = 0 }; }; // other option
+
 // template<class T>
-// struct is_same<T, T> { enum { value = 1 }; };
+// struct is_same<T, T> { static const bool value = true; };
+// struct is_same<T, T> { enum { value = 1 }; }; // other option
 //
 // template< class T >
 // struct remove_const                { typedef T type; };
