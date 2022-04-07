@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 15:23:39 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 22:44:38 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ template <class Data, class Compare = std::less<Data> >
 class AVLTree {
 
 	struct AVLNode {
+		typedef Data	value_type;
 		typedef AVLNode	Node;
 
 		Data		data;
@@ -49,11 +50,84 @@ class AVLTree {
 		virtual ~AVLNode() { }
 	};
 
+	template <class T>
+	class AVLIterator {
+public:
+	typedef typename std::ptrdiff_t                  difference_type; // TODO: see if possible https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
+	typedef typename T::value_type                   value_type;
+	typedef value_type*                              pointer;
+	typedef value_type&                              reference;
+	typedef typename std::bidirectional_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
+private:
+	pointer	_node;
+public:
+	AVLIterator(): _node(0)                                     { }
+	AVLIterator(pointer ptr): _node(ptr)                        { }
+	AVLIterator(AVLIterator const &it): _node(it.base())     { }
+
+	// Allow iterator to const_iterator conversion (careful, we still can't compare iterator and const_iterator)
+	// template <typename U>
+	// AVLIterator(const AVLIterator<U> & it) {
+	// 	(typename enable_if<!is_const<U>::value && is_same<const T, const U>::value>::type)0;
+	// 	_ptr = it.base();
+	// }
+
+	// Simpler solution. Still requires to use AVLIterator<const T> in binary operators.
+	operator AVLIterator<const T>() const { return AVLIterator<const T>(_node); }
+
+	AVLIterator	&operator=(AVLIterator const &it) { _node = it._node; return (*this); }
+	~AVLIterator()                                { }
+
+	// [LegacyBidirectionalIterator] < LegacyForwardIterator
+	AVLIterator	&operator--()   { _node = prev(_node) ; return (*this); }
+	AVLIterator	operator--(int) { AVLIterator tmp; tmp._node = _node; _node = prev(_node); return (tmp); }
+
+	// [LegacyForwardIterator] < LegacyIterator, LegacyInputOperator, DefaultConstructible
+	AVLIterator	operator++(int) { AVLIterator tmp; tmp._node = _node; _node = next(_node); return (tmp); }
+
+	// [LegacyInputOperator] < (LegacyOperator), EquallyComparable
+	bool			operator!=(AVLIterator<const T> const &rhs) const { return (_node != rhs.base()); }
+	pointer			operator->() const                                   { return (_node); }
+
+	// [EquallyComparable]
+	bool			operator==(AVLIterator<const T> const &rhs) const { return (_node == rhs.base()); }
+
+	// [LegacyIterator]
+	reference		operator*(void) const { return _node->data; }
+	AVLIterator		&operator++()         { _node = next(_node); return (*this); }
+
+	// getter (same in system headers)
+	value_type		*base(void) const     { return _node; }
+
+private:
+	pointer	next(pointer node) {
+		if (node->right)
+			return (node->right);
+		while (node->parent) {
+			node = node->parent;
+			if (node->right)
+				return (node->right);
+		}
+	}
+	pointer	prev(pointer node) {
+		if (node->left)
+			return (node->left);
+		while (node->parent) {
+			node = node->parent;
+			if (node->left)
+				return (node->left);
+		}
+	}
+	};
+
 public:
 
 	typedef AVLNode	Node;
 	typedef Data	value_type;
 	typedef Compare	value_compare;
+
+	typedef AVLIterator<Node> 		iterator;
+	typedef AVLIterator<Node const> const_iterator;
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//

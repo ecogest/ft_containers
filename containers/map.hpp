@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 14:32:44 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 22:39:37 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,20 @@ public:
 	typedef const value_type&                    	 const_reference;
 	typedef typename Allocator::pointer          	 pointer;
 	typedef typename Allocator::const_pointer    	 const_pointer;
-	typedef mapIterator<Key, T>                  	 iterator; // not sure
-	typedef mapIterator<const Key, const T>      	 const_iterator; // not sure
-	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
-	typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
-
 	class value_compare;
 private:
 	typedef AVLTree<value_type, value_compare>		tree_type;
 	typedef typename tree_type::Node				node_type;
 
 public:
+
+	// typedef mapIterator<Key, T>                  	 iterator; // not sure
+	// typedef mapIterator<const Key, const T>      	 const_iterator; // not sure
+	typedef typename tree_type::iterator           	 iterator; // not sure
+	typedef typename tree_type::const_iterator     	 const_iterator; // not sure
+	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
+	typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
+
 	//### Member classes
 	//
 	//[value_compare](https://en.cppreference.com/w/cpp/container/map/value_compare "cpp/container/map/value compare")
