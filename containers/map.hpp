@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 17:57:34 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 10:35:42 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ template<
 public:
 	// MEMBER TYPES ////////////////////////////////////////////////////////////
 	 typedef T                                    	 mapped_type;
-	 typedef std::pair<const Key, T>              	 value_type;
+	 typedef ft::pair<const Key, T>              	 value_type;
 	 typedef std::size_t                          	 size_type; // check type
 	 typedef std::ptrdiff_t                       	 difference_type; // check type
 	 typedef Compare                              	 key_compare;
@@ -52,6 +52,15 @@ public:
 	 //
 	 //[value_compare](https://en.cppreference.com/w/cpp/container/map/value_compare "cpp/container/map/value compare")
 	 //compares objects of type `value_type`  
+	 class value_compare {
+		 public:
+			typedef value_type	first_argument_type;
+			typedef value_type	second_argument_type;
+			typedef bool	result_type;
+			bool operator()(first_argument_type const &a, first_argument_type const &b) const { return comp(a.first, b.first); }
+		protected:
+			key_compare	comp;
+	 };
 
 
 	 //### Member functions

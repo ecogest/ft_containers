@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/06 22:20:01 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 11:03:47 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,20 @@
 
 namespace ft {
 
-template <class Pair>
+// template <class Pair, class Compare = std::less<typename Pair::first_type> >
+template <class Data, class Compare = std::less<Data> >
 class AVLTree {
 
 	struct AVLNode {
 		typedef AVLNode	Node;
 
-		Pair		data;
+		Data		data;
 		Node		*left;
 		Node		*right;
 		Node		*parent;
 
 		AVLNode(void): data(), left(NULL), right(NULL), parent(NULL) { }
-		AVLNode(const Pair &data): data(data), left(NULL), right(NULL), parent(NULL) { }
+		AVLNode(const Data &data): data(data), left(NULL), right(NULL), parent(NULL) { }
 		AVLNode(Node const &copy): data(copy.data), left(copy.left), right(copy.right), parent(copy.parent) { }
 		Node	&operator=(Node const &copy) {
 			if (this == &copy)
@@ -51,8 +52,8 @@ class AVLTree {
 public:
 
 	typedef AVLNode	Node;
-	typedef Pair	value_type;
-	typedef typename Pair::first_type	key_type;
+	typedef Data	value_type;
+	typedef Compare	value_compare;
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
@@ -65,11 +66,6 @@ public:
 		return (*this);
 	}
 	virtual ~AVLTree(void) { }
-
-	// static Key const	&key(Key const &data) { return (data); }
-	// template <class Value>
-	// static Key const	&key(ft::pair<Key, Value> const &data) { return (data.first); }
-	static key_type const	&key(value_type const &data) { return (data.first); }
 
 	// METHODS /////////////////////////////////////////////////////////////////
 	void		print_infix(void) const {
@@ -154,9 +150,10 @@ public:
 			Node	*node = _head;
 			Node	*parent = NULL;
 			Node	**anode = NULL;
+			value_compare	comp;
 			while (node) {
 				parent = node;
-				if (key(data) < key(node->data))
+				if (comp(data, node->data))
 					anode = &node->left;
 				else
 					anode = &node->right;
@@ -176,7 +173,7 @@ public:
 		if (!node)
 			return ;
 		_print_infix(node->left);
-		std::cout << "[" << key(node->data) << "]  ";
+		std::cout << "[" << node->data << "]  ";
 		_print_infix(node->right);
 	}
 	static size_t	_utf8_len(std::string s) {
@@ -196,7 +193,7 @@ public:
 			return ;
 		std::string	left_padding(" ");
 		std::ostringstream	oss;
-		oss << '|' << key(node->data) << '|';
+		oss << '|' << node->data << '|';
 		std::string data(oss.str());
 
 		if (v.size() == level)
