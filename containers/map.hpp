@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 10:35:42 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 13:52:54 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ template<
 > class map {
 public:
 	// MEMBER TYPES ////////////////////////////////////////////////////////////
+	typedef Key                                      key_type;
 	 typedef T                                    	 mapped_type;
 	 typedef ft::pair<const Key, T>              	 value_type;
 	 typedef std::size_t                          	 size_type; // check type
@@ -60,6 +61,8 @@ public:
 			bool operator()(first_argument_type const &a, first_argument_type const &b) const { return comp(a.first, b.first); }
 		protected:
 			key_compare	comp;
+			value_compare(key_compare c): comp(c) { }
+		friend class map; // otherwise map cannot call the constructs above (protected)
 	 };
 
 
@@ -67,6 +70,10 @@ public:
 	 //
 	 //[(constructor)](https://en.cppreference.com/w/cpp/container/map/map "cpp/container/map/map")
 	 //constructs the `map`  
+	 // 1)
+	 map(): _key_comp(), _value_comp(_key_comp), _alloc(Allocator()) { }
+	 explicit map( const Compare& comp, const Allocator& alloc = Allocator() ):
+		 _key_comp(comp), _value_comp(comp), _alloc(alloc) { }
 
 	 //[(destructor)](https://en.cppreference.com/w/cpp/container/map/~map "cpp/container/map/~map")
 	 //destructs the `map`  
@@ -151,9 +158,16 @@ public:
 	 //
 	 //[key_comp](https://en.cppreference.com/w/cpp/container/map/key_comp "cpp/container/map/key comp")
 	 //returns the function that compares keys  
+	 key_compare	key_comp() const { return _key_comp; }
 
 	 //[value_comp](https://en.cppreference.com/w/cpp/container/map/value_comp "cpp/container/map/value comp")
 	 //returns the function that compares keys in objects of type value_type  
+	 value_compare	value_comp() const { return _value_comp; }
+
+private:
+	 key_compare	_key_comp;
+	 value_compare	_value_comp;
+	 allocator_type	_alloc;
 
 };
 

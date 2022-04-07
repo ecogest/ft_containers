@@ -73,7 +73,7 @@ void	testAVLTree(void) {
 		std::cout << "-------------------" << std::endl;
 	}
 	{
-		ft::AVLTree<ft::pair<std::string, int>, ft::map<std::string, int>::value_compare >	tree;
+		ft::AVLTree<ft::pair<std::string, int>, ft::map<std::string, int>::value_compare >	tree(ft::map<std::string, int>().value_comp());
 		tree.insert(ft::make_pair<std::string, int>("b", 0));
 		tree.insert(ft::make_pair<std::string, int>("a", 1));
 		tree.insert(ft::make_pair<std::string, int>("h", -1));

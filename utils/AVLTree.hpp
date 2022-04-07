@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 11:03:47 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 13:34:35 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,13 @@ public:
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
-	AVLTree(void): _head(NULL) { }
-	AVLTree(AVLTree const &copy): _head(copy.head) { }
+	AVLTree(const Compare &comp = Compare()): _head(NULL), _comp(comp) { }
+	AVLTree(AVLTree const &copy): _head(copy.head), _comp(copy._comp) { }
 	AVLTree	&operator=(AVLTree const &copy) {
 		if (this == &copy)
 			return (*this);
 		_head = copy._head;
+		_comp = copy._comp;
 		return (*this);
 	}
 	virtual ~AVLTree(void) { }
@@ -150,10 +151,9 @@ public:
 			Node	*node = _head;
 			Node	*parent = NULL;
 			Node	**anode = NULL;
-			value_compare	comp;
 			while (node) {
 				parent = node;
-				if (comp(data, node->data))
+				if (_comp(data, node->data))
 					anode = &node->left;
 				else
 					anode = &node->right;
@@ -210,6 +210,7 @@ public:
 
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
 	Node	*_head;
+	value_compare	_comp;
 };
 
 }
