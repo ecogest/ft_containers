@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 13:34:35 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 15:23:39 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,46 @@ public:
 		}
 	}
 
-	size_t	height(void) {
+	size_t	height(void) const {
 		return(height(_head));
 	}
-	size_t	height(Node *node) {
+	static size_t	height(Node *node) {
 		if (!node)
 			return (0);
 		return (1 + std::max(height(node->left), height(node->right)));
 	}
 
-	Node	**get_node_root(Node *node) {
+	void	insert(value_type const &data) {
+		if (!_head)
+			_head = new Node(data);
+		else {
+			Node	*node = _head;
+			Node	*parent = NULL;
+			Node	**anode = NULL;
+			while (node) {
+				parent = node;
+				if (_comp(data, node->data))
+					anode = &node->left;
+				else
+					anode = &node->right;
+				node = *anode;
+			}
+			*anode = new Node(data);
+			(*anode)->parent = parent;
+			if (parent->parent)
+				balance(parent->parent);
+		}
+	}
+
+	private:
+
+	// PRIVATE METHODS /////////////////////////////////////////////////////////
+	//
+
+	// Returns the address of the branch where the node is attached
+	// can be &_head, &node->parent->left or &node->parent->right
+	// It is used to perform rotations
+	Node	**node_branch_address(Node const *node) {
 		Node	**root;
 		if (node == _head)
 			root = &_head;
@@ -105,7 +135,7 @@ public:
 	}
 	// Right son takes place of the node
 	Node	*left_rotate(Node *node) {
-		Node	**root = get_node_root(node);
+		Node	**root = node_branch_address(node);
 		*root = node->right;
 		node->right = (*root)->left;
 		(*root)->left = node;
@@ -115,7 +145,7 @@ public:
 	}
 	// Left son takes place of the node
 	Node	*right_rotate(Node *node) {
-		Node	**root = get_node_root(node);
+		Node	**root = node_branch_address(node);
 		*root = node->left;
 		node->left = (*root)->right;
 		(*root)->right = node;
@@ -144,31 +174,6 @@ public:
 		if (node->parent)
 			balance(node->parent);
 	}
-	void	insert(value_type const &data) {
-		if (!_head)
-			_head = new Node(data);
-		else {
-			Node	*node = _head;
-			Node	*parent = NULL;
-			Node	**anode = NULL;
-			while (node) {
-				parent = node;
-				if (_comp(data, node->data))
-					anode = &node->left;
-				else
-					anode = &node->right;
-				node = *anode;
-			}
-			*anode = new Node(data);
-			(*anode)->parent = parent;
-			if (parent->parent)
-				balance(parent->parent);
-		}
-	}
-
-	private:
-
-	// PRIVATE METHODS /////////////////////////////////////////////////////////
 	void	_print_infix(Node *node) const {
 		if (!node)
 			return ;
