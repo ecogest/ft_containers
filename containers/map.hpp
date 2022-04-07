@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 14:06:02 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/07 14:32:44 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "iterator.hpp"
 #include <memory>
 #include <functional> // std::less
+#include "AVLTree.hpp"
 
 namespace ft {
 
@@ -31,6 +32,7 @@ template<
 	class Compare = std::less<Key>, // check if allowed
 	class Allocator = std::allocator<ft::pair<const Key, T> >
 > class map {
+
 public:
 	// MEMBER TYPES ////////////////////////////////////////////////////////////
 	typedef Key                                      key_type;
@@ -49,6 +51,12 @@ public:
 	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
 	typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
 
+	class value_compare;
+private:
+	typedef AVLTree<value_type, value_compare>		tree_type;
+	typedef typename tree_type::Node				node_type;
+
+public:
 	//### Member classes
 	//
 	//[value_compare](https://en.cppreference.com/w/cpp/container/map/value_compare "cpp/container/map/value compare")
@@ -71,9 +79,9 @@ public:
 	//[(constructor)](https://en.cppreference.com/w/cpp/container/map/map "cpp/container/map/map")
 	//constructs the `map`
 	// 1)
-	map(): _key_comp(), _value_comp(_key_comp), _alloc(Allocator()) { }
+	map(): _key_comp(), _value_comp(_key_comp), _alloc(Allocator()), _tree(_value_comp) { }
 	explicit map( const Compare& comp, const Allocator& alloc = Allocator() ):
-		_key_comp(comp), _value_comp(comp), _alloc(alloc) { }
+		_key_comp(comp), _value_comp(comp), _alloc(alloc), _tree(_value_comp) { }
 
 	//[(destructor)](https://en.cppreference.com/w/cpp/container/map/~map "cpp/container/map/~map")
 	//destructs the `map`
@@ -128,6 +136,12 @@ public:
 
 	//[insert](https://en.cppreference.com/w/cpp/container/map/insert "cpp/container/map/insert")
 	//inserts elements or nodes (since C++17)
+	// 1) insert value
+	// Returns a pair consisting of an iterator to the inserted element (or to the element that prevented the insertion)
+	// and a bool denoting whether the insertion took place.
+	// std::pair<iterator, bool> insert( const value_type& value );
+	void insert( const value_type& value ) { _tree.insert(value); }// TODO: remove
+	void print(void) const { _tree.print_2d(); } // TODO: remove
 
 	//[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
 	//erases elements
@@ -165,9 +179,10 @@ public:
 	value_compare	value_comp() const { return _value_comp; }
 
 private:
-	key_compare	_key_comp;
+	key_compare		_key_comp;
 	value_compare	_value_comp;
 	allocator_type	_alloc;
+	tree_type		_tree;
 
 };
 

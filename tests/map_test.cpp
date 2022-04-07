@@ -92,4 +92,10 @@ void	testAVLTree(void) {
 
 void	test_map(void) {
 	testAVLTree();
+	ft::map<std::string, int> M;
+	M.insert(ft::make_pair<std::string, int>("hello", 0));
+	M.insert(ft::make_pair<std::string, int>("world", -42));
+	M.insert(ft::make_pair<std::string, int>("map", 42));
+	M.insert(ft::make_pair<std::string, int>("vector", 42));
+	M.print();
 }
