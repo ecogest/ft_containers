@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 22:44:38 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/08 14:12:06 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,66 +59,62 @@ public:
 	typedef value_type&                              reference;
 	typedef typename std::bidirectional_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
 private:
-	pointer	_node;
+	typedef T	node_type;
+	typedef T&	node_reference;
+	typedef T*	node_pointer;
+	node_pointer	_node;
 public:
 	AVLIterator(): _node(0)                                     { }
-	AVLIterator(pointer ptr): _node(ptr)                        { }
+	AVLIterator(node_pointer ptr): _node(ptr)                        { }
 	AVLIterator(AVLIterator const &it): _node(it.base())     { }
 
-	// Allow iterator to const_iterator conversion (careful, we still can't compare iterator and const_iterator)
-	// template <typename U>
-	// AVLIterator(const AVLIterator<U> & it) {
-	// 	(typename enable_if<!is_const<U>::value && is_same<const T, const U>::value>::type)0;
-	// 	_ptr = it.base();
-	// }
-
-	// Simpler solution. Still requires to use AVLIterator<const T> in binary operators.
 	operator AVLIterator<const T>() const { return AVLIterator<const T>(_node); }
 
 	AVLIterator	&operator=(AVLIterator const &it) { _node = it._node; return (*this); }
 	~AVLIterator()                                { }
 
 	// [LegacyBidirectionalIterator] < LegacyForwardIterator
-	AVLIterator	&operator--()   { _node = prev(_node) ; return (*this); }
-	AVLIterator	operator--(int) { AVLIterator tmp; tmp._node = _node; _node = prev(_node); return (tmp); }
+	AVLIterator	&operator--()   { _node = _prev(_node) ; return (*this); }
+	AVLIterator	operator--(int) { AVLIterator tmp; tmp._node = _node; _node = _prev(_node); return (tmp); }
 
 	// [LegacyForwardIterator] < LegacyIterator, LegacyInputOperator, DefaultConstructible
-	AVLIterator	operator++(int) { AVLIterator tmp; tmp._node = _node; _node = next(_node); return (tmp); }
+	AVLIterator	operator++(int) { AVLIterator tmp; tmp._node = _node; _node = _next(_node); return (tmp); }
 
 	// [LegacyInputOperator] < (LegacyOperator), EquallyComparable
 	bool			operator!=(AVLIterator<const T> const &rhs) const { return (_node != rhs.base()); }
-	pointer			operator->() const                                   { return (_node); }
+	pointer			operator->() const                                   { return (&_node->data); }
 
 	// [EquallyComparable]
 	bool			operator==(AVLIterator<const T> const &rhs) const { return (_node == rhs.base()); }
 
 	// [LegacyIterator]
 	reference		operator*(void) const { return _node->data; }
-	AVLIterator		&operator++()         { _node = next(_node); return (*this); }
+	AVLIterator		&operator++()         { _node = _next(_node); return (*this); }
 
-	// getter (same in system headers)
-	value_type		*base(void) const     { return _node; }
+	// getter
+	node_pointer	base(void) const     { return _node; }
 
 private:
-	pointer	next(pointer node) {
+	node_pointer	_next(node_pointer node) {
 		if (node->right)
 			return (node->right);
 		while (node->parent) {
+			if (node == node->parent->left)
+				return (node->parent);
 			node = node->parent;
-			if (node->right)
-				return (node->right);
 		}
+		return (NULL);
 	}
-	pointer	prev(pointer node) {
+	node_pointer	_prev(node_pointer node) {
 		if (node->left)
 			return (node->left);
 		while (node->parent) {
+			if (node == node->parent->right)
+				return (node->parent);
 			node = node->parent;
-			if (node->left)
-				return (node->left);
 		}
 	}
-	};
+	}; // AVLIterator
 
 public:
 
@@ -185,8 +181,33 @@ public:
 			*anode = new Node(data);
 			(*anode)->parent = parent;
 			if (parent->parent)
-				balance(parent->parent);
+				_balance(parent->parent);
 		}
+	}
+
+	Node	*min_node(void) {
+		Node *node(_head);
+		while (node->left)
+			node = node->left;
+		return (node);
+	}
+	Node	*max_node(void) {
+		Node *node(_head);
+		while (node->right)
+			node = node->right;
+		return (node);
+	}
+	iterator	begin() {
+		return (iterator(min_node()));
+	}
+	const_iterator	begin() const {
+		return (const_iterator(min_node()));
+	}
+	iterator	end() { // FIX: need to create a special node for the end
+		return (NULL);
+	}
+	const_iterator	end() const {
+		return (NULL);
 	}
 
 	private:
@@ -197,7 +218,7 @@ public:
 	// Returns the address of the branch where the node is attached
 	// can be &_head, &node->parent->left or &node->parent->right
 	// It is used to perform rotations
-	Node	**node_branch_address(Node const *node) {
+	Node	**_node_branch_address(Node const *node) {
 		Node	**root;
 		if (node == _head)
 			root = &_head;
@@ -208,8 +229,8 @@ public:
 		return (root);
 	}
 	// Right son takes place of the node
-	Node	*left_rotate(Node *node) {
-		Node	**root = node_branch_address(node);
+	Node	*_left_rotate(Node *node) {
+		Node	**root = _node_branch_address(node);
 		*root = node->right;
 		node->right = (*root)->left;
 		(*root)->left = node;
@@ -218,8 +239,8 @@ public:
 		return (*root);
 	}
 	// Left son takes place of the node
-	Node	*right_rotate(Node *node) {
-		Node	**root = node_branch_address(node);
+	Node	*_right_rotate(Node *node) {
+		Node	**root = _node_branch_address(node);
 		*root = node->left;
 		node->left = (*root)->right;
 		(*root)->right = node;
@@ -227,26 +248,26 @@ public:
 		node->parent = (*root);
 		return (*root);
 	}
-	void	balance(Node *node) {
+	void	_balance(Node *node) {
 		// RIGHT IMBALANCE / LEFT ROTATION
 		if (height(node->right) > height(node->left) + 1 && height(node->right->right) >= height(node->right->left))
-			node = left_rotate(node);
+			node = _left_rotate(node);
 		// LEFT IMBALANCE / RIGHT ROTATION
 		else if (height(node->left) > height(node->right) + 1 && height(node->left->left) >= height(node->left->right))
-			node = right_rotate(node);
+			node = _right_rotate(node);
 		// RL IMBALANCE / RL ROTATION
 		else if (height(node->right) > height(node->left) + 1 && height(node->right->right) < height(node->right->left)) {
-			right_rotate(node->right);
-			node = left_rotate(node);
+			_right_rotate(node->right);
+			node = _left_rotate(node);
 		}
 		// LR IMBALANCE / LR ROTATION
 		else if (height(node->left) > height(node->right) + 1 && height(node->left->left) < height(node->left->right)) {
-			left_rotate(node->left);
-			node = right_rotate(node);
+			_left_rotate(node->left);
+			node = _right_rotate(node);
 		}
 
 		if (node->parent)
-			balance(node->parent);
+			_balance(node->parent);
 	}
 	void	_print_infix(Node *node) const {
 		if (!node)

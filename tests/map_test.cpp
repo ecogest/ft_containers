@@ -90,12 +90,40 @@ void	testAVLTree(void) {
 	}
 }
 
+void	avl_iterator_test(void) {
+	{
+		ft::AVLTree<int>	tree;
+		tree.insert(1000);
+		tree.insert(-1000);
+		tree.insert(-4000);
+		tree.insert(-2000);
+		tree.insert(32000);
+		tree.insert(12000);
+		tree.insert(42000);
+		tree.insert(42);
+		tree.insert(42);
+		tree.insert(42);
+
+		std::cout << "-------------------" << std::endl;
+		tree.print_2d();
+		tree.print_infix();
+		std::cout << "-------------------" << std::endl;
+		ft::AVLTree<int>::iterator	it;
+		for (it = tree.begin(); it != tree.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << "-------------------" << std::endl;
+	}
+}
+
 void	test_map(void) {
 	testAVLTree();
+
 	ft::map<std::string, int> M;
 	M.insert(ft::make_pair<std::string, int>("hello", 0));
 	M.insert(ft::make_pair<std::string, int>("world", -42));
 	M.insert(ft::make_pair<std::string, int>("map", 42));
 	M.insert(ft::make_pair<std::string, int>("vector", 42));
 	M.print();
+
+	avl_iterator_test();
 }
