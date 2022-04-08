@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/08 14:12:06 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/08 18:41:35 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,22 +96,37 @@ public:
 
 private:
 	node_pointer	_next(node_pointer node) {
-		if (node->right)
-			return (node->right);
-		while (node->parent) {
-			if (node == node->parent->left)
-				return (node->parent);
-			node = node->parent;
+		if (node->right) {
+			node = node->right;
+			while (node->left)
+				node = node->left;
+			return (node);
 		}
-		return (NULL);
+		else {
+			while (node->parent) {
+				if (node == node->parent->right)
+					node = node->parent;
+				else
+					return (node->parent);
+			}
+			return (NULL);
+		}
 	}
 	node_pointer	_prev(node_pointer node) {
-		if (node->left)
-			return (node->left);
-		while (node->parent) {
-			if (node == node->parent->right)
-				return (node->parent);
-			node = node->parent;
+		if (node->left) {
+			node = node->left;
+			while (node->right)
+				node = node->right;
+			return (node);
+		}
+		else {
+			while (node->parent) {
+				if (node == node->parent->left)
+					node = node->parent;
+				else
+					return (node->parent);
+			}
+			return (NULL);
 		}
 	}
 	}; // AVLIterator
@@ -229,23 +244,29 @@ public:
 		return (root);
 	}
 	// Right son takes place of the node
-	Node	*_left_rotate(Node *node) {
-		Node	**root = _node_branch_address(node);
-		*root = node->right;
-		node->right = (*root)->left;
-		(*root)->left = node;
-		(*root)->parent = node->parent;
-		node->parent = (*root);
+	Node	*_left_rotate(Node *old_parent) {
+		Node	*new_parent = old_parent->right;
+		Node	**root = _node_branch_address(old_parent);
+		*root = new_parent;
+		new_parent->parent = old_parent->parent;
+		old_parent->parent = new_parent;
+		old_parent->right = new_parent->left;
+		if (old_parent->right)
+			old_parent->right->parent = old_parent;
+		new_parent->left = old_parent;
 		return (*root);
 	}
 	// Left son takes place of the node
-	Node	*_right_rotate(Node *node) {
-		Node	**root = _node_branch_address(node);
-		*root = node->left;
-		node->left = (*root)->right;
-		(*root)->right = node;
-		(*root)->parent = node->parent;
-		node->parent = (*root);
+	Node	*_right_rotate(Node *old_parent) {
+		Node	*new_parent = old_parent->left;
+		Node	**root = _node_branch_address(old_parent);
+		*root = new_parent;
+		new_parent->parent = old_parent->parent;
+		old_parent->parent = new_parent;
+		old_parent->left = new_parent->right;
+		if (old_parent->left)
+			old_parent->left->parent = old_parent;
+		new_parent->right = old_parent;
 		return (*root);
 	}
 	void	_balance(Node *node) {
