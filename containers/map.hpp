@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 08:48:44 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 08:54:50 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,9 @@ public:
 	//[(constructor)](https://en.cppreference.com/w/cpp/container/map/map "cpp/container/map/map")
 	//constructs the `map`
 	// 1)
-	map(): _key_comp(), _value_comp(_key_comp), _alloc(Allocator()), _tree(_value_comp) { }
+	map(): _key_comp(), _value_comp(_key_comp), _tree(_value_comp, Allocator()) { }
 	explicit map( const Compare& comp, const Allocator& alloc = Allocator() ):
-		_key_comp(comp), _value_comp(comp), _alloc(alloc), _tree(_value_comp) { }
+		_key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) { }
 
 	//[(destructor)](https://en.cppreference.com/w/cpp/container/map/~map "cpp/container/map/~map")
 	//destructs the `map`
@@ -184,7 +184,6 @@ public:
 private:
 	key_compare		_key_comp;
 	value_compare	_value_comp;
-	allocator_type	_alloc;
 	tree_type		_tree;
 
 };

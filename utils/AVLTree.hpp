@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 08:47:34 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 10:14:22 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ namespace ft {
 template <class Data, class Compare = std::less<Data>, class Allocator = std::allocator<Data> >
 class AVLTree {
 
+public:
 	typedef Data	value_type;
 	typedef Compare	value_compare;
 	typedef std::size_t                          	 size_type; // check type
 	typedef std::ptrdiff_t                       	 difference_type; // check type
-	typedef Allocator                            	 allocator_type;
 	typedef value_type&                          	 reference;
 	typedef const value_type&                    	 const_reference;
-	typedef typename Allocator::pointer          	 pointer;
-	typedef typename Allocator::const_pointer    	 const_pointer;
 
+private:
 	struct AVLNode {
 		typedef Data	value_type;
 		typedef AVLNode	Node;
@@ -58,7 +57,7 @@ class AVLTree {
 			return (*this);
 		}
 		virtual ~AVLNode() { }
-	};
+	}; // AVLNode
 
 	template <class T>
 	class AVLIterator {
@@ -145,6 +144,10 @@ public:
 
 	typedef AVLNode	Node;
 
+	// https://www.cplusplus.com/reference/memory/allocator/rebind/
+	typedef typename Allocator::template rebind<Node>::other	 allocator_type;
+	typedef typename Allocator::pointer          	 pointer;
+	typedef typename Allocator::const_pointer    	 const_pointer;
 	typedef AVLIterator<Node> 		iterator;
 	typedef AVLIterator<Node const> const_iterator;
 	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
@@ -152,16 +155,26 @@ public:
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
-	AVLTree(const Compare &comp = Compare()): _head(NULL), _comp(comp) { }
-	AVLTree(AVLTree const &copy): _head(copy.head), _comp(copy._comp) { }
+	AVLTree(const Compare &comp = Compare(), const Allocator &alloc = Allocator()): _head(NULL), _comp(comp), _alloc(alloc) { }
+	AVLTree(AVLTree const &copy): _head(copy.head), _comp(copy._comp), _alloc(copy.alloc) { }
 	AVLTree	&operator=(AVLTree const &copy) { // shallow copy
 		if (this == &copy)
 			return (*this);
 		_head = copy._head;
 		_comp = copy._comp;
+		_alloc = copy._alloc;
 		return (*this);
 	}
-	virtual ~AVLTree(void) { }
+	virtual ~AVLTree(void) {
+		iterator	it = begin();
+		Node	*node;
+		while (it != end()) {
+			node = it.base();
+			it++;
+			_alloc.destroy(node);
+			_alloc.deallocate(node, 1);
+		}
+	}
 
 	// METHODS /////////////////////////////////////////////////////////////////
 	void		print_infix(void) const {
@@ -187,10 +200,15 @@ public:
 			return (0);
 		return (1 + std::max(height(node->left), height(node->right)));
 	}
+	Node	*new_node(value_type const &data) {
+		Node	*node = _alloc.allocate(1);
+		_alloc.construct(node, data);
+		return (node);
+	}
 
 	void	insert(value_type const &data) {
 		if (!_head)
-			_head = new Node(data);
+			_head = new_node(data);
 		else {
 			Node	*node = _head;
 			Node	*parent = NULL;
@@ -203,7 +221,7 @@ public:
 					anode = &node->right;
 				node = *anode;
 			}
-			*anode = new Node(data);
+			*anode = new_node(data);
 			(*anode)->parent = parent;
 			if (parent->parent)
 				_balance(parent->parent);
@@ -212,12 +230,16 @@ public:
 
 	Node	*min_node(void) {
 		Node *node(_head);
+		if (!node)
+			return (NULL);
 		while (node->left)
 			node = node->left;
 		return (node);
 	}
 	Node	*max_node(void) {
 		Node *node(_head);
+		if (!node)
+			return (NULL);
 		while (node->right)
 			node = node->right;
 		return (node);
@@ -342,6 +364,7 @@ public:
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
 	Node	*_head;
 	value_compare	_comp;
+	allocator_type	_alloc;
 	Node	*_end;
 };
 
