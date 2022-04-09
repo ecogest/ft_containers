@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:14:19 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 14:32:37 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 13:00:52 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,10 @@ public:
 	reverse_iterator&	operator=(const reverse_iterator<U>& u) { current = u.base(); return (*this); }
 	// Methods
     Iterator			base() const                            { return (current); }
-	// Returns a reference or pointer to the element previous to current.
-    reference			operator*() const                       { return *(current - 1); }
-    pointer				operator->() const                      { return ((current - 1).operator->()); }
+	// @brief [operator*] Returns a reference or pointer to the element previous to current.
+	// note: we cannot rely on current - n which might not exists
+	reference			operator*() const                       { reverse_iterator tmp(*this); tmp++; return *(tmp.current); }
+	pointer				operator->() const                      { reverse_iterator tmp(*this); tmp++; return (tmp.current.operator->()); }
     reverse_iterator&	operator++()                            { --current; return (*this); }
     reverse_iterator	operator++(int)                         { reverse_iterator tmp(*this); --current; return (tmp); }
     reverse_iterator&	operator--()                            { ++current; return (*this); }

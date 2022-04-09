@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 12:05:05 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 12:46:29 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,6 +259,18 @@ public:
 	}
 	const_iterator	end() const {
 		return (_end);
+	}
+	reverse_iterator rbegin() {
+		return (reverse_iterator(end()));
+	}
+	const_reverse_iterator rbegin() const {
+		return (const_reverse_iterator(end()));
+	}
+	reverse_iterator rend() {
+		return (reverse_iterator(begin()));
+	}
+	const_reverse_iterator rend() const {
+		return (const_reverse_iterator(begin()));
 	}
 
 	private:

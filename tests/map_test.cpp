@@ -90,7 +90,7 @@ void	testAVLTree(void) {
 	}
 }
 
-void	avl_iterator_test(void) {
+void	avl_iterator_basic_test(void) {
 	{
 		ft::AVLTree<int>	tree;
 		tree.insert(1000);
@@ -117,6 +117,11 @@ void	avl_iterator_test(void) {
 		it = tree.end();
 		if (it != tree.begin())
 			do std::cout << *--it << std::endl; while (it != tree.begin());
+		std::cout << "-------------------" << std::endl;
+		std::cout << "Decreasing (reverse iterator style):" << std::endl;
+		ft::AVLTree<int>::reverse_iterator	rit;
+		for (rit = tree.rbegin(); rit != tree.rend(); rit++)
+			std::cout << *rit << std::endl;
 	}
 }
 
@@ -131,5 +136,5 @@ void	test_map(void) {
 	M.print();
 	std::map<std::string, std::string> N;
 
-	avl_iterator_test();
+	avl_iterator_basic_test();
 }
