@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 13:53:36 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 16:22:56 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,51 @@ public:
 			if (parent->parent)
 				_balance(parent->parent);
 		// }
+	}
+	void	erase(iterator it) { // TODO: basic erasor (need to balance)
+		Node	*node = it.base();
+		if (node == _end)
+			return ;
+		if (node) {
+			Node	*parent = node->parent;
+			Node	**parent_anchor = NULL;
+			if (parent) {
+				if (node == node->parent->left)
+					parent_anchor = &node->parent->left;
+				if (node == node->parent->right)
+					parent_anchor = &node->parent->right;
+			}
+			else
+				parent_anchor = &_head;
+			// leaf case
+			if (!node->left && !node->right)
+				*parent_anchor = NULL;
+			// single child
+			else if (node->left && !node->right) {
+				*parent_anchor = node->left;
+				(*parent_anchor)->parent = parent;
+			}
+			else if (node->right && !node->left) {
+				*parent_anchor = node->right;
+				(*parent_anchor)->parent = parent;
+			}
+			else { // 2 children
+				++it;
+				Node	*next_node = it.base();
+				*parent_anchor = next_node;
+				if (next_node == next_node->parent->left)
+					next_node->parent->left = next_node->left;
+				else if (next_node == next_node->parent->right)
+					next_node->parent->right = next_node->right; // (1)
+				next_node->left = node->left;
+				node->left->parent = next_node;
+				next_node->right = node->right;
+				if (node->right) // (1) -> can NULL node->right if next_node == node->right
+					node->right->parent = next_node;
+				next_node->parent = node->parent;
+			}
+		}
+		_delete_node(node);
 	}
 
 	Node	*min_node(void) {

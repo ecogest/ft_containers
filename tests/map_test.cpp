@@ -13,8 +13,7 @@ std::ostream	&operator<<(std::ostream &os, ft::pair<Key, Value> const &p) {
 }
 
 void	testAVLTree(void) {
-	{
-		// EMPTY TREE
+	{ // EMPTY TREE
 		std::cout << "-------------------" << std::endl;
 		ft::AVLTree<std::string >	tree;
 		std::cout << "height: " << tree.height() << std::endl;
@@ -22,7 +21,7 @@ void	testAVLTree(void) {
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
 	}
-	{
+	{ // strings
 		ft::AVLTree<std::string >	tree;
 		tree.insert("c");
 		tree.insert("d");
@@ -33,7 +32,7 @@ void	testAVLTree(void) {
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
 	}
-	{
+	{ // more strings
 		ft::AVLTree<std::string>	tree;
 		tree.insert("i");
 		tree.insert("h");
@@ -49,7 +48,7 @@ void	testAVLTree(void) {
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
 	}
-	{
+	{ // numbers
 		ft::AVLTree<int>	tree;
 		tree.insert(1);
 		tree.insert(-1);
@@ -63,7 +62,7 @@ void	testAVLTree(void) {
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
 	}
-	{
+	{ // more numbers
 		ft::AVLTree<int>	tree;
 		tree.insert(1000);
 		tree.insert(-1000);
@@ -98,7 +97,7 @@ void	testAVLTree(void) {
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
 	}
-	{
+	{ // with pairs
 		ft::AVLTree<ft::pair<std::string, int>, ft::map<std::string, int>::value_compare >	tree(ft::map<std::string, int>().value_comp());
 		tree.insert(ft::make_pair<std::string, int>("b", 0));
 		tree.insert(ft::make_pair<std::string, int>("a", 1));
@@ -117,6 +116,76 @@ void	testAVLTree(void) {
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
+	}
+	{ // delete
+		ft::AVLTree<std::string>	tree;
+		tree.insert("i");
+		tree.insert("h");
+		tree.insert("g");
+		tree.insert("f");
+		tree.insert("e");
+		tree.insert("d");
+		tree.insert("c");
+		tree.insert("b");
+		tree.insert("a");
+		std::cout << "height: " << tree.height() << std::endl;
+		tree.print_infix();
+		tree.print_2d();
+		std::cout << "-------------------" << std::endl;
+		ft::AVLTree<std::string>::iterator	it = tree.begin(); // a
+		std::cout << "### Remove a:" << std::endl;
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove b:" << std::endl;
+		it = tree.begin(); // b
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove c:" << std::endl;
+		it = tree.begin(); // c
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove e:" << std::endl;
+		it = tree.begin(); // d
+		it++; // e
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove g:" << std::endl;
+		it = tree.begin(); // d
+		it++; // f
+		it++; // g
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove h:" << std::endl;
+		it = tree.begin(); // d
+		it++; // f
+		it++; // g
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove i:" << std::endl;
+		it = tree.begin(); // d
+		it++; // f
+		it++; // i
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Attempt to remove END:" << std::endl;
+		it = tree.begin(); // d
+		it++; // f
+		it++; // END
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove f:" << std::endl;
+		it = tree.begin(); // d
+		it++; // f
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Remove d:" << std::endl;
+		it = tree.begin(); // d
+		tree.erase(it);
+		tree.print_2d();
+		std::cout << "### Try to remove the begin of an empty tree:" << std::endl;
+		it = tree.begin(); // END
+		tree.erase(it);
+		tree.print_2d();
 	}
 }
 
@@ -176,8 +245,6 @@ void	avl_iterator_basic_test(void) {
 }
 
 void	test_map(void) {
-	testAVLTree();
-
 	ft::map<std::string, int> M;
 	M.insert(ft::make_pair<std::string, int>("hello", 0));
 	M.insert(ft::make_pair<std::string, int>("world", -42));
@@ -187,4 +254,5 @@ void	test_map(void) {
 	std::map<std::string, std::string> N;
 
 	avl_iterator_basic_test();
+	testAVLTree();
 }
