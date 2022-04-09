@@ -91,23 +91,23 @@ void	testAVLTree(void) {
 }
 
 void	avl_iterator_basic_test(void) {
-	{
-		ft::AVLTree<int>	tree;
-		tree.insert(1000);
-		tree.insert(-1000);
-		tree.insert(-4000);
-		tree.insert(-2000);
-		tree.insert(32000);
-		tree.insert(12000);
-		tree.insert(42000);
-		tree.insert(42);
-		tree.insert(42);
-		tree.insert(42);
+	ft::AVLTree<int>	tree;
+	tree.insert(1000);
+	tree.insert(-1000);
+	tree.insert(-4000);
+	tree.insert(-2000);
+	tree.insert(32000);
+	tree.insert(12000);
+	tree.insert(42000);
+	tree.insert(42);
+	tree.insert(42);
+	tree.insert(42);
 
-		std::cout << "-------------------" << std::endl;
-		tree.print_2d();
-		tree.print_infix();
-		std::cout << "-------------------" << std::endl;
+	std::cout << "-------------------" << std::endl;
+	tree.print_2d();
+	tree.print_infix();
+	std::cout << "-------------------" << std::endl;
+	{
 		std::cout << "Increasing:" << std::endl;
 		ft::AVLTree<int>::iterator	it;
 		for (it = tree.begin(); it != tree.end(); it++)
@@ -117,9 +117,29 @@ void	avl_iterator_basic_test(void) {
 		it = tree.end();
 		if (it != tree.begin())
 			do std::cout << *--it << std::endl; while (it != tree.begin());
+	}
+	{
+		std::cout << "Increasing:" << std::endl;
+		ft::AVLTree<int>::const_iterator	it;
+		for (it = tree.begin(); it != tree.end(); it++)
+			std::cout << *it << std::endl;
+		std::cout << "-------------------" << std::endl;
+		std::cout << "Decreasing:" << std::endl;
+		it = tree.end();
+		if (it != tree.begin())
+			do std::cout << *--it << std::endl; while (it != tree.begin());
+	}
+	{
 		std::cout << "-------------------" << std::endl;
 		std::cout << "Decreasing (reverse iterator style):" << std::endl;
 		ft::AVLTree<int>::reverse_iterator	rit;
+		for (rit = tree.rbegin(); rit != tree.rend(); rit++)
+			std::cout << *rit << std::endl;
+	}
+	{
+		std::cout << "-------------------" << std::endl;
+		std::cout << "Decreasing (reverse iterator style):" << std::endl;
+		ft::AVLTree<int>::const_reverse_iterator	rit;
 		for (rit = tree.rbegin(); rit != tree.rend(); rit++)
 			std::cout << *rit << std::endl;
 	}

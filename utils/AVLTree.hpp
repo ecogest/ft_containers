@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 12:46:29 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 13:22:59 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,25 +59,26 @@ private:
 		virtual ~AVLNode() { }
 	}; // AVLNode
 
-	template <class T>
+	// NOTE: we need to specify ValueType in order to apply constness if necessary
+	template <class NodeType, class ValueType>
 	class AVLIterator {
 public:
 	typedef typename std::ptrdiff_t                  difference_type; // TODO: see if possible https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
-	typedef typename T::value_type                   value_type;
+	typedef ValueType                   value_type;
 	typedef value_type*                              pointer;
 	typedef value_type&                              reference;
 	typedef typename std::bidirectional_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
 private:
-	typedef T	node_type;
-	typedef T&	node_reference;
-	typedef T*	node_pointer;
+	typedef NodeType	node_type;
+	typedef NodeType&	node_reference;
+	typedef NodeType*	node_pointer;
 	node_pointer	_node;
 public:
 	AVLIterator(): _node(0)                                     { }
 	AVLIterator(node_pointer ptr): _node(ptr)                        { }
 	AVLIterator(AVLIterator const &it): _node(it.base())     { }
 
-	operator AVLIterator<const T>() const { return AVLIterator<const T>(_node); }
+	operator AVLIterator<const NodeType, const ValueType>() const { return AVLIterator<const NodeType, const ValueType>(_node); }
 
 	AVLIterator	&operator=(AVLIterator const &it) { _node = it._node; return (*this); }
 	~AVLIterator()                                { }
@@ -90,11 +91,11 @@ public:
 	AVLIterator	operator++(int) { AVLIterator tmp; tmp._node = _node; _node = _next(_node); return (tmp); }
 
 	// [LegacyInputOperator] < (LegacyOperator), EquallyComparable
-	bool			operator!=(AVLIterator<const T> const &rhs) const { return (_node != rhs.base()); }
+	bool			operator!=(AVLIterator<const NodeType, const ValueType> const &rhs) const { return (_node != rhs.base()); }
 	pointer			operator->() const                                   { return (&_node->data); }
 
 	// [EquallyComparable]
-	bool			operator==(AVLIterator<const T> const &rhs) const { return (_node == rhs.base()); }
+	bool			operator==(AVLIterator<const NodeType, const ValueType> const &rhs) const { return (_node == rhs.base()); }
 
 	// [LegacyIterator]
 	reference		operator*(void) const { return _node->data; }
@@ -148,8 +149,8 @@ public:
 	typedef typename Allocator::template rebind<Node>::other	 allocator_type;
 	typedef typename Allocator::pointer          	 pointer;
 	typedef typename Allocator::const_pointer    	 const_pointer;
-	typedef AVLIterator<Node> 		iterator;
-	typedef AVLIterator<Node const> const_iterator;
+	typedef AVLIterator<Node, value_type> 		iterator;
+	typedef AVLIterator<Node const, value_type const> const_iterator;
 	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
 	typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
 
