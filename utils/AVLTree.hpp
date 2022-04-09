@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 13:22:59 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 13:53:36 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 namespace ft {
 
 // template <class Pair, class Compare = std::less<typename Pair::first_type> >
-template <class Data, class Compare = std::less<Data>, class Allocator = std::allocator<Data> >
+template <class Data, class Compare = std::less<Data>, class Allocator = std::allocator<Data>, bool AreKeysUnique = true >
 class AVLTree {
 
 public:
@@ -166,8 +166,10 @@ public:
 		_end->parent = parent;
 		parent->right = _end;
 	}
-	AVLTree(const Compare &comp = Compare(), const Allocator &alloc = Allocator()): _head(NULL), _comp(comp), _alloc(alloc) { _init_end(); _head = _end; }
-	AVLTree(AVLTree const &copy): _head(copy.head), _comp(copy._comp), _alloc(copy.alloc), _end(copy.end) { }
+	AVLTree(const Compare &comp = Compare(), const Allocator &alloc = Allocator())
+		: _head(NULL), _comp(comp), _alloc(alloc), _are_keys_unique(AreKeysUnique) { _init_end(); _head = _end; }
+	AVLTree(AVLTree const &copy)
+		: _head(copy.head), _end(copy.end), _comp(copy._comp), _alloc(copy.alloc), _are_keys_unique(AreKeysUnique) { }
 	AVLTree	&operator=(AVLTree const &copy) { // shallow copy
 		if (this == &copy)
 			return (*this);
@@ -175,6 +177,7 @@ public:
 		_comp = copy._comp;
 		_alloc = copy._alloc;
 		_end = copy._end;
+		_are_keys_unique = copy._are_keys_unique;
 		return (*this);
 	}
 	virtual ~AVLTree(void) {
@@ -226,6 +229,8 @@ public:
 					anode = &node->right;
 				node = *anode;
 			}
+			if (_are_keys_unique && parent && parent != _end && !_comp(data, parent->data) && !_comp(parent->data, data))
+				return ;
 			*anode = new_node(data);
 			(*anode)->parent = parent;
 			if (parent->parent)
@@ -404,9 +409,10 @@ public:
 
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
 	Node	*_head;
+	Node	*_end;
 	value_compare	_comp;
 	allocator_type	_alloc;
-	Node	*_end;
+	bool const	_are_keys_unique;
 };
 
 }
