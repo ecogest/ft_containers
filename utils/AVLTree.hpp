@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 10:38:54 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 12:05:05 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,14 +155,25 @@ public:
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
-	AVLTree(const Compare &comp = Compare(), const Allocator &alloc = Allocator()): _head(NULL), _comp(comp), _alloc(alloc) { }
-	AVLTree(AVLTree const &copy): _head(copy.head), _comp(copy._comp), _alloc(copy.alloc) { }
+	void	_init_end(void) {
+		_end = _alloc.allocate(1);
+		_end->left = NULL;
+		_end->right = NULL;
+		_end->parent = NULL;
+	}
+	void	_set_end_parentage(Node *parent) {
+		_end->parent = parent;
+		parent->right = _end;
+	}
+	AVLTree(const Compare &comp = Compare(), const Allocator &alloc = Allocator()): _head(NULL), _comp(comp), _alloc(alloc) { _init_end(); _head = _end; }
+	AVLTree(AVLTree const &copy): _head(copy.head), _comp(copy._comp), _alloc(copy.alloc), _end(copy.end) { }
 	AVLTree	&operator=(AVLTree const &copy) { // shallow copy
 		if (this == &copy)
 			return (*this);
 		_head = copy._head;
 		_comp = copy._comp;
 		_alloc = copy._alloc;
+		_end = copy._end;
 		return (*this);
 	}
 	virtual ~AVLTree(void) {
@@ -171,24 +182,24 @@ public:
 
 	// METHODS /////////////////////////////////////////////////////////////////
 	void		print_infix(void) const {
-		if (_head)
+		if (_head != _end || _end->left)
 			_print_infix(_head);
 		std::cout << std::endl;
 	}
 	void	print_2d(void) const {
-		if (_head) {
-			ft::vector<std::string> output_vector;
-			_print_2d(_head, output_vector, 0);
-			std::cout << std::endl;
-			for (size_t i = 0; i < output_vector.size(); i++)
-				std::cout << output_vector[i] << std::endl;
-		}
+		ft::vector<std::string> output_vector;
+		_print_2d(_head, output_vector, 0);
+		std::cout << std::endl;
+		for (size_t i = 0; i < output_vector.size(); i++)
+			std::cout << output_vector[i] << std::endl;
 	}
 
 	size_t	height(void) const {
 		return(height(_head));
 	}
-	static size_t	height(Node *node) {
+	size_t	height(Node *node) const {
+		// if (node == _end) // if we wanted to skip the END node
+		// 	return (height(node->left));
 		if (!node)
 			return (0);
 		return (1 + std::max(height(node->left), height(node->right)));
@@ -200,15 +211,15 @@ public:
 	}
 
 	void	insert(value_type const &data) {
-		if (!_head)
-			_head = new_node(data);
-		else {
+		// if (!_head)
+		// 	_head = new_node(data);
+		// else {
 			Node	*node = _head;
 			Node	*parent = NULL;
 			Node	**anode = NULL;
 			while (node) {
 				parent = node;
-				if (_comp(data, node->data))
+				if (node == _end || _comp(data, node->data))
 					anode = &node->left;
 				else
 					anode = &node->right;
@@ -218,36 +229,36 @@ public:
 			(*anode)->parent = parent;
 			if (parent->parent)
 				_balance(parent->parent);
-		}
+		// }
 	}
 
 	Node	*min_node(void) {
 		Node *node(_head);
-		if (!node)
-			return (NULL);
+		// if (!node)
+		// 	return (NULL);
 		while (node->left)
 			node = node->left;
 		return (node);
 	}
-	Node	*max_node(void) {
-		Node *node(_head);
-		if (!node)
-			return (NULL);
-		while (node->right)
-			node = node->right;
-		return (node);
-	}
+	// Node	*max_node(void) {
+	// 	Node *node(_head);
+	// 	// if (!node)
+	// 	// 	return (NULL);
+	// 	while (node->right)
+	// 		node = node->right;
+	// 	return (node);
+	// }
 	iterator	begin() {
 		return (iterator(min_node()));
 	}
 	const_iterator	begin() const {
 		return (const_iterator(min_node()));
 	}
-	iterator	end() { // FIX: need to create a special node for the end
-		return (NULL);
+	iterator	end() {
+		return (_end);
 	}
 	const_iterator	end() const {
-		return (NULL);
+		return (_end);
 	}
 
 	private:
@@ -316,7 +327,8 @@ public:
 			_balance(node->parent);
 	}
 	void	_delete_node(Node *node) {
-		_alloc.destroy(node);
+		if (node != _end)
+			_alloc.destroy(node);
 		_alloc.deallocate(node, 1);
 	}
 	void	_delete_subtree(Node *node) {
@@ -333,7 +345,8 @@ public:
 		if (!node)
 			return ;
 		_print_infix(node->left);
-		std::cout << "[" << node->data << "]  ";
+		if (node != _end)
+			std::cout << "[" << node->data << "]  ";
 		_print_infix(node->right);
 	}
 	static size_t	_utf8_len(std::string s) {
@@ -351,9 +364,17 @@ public:
 	void	_print_2d(Node *node, ft::vector<std::string> &v, size_t level) const {
 		if (!node)
 			return ;
+		// if (node == _end)
+		// {
+		// 	_print_2d(node->left, v, level);
+		// 	return ;
+		// }
 		std::string	left_padding(" ");
 		std::ostringstream	oss;
-		oss << '|' << node->data << '|';
+		if (node != _end)
+			oss << '|' << node->data << '|';
+		else
+			oss << '|' << "✋" << '|';
 		std::string data(oss.str());
 
 		if (v.size() == level)

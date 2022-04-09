@@ -108,10 +108,15 @@ void	avl_iterator_test(void) {
 		tree.print_2d();
 		tree.print_infix();
 		std::cout << "-------------------" << std::endl;
+		std::cout << "Increasing:" << std::endl;
 		ft::AVLTree<int>::iterator	it;
 		for (it = tree.begin(); it != tree.end(); it++)
 			std::cout << *it << std::endl;
 		std::cout << "-------------------" << std::endl;
+		std::cout << "Decreasing:" << std::endl;
+		it = tree.end();
+		if (it != tree.begin())
+			do std::cout << *--it << std::endl; while (it != tree.begin());
 	}
 }
 
