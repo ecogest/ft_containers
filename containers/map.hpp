@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/07 22:39:37 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 08:48:44 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ public:
 	typedef typename Allocator::const_pointer    	 const_pointer;
 	class value_compare;
 private:
-	typedef AVLTree<value_type, value_compare>		tree_type;
+	typedef AVLTree<value_type, value_compare, allocator_type>		tree_type;
 	typedef typename tree_type::Node				node_type;
 
 public:

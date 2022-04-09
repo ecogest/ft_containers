@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/08 18:41:35 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 08:47:34 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,18 @@
 namespace ft {
 
 // template <class Pair, class Compare = std::less<typename Pair::first_type> >
-template <class Data, class Compare = std::less<Data> >
+template <class Data, class Compare = std::less<Data>, class Allocator = std::allocator<Data> >
 class AVLTree {
+
+	typedef Data	value_type;
+	typedef Compare	value_compare;
+	typedef std::size_t                          	 size_type; // check type
+	typedef std::ptrdiff_t                       	 difference_type; // check type
+	typedef Allocator                            	 allocator_type;
+	typedef value_type&                          	 reference;
+	typedef const value_type&                    	 const_reference;
+	typedef typename Allocator::pointer          	 pointer;
+	typedef typename Allocator::const_pointer    	 const_pointer;
 
 	struct AVLNode {
 		typedef Data	value_type;
@@ -134,17 +144,17 @@ private:
 public:
 
 	typedef AVLNode	Node;
-	typedef Data	value_type;
-	typedef Compare	value_compare;
 
 	typedef AVLIterator<Node> 		iterator;
 	typedef AVLIterator<Node const> const_iterator;
+	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
+	typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
 	AVLTree(const Compare &comp = Compare()): _head(NULL), _comp(comp) { }
 	AVLTree(AVLTree const &copy): _head(copy.head), _comp(copy._comp) { }
-	AVLTree	&operator=(AVLTree const &copy) {
+	AVLTree	&operator=(AVLTree const &copy) { // shallow copy
 		if (this == &copy)
 			return (*this);
 		_head = copy._head;
@@ -332,6 +342,7 @@ public:
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
 	Node	*_head;
 	value_compare	_comp;
+	Node	*_end;
 };
 
 }

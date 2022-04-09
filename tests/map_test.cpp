@@ -124,6 +124,7 @@ void	test_map(void) {
 	M.insert(ft::make_pair<std::string, int>("map", 42));
 	M.insert(ft::make_pair<std::string, int>("vector", 42));
 	M.print();
+	std::map<std::string, std::string> N;
 
 	avl_iterator_test();
 }
