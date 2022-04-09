@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 10:14:22 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/09 10:38:54 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,14 +166,7 @@ public:
 		return (*this);
 	}
 	virtual ~AVLTree(void) {
-		iterator	it = begin();
-		Node	*node;
-		while (it != end()) {
-			node = it.base();
-			it++;
-			_alloc.destroy(node);
-			_alloc.deallocate(node, 1);
-		}
+		_delete_subtree(_head);
 	}
 
 	// METHODS /////////////////////////////////////////////////////////////////
@@ -321,6 +314,20 @@ public:
 
 		if (node->parent)
 			_balance(node->parent);
+	}
+	void	_delete_node(Node *node) {
+		_alloc.destroy(node);
+		_alloc.deallocate(node, 1);
+	}
+	void	_delete_subtree(Node *node) {
+		if (!node)
+			return ;
+		if (node->left)
+			_delete_subtree(node->left);
+		if (node->right)
+			_delete_subtree(node->right);
+		_delete_node(node);
+
 	}
 	void	_print_infix(Node *node) const {
 		if (!node)
