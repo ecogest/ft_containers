@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 13:44:00 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 13:55:10 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,30 +153,24 @@ public:
 	typedef AVLNode	Node;
 
 	// https://www.cplusplus.com/reference/memory/allocator/rebind/
-	typedef typename Allocator::template rebind<Node>::other	 allocator_type;
-	typedef typename Allocator::pointer          	 pointer;
-	typedef typename Allocator::const_pointer    	 const_pointer;
-	typedef AVLIterator<Node, value_type> 		iterator;
-	typedef AVLIterator<Node const, value_type const> const_iterator;
-	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
-	typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
+	typedef typename Allocator::template rebind<Node>::other	allocator_type;
+	typedef typename Allocator::pointer		 					pointer;
+	typedef typename Allocator::const_pointer		 			const_pointer;
+
+	typedef AVLIterator<Node, value_type> 				iterator;
+	typedef AVLIterator<Node const, value_type const>	const_iterator;
+	typedef ft::reverse_iterator<iterator>		 		reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator> 		const_reverse_iterator;
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
-	void	_init_end(void) {
-		_end = _alloc.allocate(1);
-		_end->left = NULL;
-		_end->right = NULL;
-		_end->parent = NULL;
-	}
-	void	_set_end_parentage(Node *parent) {
-		_end->parent = parent;
-		parent->right = _end;
-	}
 	AVLTree(const Compare &comp = Compare(), const Allocator &alloc = Allocator())
-		: _head(NULL), _comp(comp), _alloc(alloc), _are_keys_unique(AreKeysUnique) { _init_end(); _head = _end; }
+		: _head(NULL), _comp(comp), _alloc(alloc), _are_keys_unique(AreKeysUnique) {
+			_init_end(); _head = _end;
+		}
 	AVLTree(AVLTree const &copy)
-		: _head(copy.head), _end(copy.end), _comp(copy._comp), _alloc(copy.alloc), _are_keys_unique(AreKeysUnique) { }
+		: _head(copy.head), _end(copy.end), _comp(copy._comp),
+		_alloc(copy.alloc), _are_keys_unique(AreKeysUnique) { }
 	AVLTree	&operator=(AVLTree const &copy) { // shallow copy
 		if (this == &copy)
 			return (*this);
@@ -215,38 +209,27 @@ public:
 			return (0);
 		return (1 + std::max(height(node->left), height(node->right)));
 	}
-	Node	*new_node(value_type const &data) {
-		Node	*node = _alloc.allocate(1);
-		_alloc.construct(node, data);
-		return (node);
-	}
 
 	void	insert(value_type const &data) {
-		// if (!_head)
-		// 	_head = new_node(data);
-		// else {
-			Node	*node = _head;
-			Node	*parent = NULL;
-			Node	**anode = NULL;
-			while (node) {
-				parent = node;
-				if (node == _end || _comp(data, node->data))
-					anode = &node->left;
-				else if (_comp(node->data, data) || !_are_keys_unique)
-					anode = &node->right;
-				else
-					return ;
-				node = *anode;
-			}
-			// if (_are_keys_unique && parent && parent != _end && !_comp(data, parent->data) && !_comp(parent->data, data))
-			// 	return ;
-			*anode = new_node(data);
-			(*anode)->parent = parent;
-			if (parent->parent)
-				_balance(parent->parent);
-		// }
+		Node	*node = _head;
+		Node	*parent = NULL;
+		Node	**anode = NULL;
+		while (node) {
+			parent = node;
+			if (node == _end || _comp(data, node->data))
+				anode = &node->left;
+			else if (_comp(node->data, data) || !_are_keys_unique)
+				anode = &node->right;
+			else
+				return ;
+			node = *anode;
+		}
+		*anode = _new_node(data);
+		(*anode)->parent = parent;
+		if (parent->parent)
+			_balance(parent->parent);
 	}
-	void	erase(iterator it) { // TODO: basic erasor (need to balance)
+	void	erase(iterator it) {
 		Node	*node = it.base();
 		if (node == _end)
 			return ;
@@ -298,52 +281,31 @@ public:
 		}
 	}
 
-	Node	*min_node(void) {
-		Node *node(_head);
-		// if (!node)
-		// 	return (NULL);
-		while (node->left)
-			node = node->left;
-		return (node);
-	}
-	// Node	*max_node(void) {
-	// 	Node *node(_head);
-	// 	// if (!node)
-	// 	// 	return (NULL);
-	// 	while (node->right)
-	// 		node = node->right;
-	// 	return (node);
-	// }
-	iterator	begin() {
-		return (iterator(min_node()));
-	}
-	const_iterator	begin() const {
-		return (const_iterator(min_node()));
-	}
-	iterator	end() {
-		return (_end);
-	}
-	const_iterator	end() const {
-		return (_end);
-	}
-	reverse_iterator rbegin() {
-		return (reverse_iterator(end()));
-	}
-	const_reverse_iterator rbegin() const {
-		return (const_reverse_iterator(end()));
-	}
-	reverse_iterator rend() {
-		return (reverse_iterator(begin()));
-	}
-	const_reverse_iterator rend() const {
-		return (const_reverse_iterator(begin()));
-	}
+
+	iterator				begin()        { return (iterator(_min_node())); }
+	const_iterator			begin() const  { return (const_iterator(_min_node())); }
+	iterator				end()          { return (_end); }
+	const_iterator			end() const    { return (_end); }
+	reverse_iterator		rbegin()       { return (reverse_iterator(end())); }
+	const_reverse_iterator	rbegin() const { return (const_reverse_iterator(end())); }
+	reverse_iterator		rend()         { return (reverse_iterator(begin())); }
+	const_reverse_iterator	rend() const   { return (const_reverse_iterator(begin())); }
 
 	private:
 
 	// PRIVATE METHODS /////////////////////////////////////////////////////////
 	//
 
+	void	_init_end(void) {
+		_end = _alloc.allocate(1);
+		_end->left = NULL;
+		_end->right = NULL;
+		_end->parent = NULL;
+	}
+	void	_set_end_parentage(Node *parent) {
+		_end->parent = parent;
+		parent->right = _end;
+	}
 	// Returns the address of the branch where the node is attached
 	// can be &_head, &node->parent->left or &node->parent->right
 	// It is used to perform rotations
@@ -404,6 +366,11 @@ public:
 		if (node->parent)
 			_balance(node->parent);
 	}
+	Node	*_new_node(value_type const &data) {
+		Node	*node = _alloc.allocate(1);
+		_alloc.construct(node, data);
+		return (node);
+	}
 	void	_delete_node(Node *node) {
 		if (node != _end)
 			_alloc.destroy(node);
@@ -418,6 +385,12 @@ public:
 			_delete_subtree(node->right);
 		_delete_node(node);
 
+	}
+	Node	*_min_node(void) {
+		Node *node(_head);
+		while (node->left)
+			node = node->left;
+		return (node);
 	}
 	void	_print_infix(Node *node) const {
 		if (!node)
