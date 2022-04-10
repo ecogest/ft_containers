@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 11:14:02 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 12:50:19 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,14 @@ public:
 	//constructs the `map`
 	// 1)
 	map(): _key_comp(), _value_comp(_key_comp), _tree(_value_comp, Allocator()) { }
-	explicit map( const Compare& comp, const Allocator& alloc = Allocator() ):
-		_key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) { }
+	explicit map( const Compare& comp, const Allocator& alloc = Allocator() )
+		: _key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) { }
+	template< class InputIt >
+	map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator())
+		: _key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) {
+			insert(first, last);
+		}
+
 
 	//[(destructor)](https://en.cppreference.com/w/cpp/container/map/~map "cpp/container/map/~map")
 	//destructs the `map`
@@ -109,6 +115,30 @@ public:
 	//
 	//[begin](https://en.cppreference.com/w/cpp/container/map/begin "cpp/container/map/begin")
 	//returns an iterator to the beginning
+	iterator	begin() {
+		return (_tree.begin());
+	}
+	const_iterator	begin() const {
+		return (_tree.begin());
+	}
+	iterator	end() {
+		return (_tree.end());
+	}
+	const_iterator	end() const {
+		return (_tree.end());
+	}
+	reverse_iterator rbegin() {
+		return (reverse_iterator(end()));
+	}
+	const_reverse_iterator rbegin() const {
+		return (const_reverse_iterator(end()));
+	}
+	reverse_iterator rend() {
+		return (reverse_iterator(begin()));
+	}
+	const_reverse_iterator rend() const {
+		return (const_reverse_iterator(begin()));
+	}
 
 	//[end](https://en.cppreference.com/w/cpp/container/map/end "cpp/container/map/end")
 	//returns an iterator to the end
@@ -144,7 +174,13 @@ public:
 	// and a bool denoting whether the insertion took place.
 	// std::pair<iterator, bool> insert( const value_type& value );
 	void insert( const value_type& value ) { _tree.insert(value); }// TODO: remove
-	void print(void) const { _tree.print_2d(); } // TODO: remove
+	// 7)
+	template< class InputIt >
+	void insert( InputIt first, InputIt last ) {
+		while (first != last)
+			insert(*first++);
+	}
+	// void print(void) const { _tree.print_2d(); } // TODO: remove
 
 	//[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
 	//erases elements
