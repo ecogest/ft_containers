@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 13:55:10 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 14:23:07 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ private:
 	typedef NodeType	node_type;
 	typedef NodeType&	node_reference;
 	typedef NodeType*	node_pointer;
+
+	typedef AVLIterator<const NodeType, const ValueType> const	const_iterator;
+
 	node_pointer	_node;
 
 public:
@@ -85,31 +88,28 @@ public:
 	AVLIterator(AVLIterator const &it): _node(it.base()) { }
 	~AVLIterator()                                       { }
 
-	operator AVLIterator<const NodeType, const ValueType>() const {
-		return AVLIterator<const NodeType, const ValueType>(_node); }
+	// operator AVLIterator<const NodeType, const ValueType>() const {
+	// 	return AVLIterator<const NodeType, const ValueType>(_node); }
+	operator const_iterator() const { return (_node); }
 
 	AVLIterator	&operator=(AVLIterator const &it) { _node = it._node; return (*this); }
 
 	// [LegacyBidirectionalIterator] < LegacyForwardIterator
 	AVLIterator	&operator--()   { _node = _prev(_node) ; return (*this); }
-	AVLIterator	operator--(int) {
-		AVLIterator tmp; tmp._node = _node; _node = _prev(_node); return (tmp); }
+	AVLIterator	operator--(int) { AVLIterator tmp(_node); _node = _prev(_node); return (tmp); }
 	// [LegacyForwardIterator] < LegacyIterator, LegacyInputOperator, DefaultConstructible
-	AVLIterator	operator++(int) {
-		AVLIterator tmp; tmp._node = _node; _node = _next(_node); return (tmp); }
+	AVLIterator	operator++(int) { AVLIterator tmp(_node); _node = _next(_node); return (tmp); }
 	// [LegacyInputOperator] < (LegacyOperator), EquallyComparable
-	bool		operator!=(AVLIterator<const NodeType, const ValueType> const &rhs) const {
-		return (_node != rhs.base()); }
-	pointer		operator->() const { return (&_node->data); }
+	bool		operator!=(const_iterator &rhs) const { return (_node != rhs.base()); }
+	pointer		operator->() const                    { return (&_node->data); }
 	// [EquallyComparable]
-	bool		operator==(AVLIterator<const NodeType, const ValueType> const &rhs) const {
-		return (_node == rhs.base()); }
+	bool		operator==(const_iterator &rhs) const { return (_node == rhs.base()); }
 	// [LegacyIterator]
 	reference	operator*(void) const { return _node->data; }
 	AVLIterator	&operator++()         { _node = _next(_node); return (*this); }
 
 	// getter
-	node_pointer	base(void) const      { return _node; }
+	node_pointer	base(void) const  { return _node; }
 
 private:
 	node_pointer	_next(node_pointer node) {
