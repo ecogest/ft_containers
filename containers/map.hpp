@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 14:34:42 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 15:16:05 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,22 @@ public:
 	//
 	//[(constructor)](https://en.cppreference.com/w/cpp/container/map/map "cpp/container/map/map")
 	//constructs the `map`
-	// 1)
+	// 1) Constructs an empty container.
 	map(): _key_comp(), _value_comp(_key_comp), _tree(_value_comp, Allocator()) { }
 	explicit map( const Compare& comp, const Allocator& alloc = Allocator() )
 		: _key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) { }
+	// 2) Constructs the container with the contents of the range [first, last).
 	template< class InputIt >
 	map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator())
 		: _key_comp(comp), _value_comp(comp), _tree(_value_comp, alloc) {
 			insert(first, last);
 		}
-
+	// 3) Copy constructor. Constructs the container with the copy of the contents of other.
+	// it is a deep copy
+	map( const map& other )
+		: _key_comp(other._key_comp), _value_comp(_key_comp), _tree(_value_comp, other.get_allocator()) {
+			insert(other.begin(), other.end());
+		}
 
 	//[(destructor)](https://en.cppreference.com/w/cpp/container/map/~map "cpp/container/map/~map")
 	//destructs the `map`
@@ -96,6 +102,7 @@ public:
 
 	//[get_allocator](https://en.cppreference.com/w/cpp/container/map/get_allocator "cpp/container/map/get allocator")
 	//returns the associated allocator
+	allocator_type get_allocator() const { return _tree.get_allocator(); }
 
 
 	//##### Element access
@@ -162,6 +169,7 @@ public:
 
 	//[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
 	//erases elements
+	void erase( iterator pos ) { _tree.erase(pos); }
 
 	//[swap](https://en.cppreference.com/w/cpp/container/map/swap "cpp/container/map/swap")
 	//swaps the contents

@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 14:34:49 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 15:12:11 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,9 +153,10 @@ public:
 	typedef AVLNode	Node;
 
 	// https://www.cplusplus.com/reference/memory/allocator/rebind/
-	typedef typename Allocator::template rebind<Node>::other	allocator_type;
+	typedef Allocator											allocator_type;
 	typedef typename Allocator::pointer		 					pointer;
 	typedef typename Allocator::const_pointer		 			const_pointer;
+	typedef typename Allocator::template rebind<Node>::other	node_allocator_type;
 
 	typedef AVLIterator<Node, value_type> 				iterator;
 	typedef AVLIterator<Node const, value_type const>	const_iterator;
@@ -165,18 +166,19 @@ public:
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
 	AVLTree(const Compare &comp = Compare(), const Allocator &alloc = Allocator())
-		: _head(NULL), _comp(comp), _alloc(alloc), _are_keys_unique(AreKeysUnique) {
+		: _head(NULL), _comp(comp), _alloc(alloc), _node_alloc(alloc), _are_keys_unique(AreKeysUnique) {
 			_init_end(); _head = _end;
 		}
 	AVLTree(AVLTree const &copy)
-		: _head(copy.head), _end(copy.end), _comp(copy._comp),
-		_alloc(copy.alloc), _are_keys_unique(AreKeysUnique) { }
+		: _head(copy.head), _end(copy.end), _comp(copy._comp), _alloc(copy._alloc),
+		_node_alloc(copy.alloc), _are_keys_unique(AreKeysUnique) { }
 	AVLTree	&operator=(AVLTree const &copy) { // shallow copy
 		if (this == &copy)
 			return (*this);
 		_head = copy._head;
 		_comp = copy._comp;
 		_alloc = copy._alloc;
+		_node_alloc = copy._node_alloc;
 		_end = copy._end;
 		_are_keys_unique = copy._are_keys_unique;
 		return (*this);
@@ -186,6 +188,9 @@ public:
 	}
 
 	// METHODS /////////////////////////////////////////////////////////////////
+	//
+	node_allocator_type get_allocator() const { return _alloc; }
+
 	void		print_infix(void) const {
 		if (_head != _end || _end->left)
 			_print_infix(_head);
@@ -297,7 +302,7 @@ public:
 	//
 
 	void	_init_end(void) {
-		_end = _alloc.allocate(1);
+		_end = _node_alloc.allocate(1);
 		_end->left = NULL;
 		_end->right = NULL;
 		_end->parent = NULL;
@@ -367,14 +372,14 @@ public:
 			_balance(node->parent);
 	}
 	Node	*_new_node(value_type const &data) {
-		Node	*node = _alloc.allocate(1);
-		_alloc.construct(node, data);
+		Node	*node = _node_alloc.allocate(1);
+		_node_alloc.construct(node, data);
 		return (node);
 	}
 	void	_delete_node(Node *node) {
 		if (node != _end)
-			_alloc.destroy(node);
-		_alloc.deallocate(node, 1);
+			_node_alloc.destroy(node);
+		_node_alloc.deallocate(node, 1);
 	}
 	void	_delete_subtree(Node *node) {
 		if (!node)
@@ -386,7 +391,7 @@ public:
 		_delete_node(node);
 
 	}
-	Node	*_min_node(void) {
+	Node	*_min_node(void) const {
 		Node *node(_head);
 		while (node->left)
 			node = node->left;
@@ -444,7 +449,8 @@ public:
 	Node	*_head;
 	Node	*_end;
 	value_compare	_comp;
-	allocator_type	_alloc;
+	allocator_type	_alloc; // we could probably drop this attribute and rebind _node_alloc in get_allocator()
+	node_allocator_type	_node_alloc;
 	bool const	_are_keys_unique;
 };
 
