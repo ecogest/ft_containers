@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 08:54:50 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 11:14:02 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
 
 namespace ft {
 
-template <class Key, class T>
-class mapIterator { // should be a LegacyBidirectionalIterator
-public:
-};
+// template <class Key, class T>
+// class mapIterator { // should be a LegacyBidirectionalIterator
+// public:
+// };
 
 template<
 	class Key,

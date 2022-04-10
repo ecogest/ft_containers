@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 10:53:13 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 11:11:52 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 11:20:48 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,12 +196,14 @@ void	testAVLTree(void) {
 		tree.insert(2);
 		tree.insert(-3);
 		tree.insert(-2);
+		tree.insert(2); // should not insert, it is just a check
 		tree.insert(3);
 		tree.insert(-4);
 		std::cout << "height: " << tree.height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
+		std::cout << "Remove progressively: -4, -3, -2, -1 (to check the balance is done)" << std::endl;
 		tree.erase(tree.begin()); // -4
 		tree.print_2d();
 		tree.erase(tree.begin()); // -3

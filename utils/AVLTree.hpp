@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 10:48:36 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 11:18:46 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,12 +225,14 @@ public:
 				parent = node;
 				if (node == _end || _comp(data, node->data))
 					anode = &node->left;
-				else
+				else if (_comp(node->data, data) || !_are_keys_unique)
 					anode = &node->right;
+				else
+					return ;
 				node = *anode;
 			}
-			if (_are_keys_unique && parent && parent != _end && !_comp(data, parent->data) && !_comp(parent->data, data))
-				return ;
+			// if (_are_keys_unique && parent && parent != _end && !_comp(data, parent->data) && !_comp(parent->data, data))
+			// 	return ;
 			*anode = new_node(data);
 			(*anode)->parent = parent;
 			if (parent->parent)
