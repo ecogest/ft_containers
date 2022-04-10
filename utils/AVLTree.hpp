@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 15:26:40 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 16:00:15 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,16 +172,16 @@ public:
 	AVLTree(AVLTree const &copy)
 		: _head(copy.head), _end(copy.end), _comp(copy._comp), _alloc(copy._alloc),
 		_node_alloc(copy.alloc), _are_keys_unique(AreKeysUnique) { }
-	AVLTree	&operator=(AVLTree const &copy) { // shallow copy
+	AVLTree	&operator=(AVLTree const &copy) { // deep copy
 		if (this == &copy)
 			return (*this);
-		_head = copy._head;
-		_comp = copy._comp;
-		_alloc = copy._alloc;
-		_node_alloc = copy._node_alloc;
-		_end = copy._end;
-		_are_keys_unique = copy._are_keys_unique;
+		clear();
+		for (const_iterator it = copy.begin(); it != copy.end(); it++)
+			insert(*it);
 		return (*this);
+		// Rq:If trees are the same type, the following are already true
+		// _comp = copy._comp; _alloc = copy._alloc; _node_alloc = copy._node_alloc;
+		// _are_keys_unique = copy._are_keys_unique;
 	}
 	virtual ~AVLTree(void) {
 		_delete_subtree(_head);
@@ -191,7 +191,22 @@ public:
 	//
 	node_allocator_type get_allocator() const { return _alloc; }
 
-	void clear() { _delete_subtree(_head); }
+	// Remove everything except the end
+	void clear(void) { clear(_head); }
+	void clear(Node *node) {
+		if (!node)
+			return ;
+		if (node->left)
+			clear(node->left);
+		if (node->right)
+			clear(node->right);
+		if (node == _end) {
+			node->left = NULL; node->right = NULL; node->parent = NULL;
+			_head = _end;
+		}
+		else
+			_delete_node(node);
+	}
 
 	size_t	height(void) const { return(height(_head)); }
 	size_t	height(Node *node) const {
@@ -389,7 +404,6 @@ public:
 		if (node->right)
 			_delete_subtree(node->right);
 		_delete_node(node);
-
 	}
 	Node	*_min_node(void) const {
 		Node *node(_head);
@@ -446,12 +460,12 @@ public:
 	}
 
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
-	Node	*_head;
-	Node	*_end;
-	value_compare	_comp;
-	allocator_type	_alloc; // we could probably drop this attribute and rebind _node_alloc in get_allocator()
+	Node				*_head;
+	Node				*_end;
+	value_compare		_comp;
+	allocator_type		_alloc; // we could probably drop this attribute and rebind _node_alloc in get_allocator()
 	node_allocator_type	_node_alloc;
-	bool const	_are_keys_unique;
+	bool const			_are_keys_unique;
 };
 
 }

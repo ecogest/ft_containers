@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 15:25:04 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 15:50:44 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,9 @@ public:
 
 	//[operator=](https://en.cppreference.com/w/cpp/container/map/operator%3D "cpp/container/map/operator=")
 	//assigns values to the container
+	map& operator=( const map& other ) {
+		if (this == &other) return (*this); _tree = other._tree; return (*this);
+	}
 
 	//[get_allocator](https://en.cppreference.com/w/cpp/container/map/get_allocator "cpp/container/map/get allocator")
 	//returns the associated allocator

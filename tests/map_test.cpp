@@ -42,7 +42,7 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << *it << " ";
 		std::cout << std::endl;
 	}
-	{ // copy constructor
+	{ // copy constructor and operator =
 		std::cout << "-------------------" << std::endl;
 		std::cout << "Copy constructor" << std::endl;
 		NS::map<size_t, std::string>	N(M);
@@ -50,8 +50,11 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << *it << " ";
 		std::cout << std::endl;
 		std::cout << "-------------------" << std::endl;
-		std::cout << "Copy constructor: check this is deep copy" << std::endl;
-		NS::map<size_t, std::string>	O(N);
+		std::cout << "Copy constructor and assignation: check this is deep copy" << std::endl;
+		NS::map<size_t, std::string>	O(N); // COPY CONSTRUCTOR
+		NS::map<size_t, std::string>	P;
+		P.insert(NS::make_pair<size_t, std::string>(42, "hi42!"));
+		P = N; // ASSIGNATION
 		N.erase(N.begin());
 		N.erase(N.begin());
 		N.erase(N.begin());
@@ -60,6 +63,9 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << *it << " ";
 		std::cout << std::endl;
 		for (NS::map<size_t, std::string>::const_reverse_iterator it = O.rbegin(); it != O.rend(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		for (NS::map<size_t, std::string>::const_reverse_iterator it = P.rbegin(); it != P.rend(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
 
