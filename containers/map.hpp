@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 12:50:19 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 13:29:30 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,39 +115,21 @@ public:
 	//
 	//[begin](https://en.cppreference.com/w/cpp/container/map/begin "cpp/container/map/begin")
 	//returns an iterator to the beginning
-	iterator	begin() {
-		return (_tree.begin());
-	}
-	const_iterator	begin() const {
-		return (_tree.begin());
-	}
-	iterator	end() {
-		return (_tree.end());
-	}
-	const_iterator	end() const {
-		return (_tree.end());
-	}
-	reverse_iterator rbegin() {
-		return (reverse_iterator(end()));
-	}
-	const_reverse_iterator rbegin() const {
-		return (const_reverse_iterator(end()));
-	}
-	reverse_iterator rend() {
-		return (reverse_iterator(begin()));
-	}
-	const_reverse_iterator rend() const {
-		return (const_reverse_iterator(begin()));
-	}
-
+	iterator		begin()       { return (_tree.begin()); }
+	const_iterator	begin() const { return (_tree.begin()); }
 	//[end](https://en.cppreference.com/w/cpp/container/map/end "cpp/container/map/end")
 	//returns an iterator to the end
-
+	iterator		end()       { return (_tree.end()); }
+	const_iterator	end() const { return (_tree.end()); }
 	//[rbegin](https://en.cppreference.com/w/cpp/container/map/rbegin "cpp/container/map/rbegin")
 	//returns a reverse iterator to the beginning
-
+	reverse_iterator 		rbegin()       { return (reverse_iterator(end())); }
+	const_reverse_iterator	rbegin() const { return (const_reverse_iterator(end())); }
 	//[rend](https://en.cppreference.com/w/cpp/container/map/rend "cpp/container/map/rend")
 	//returns a reverse iterator to the end
+	reverse_iterator		rend()       { return (reverse_iterator(begin())); }
+	const_reverse_iterator	rend() const { return (const_reverse_iterator(begin())); }
+
 
 
 	//##### Capacity
