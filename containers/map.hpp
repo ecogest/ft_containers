@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 13:29:30 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 13:31:45 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ public:
 	class value_compare;
 private:
 	typedef AVLTree<value_type, value_compare, allocator_type>		tree_type;
-	typedef typename tree_type::Node				node_type;
+	typedef typename tree_type::Node								node_type;
 
 public:
 
@@ -69,7 +69,8 @@ public:
 			typedef value_type	first_argument_type;
 			typedef value_type	second_argument_type;
 			typedef bool	result_type;
-			bool operator()(first_argument_type const &a, first_argument_type const &b) const { return comp(a.first, b.first); }
+			bool operator()(first_argument_type const &a, first_argument_type const &b) const
+			{ return comp(a.first, b.first); }
 		protected:
 			key_compare	comp;
 			value_compare(key_compare c): comp(c) { }

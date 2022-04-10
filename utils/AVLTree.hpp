@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 11:18:46 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 13:44:00 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ template <class Data, class Compare = std::less<Data>, class Allocator = std::al
 class AVLTree {
 
 public:
-	typedef Data	value_type;
-	typedef Compare	value_compare;
-	typedef std::size_t                          	 size_type; // check type
-	typedef std::ptrdiff_t                       	 difference_type; // check type
-	typedef value_type&                          	 reference;
-	typedef const value_type&                    	 const_reference;
+	typedef Data				value_type;
+	typedef Compare				value_compare;
+	typedef std::size_t			size_type; // check type
+	typedef std::ptrdiff_t		difference_type; // check type
+	typedef value_type&			reference;
+	typedef const value_type&	const_reference;
 
 private:
 	struct AVLNode {
@@ -44,9 +44,12 @@ private:
 		Node		*right;
 		Node		*parent;
 
-		AVLNode(void): data(), left(NULL), right(NULL), parent(NULL) { }
-		AVLNode(const Data &data): data(data), left(NULL), right(NULL), parent(NULL) { }
-		AVLNode(Node const &copy): data(copy.data), left(copy.left), right(copy.right), parent(copy.parent) { }
+		AVLNode(void)
+			: data(), left(NULL), right(NULL), parent(NULL) { }
+		AVLNode(const Data &data)
+			: data(data), left(NULL), right(NULL), parent(NULL) { }
+		AVLNode(Node const &copy)
+			: data(copy.data), left(copy.left), right(copy.right), parent(copy.parent) { }
 		Node	&operator=(Node const &copy) {
 			if (this == &copy)
 				return (*this);
@@ -62,47 +65,51 @@ private:
 	// NOTE: we need to specify ValueType in order to apply constness if necessary
 	template <class NodeType, class ValueType>
 	class AVLIterator {
+
 public:
-	typedef typename std::ptrdiff_t                  difference_type; // TODO: see if possible https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
-	typedef ValueType                   value_type;
-	typedef value_type*                              pointer;
-	typedef value_type&                              reference;
-	typedef typename std::bidirectional_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
+	typedef typename std::ptrdiff_t					difference_type; // TODO: see if possible https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
+	typedef ValueType								value_type;
+	typedef value_type*								pointer;
+	typedef value_type&								reference;
+	typedef typename ft::bidirectional_iterator_tag	iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
+
 private:
 	typedef NodeType	node_type;
 	typedef NodeType&	node_reference;
 	typedef NodeType*	node_pointer;
 	node_pointer	_node;
-public:
-	AVLIterator(): _node(0)                                     { }
-	AVLIterator(node_pointer ptr): _node(ptr)                        { }
-	AVLIterator(AVLIterator const &it): _node(it.base())     { }
 
-	operator AVLIterator<const NodeType, const ValueType>() const { return AVLIterator<const NodeType, const ValueType>(_node); }
+public:
+	AVLIterator(): _node(0)                              { }
+	AVLIterator(node_pointer ptr): _node(ptr)            { }
+	AVLIterator(AVLIterator const &it): _node(it.base()) { }
+	~AVLIterator()                                       { }
+
+	operator AVLIterator<const NodeType, const ValueType>() const {
+		return AVLIterator<const NodeType, const ValueType>(_node); }
 
 	AVLIterator	&operator=(AVLIterator const &it) { _node = it._node; return (*this); }
-	~AVLIterator()                                { }
 
 	// [LegacyBidirectionalIterator] < LegacyForwardIterator
 	AVLIterator	&operator--()   { _node = _prev(_node) ; return (*this); }
-	AVLIterator	operator--(int) { AVLIterator tmp; tmp._node = _node; _node = _prev(_node); return (tmp); }
-
+	AVLIterator	operator--(int) {
+		AVLIterator tmp; tmp._node = _node; _node = _prev(_node); return (tmp); }
 	// [LegacyForwardIterator] < LegacyIterator, LegacyInputOperator, DefaultConstructible
-	AVLIterator	operator++(int) { AVLIterator tmp; tmp._node = _node; _node = _next(_node); return (tmp); }
-
+	AVLIterator	operator++(int) {
+		AVLIterator tmp; tmp._node = _node; _node = _next(_node); return (tmp); }
 	// [LegacyInputOperator] < (LegacyOperator), EquallyComparable
-	bool			operator!=(AVLIterator<const NodeType, const ValueType> const &rhs) const { return (_node != rhs.base()); }
-	pointer			operator->() const                                   { return (&_node->data); }
-
+	bool		operator!=(AVLIterator<const NodeType, const ValueType> const &rhs) const {
+		return (_node != rhs.base()); }
+	pointer		operator->() const { return (&_node->data); }
 	// [EquallyComparable]
-	bool			operator==(AVLIterator<const NodeType, const ValueType> const &rhs) const { return (_node == rhs.base()); }
-
+	bool		operator==(AVLIterator<const NodeType, const ValueType> const &rhs) const {
+		return (_node == rhs.base()); }
 	// [LegacyIterator]
-	reference		operator*(void) const { return _node->data; }
-	AVLIterator		&operator++()         { _node = _next(_node); return (*this); }
+	reference	operator*(void) const { return _node->data; }
+	AVLIterator	&operator++()         { _node = _next(_node); return (*this); }
 
 	// getter
-	node_pointer	base(void) const     { return _node; }
+	node_pointer	base(void) const      { return _node; }
 
 private:
 	node_pointer	_next(node_pointer node) {
