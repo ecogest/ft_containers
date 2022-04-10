@@ -187,6 +187,31 @@ void	testAVLTree(void) {
 		tree.erase(it);
 		tree.print_2d();
 	}
+	{ // delete 2 (check balance)
+		std::cout << "-------------------" << std::endl;
+		ft::AVLTree<int>	tree;
+		tree.insert(0);
+		tree.insert(-1);
+		tree.insert(1);
+		tree.insert(2);
+		tree.insert(-3);
+		tree.insert(-2);
+		tree.insert(3);
+		tree.insert(-4);
+		std::cout << "height: " << tree.height() << std::endl;
+		tree.print_infix();
+		tree.print_2d();
+		std::cout << "-------------------" << std::endl;
+		tree.erase(tree.begin()); // -4
+		tree.print_2d();
+		tree.erase(tree.begin()); // -3
+		tree.print_2d();
+		tree.erase(tree.begin()); // -2
+		tree.print_2d();
+		tree.erase(tree.begin()); // -1
+		tree.print_2d();
+		std::cout << "-------------------" << std::endl;
+	}
 }
 
 void	avl_iterator_basic_test(void) {

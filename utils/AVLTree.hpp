@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/09 16:22:56 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 10:48:36 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,8 +279,14 @@ public:
 					node->right->parent = next_node;
 				next_node->parent = node->parent;
 			}
+			if (*parent_anchor)
+				_balance(*parent_anchor);
+			else if (parent)
+				_balance(parent);
+			else
+				_balance(_head);
+			_delete_node(node);
 		}
-		_delete_node(node);
 	}
 
 	Node	*min_node(void) {
