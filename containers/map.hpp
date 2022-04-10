@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 13:31:45 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 14:34:42 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 #include "AVLTree.hpp"
 
 namespace ft {
-
-// template <class Key, class T>
-// class mapIterator { // should be a LegacyBidirectionalIterator
-// public:
-// };
 
 template<
 	class Key,
@@ -53,10 +48,10 @@ private:
 
 public:
 
-	// typedef mapIterator<Key, T>                  	 iterator; // not sure
-	// typedef mapIterator<const Key, const T>      	 const_iterator; // not sure
-	typedef typename tree_type::iterator           	 iterator; // not sure
-	typedef typename tree_type::const_iterator     	 const_iterator; // not sure
+	// typedef mapIterator<Key, T>                  	 iterator; // should be a LegacyBidirectionalIterator
+	// typedef mapIterator<const Key, const T>      	 const_iterator;
+	typedef typename tree_type::iterator           	 iterator;
+	typedef typename tree_type::const_iterator     	 const_iterator;
 	typedef ft::reverse_iterator<iterator>       	 reverse_iterator; // think of the ft:: part or the linter won't like
 	typedef ft::reverse_iterator<const_iterator> 	 const_reverse_iterator;
 
