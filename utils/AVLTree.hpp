@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 15:12:11 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 15:26:40 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,22 +191,9 @@ public:
 	//
 	node_allocator_type get_allocator() const { return _alloc; }
 
-	void		print_infix(void) const {
-		if (_head != _end || _end->left)
-			_print_infix(_head);
-		std::cout << std::endl;
-	}
-	void	print_2d(void) const {
-		ft::vector<std::string> output_vector;
-		_print_2d(_head, output_vector, 0);
-		std::cout << std::endl;
-		for (size_t i = 0; i < output_vector.size(); i++)
-			std::cout << output_vector[i] << std::endl;
-	}
+	void clear() { _delete_subtree(_head); }
 
-	size_t	height(void) const {
-		return(height(_head));
-	}
+	size_t	height(void) const { return(height(_head)); }
 	size_t	height(Node *node) const {
 		// if (node == _end) // if we wanted to skip the END node
 		// 	return (height(node->left));
@@ -295,6 +282,19 @@ public:
 	const_reverse_iterator	rbegin() const { return (const_reverse_iterator(end())); }
 	reverse_iterator		rend()         { return (reverse_iterator(begin())); }
 	const_reverse_iterator	rend() const   { return (const_reverse_iterator(begin())); }
+
+	void		print_infix(void) const {
+		if (_head != _end || _end->left)
+			_print_infix(_head);
+		std::cout << std::endl;
+	}
+	void	print_2d(void) const {
+		ft::vector<std::string> output_vector;
+		_print_2d(_head, output_vector, 0);
+		std::cout << std::endl;
+		for (size_t i = 0; i < output_vector.size(); i++)
+			std::cout << output_vector[i] << std::endl;
+	}
 
 	private:
 

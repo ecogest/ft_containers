@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 15:16:05 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/10 15:25:04 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ public:
 
 	//[(destructor)](https://en.cppreference.com/w/cpp/container/map/~map "cpp/container/map/~map")
 	//destructs the `map`
+	~map() { }
 
 	//[operator=](https://en.cppreference.com/w/cpp/container/map/operator%3D "cpp/container/map/operator=")
 	//assigns values to the container
@@ -151,6 +152,9 @@ public:
 	//
 	//[clear](https://en.cppreference.com/w/cpp/container/map/clear "cpp/container/map/clear")
 	//clears the contents
+	void clear() {
+		_tree.clear();
+	}
 
 	//[insert](https://en.cppreference.com/w/cpp/container/map/insert "cpp/container/map/insert")
 	//inserts elements or nodes (since C++17)
