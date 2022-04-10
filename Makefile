@@ -1,7 +1,7 @@
 NAME=ft_containers
 
 CXX=c++
-CPPFLAGS=-Icontainers -Iutils -Itest
+CPPFLAGS=-Icontainers -Iutils -Itests
 CXXFLAGS=-std=c++98 -Wall -Werror -Wextra -g
 # TODO: remove -g
 CXXFLAGS+=-fsanitize=address
@@ -32,6 +32,7 @@ TESTS=$(addprefix tests/, \
 			stack_test.cpp \
 			vector_test.cpp \
 			utils_test.cpp \
+			avl_test.cpp \
 			)
 
 all: $(NAME) std_containers
