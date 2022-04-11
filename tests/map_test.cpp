@@ -213,6 +213,74 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << *it << " ";
 		std::cout << std::endl;
 	}
+	{ // bounds
+		NS::map<size_t, std::string> N;
+		for (size_t i = 0; i < 5; i+=2)
+			N[i] = "hello";
+		if (N.lower_bound(0) != N.end()) std::cout << *N.lower_bound(0) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(1) != N.end()) std::cout << *N.lower_bound(1) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(2) != N.end()) std::cout << *N.lower_bound(2) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(3) != N.end()) std::cout << *N.lower_bound(3) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(4) != N.end()) std::cout << *N.lower_bound(4) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(5) != N.end()) std::cout << *N.lower_bound(5) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(6) != N.end()) std::cout << *N.lower_bound(6) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(7) != N.end()) std::cout << *N.lower_bound(7) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(8) != N.end()) std::cout << *N.lower_bound(8) << " "; else std::cout << "X" << " ";
+		if (N.lower_bound(9) != N.end()) std::cout << *N.lower_bound(9) << " "; else std::cout << "X" << " ";
+		std::cout << std::endl;
+		NS::map<size_t, std::string> const P(N);
+		if (P.lower_bound(0) != P.end()) std::cout << *P.lower_bound(0) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(1) != P.end()) std::cout << *P.lower_bound(1) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(2) != P.end()) std::cout << *P.lower_bound(2) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(3) != P.end()) std::cout << *P.lower_bound(3) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(4) != P.end()) std::cout << *P.lower_bound(4) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(5) != P.end()) std::cout << *P.lower_bound(5) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(6) != P.end()) std::cout << *P.lower_bound(6) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(7) != P.end()) std::cout << *P.lower_bound(7) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(8) != P.end()) std::cout << *P.lower_bound(8) << " "; else std::cout << "X" << " ";
+		if (P.lower_bound(9) != P.end()) std::cout << *P.lower_bound(9) << " "; else std::cout << "X" << " ";
+		std::cout << std::endl;
+		if (N.upper_bound(0) != N.end()) std::cout << *N.upper_bound(0) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(1) != N.end()) std::cout << *N.upper_bound(1) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(2) != N.end()) std::cout << *N.upper_bound(2) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(3) != N.end()) std::cout << *N.upper_bound(3) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(4) != N.end()) std::cout << *N.upper_bound(4) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(5) != N.end()) std::cout << *N.upper_bound(5) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(6) != N.end()) std::cout << *N.upper_bound(6) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(7) != N.end()) std::cout << *N.upper_bound(7) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(8) != N.end()) std::cout << *N.upper_bound(8) << " "; else std::cout << "X" << " ";
+		if (N.upper_bound(9) != N.end()) std::cout << *N.upper_bound(9) << " "; else std::cout << "X" << " ";
+		std::cout << std::endl;
+		if (P.upper_bound(0) != P.end()) std::cout << *P.upper_bound(0) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(1) != P.end()) std::cout << *P.upper_bound(1) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(2) != P.end()) std::cout << *P.upper_bound(2) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(3) != P.end()) std::cout << *P.upper_bound(3) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(4) != P.end()) std::cout << *P.upper_bound(4) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(5) != P.end()) std::cout << *P.upper_bound(5) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(6) != P.end()) std::cout << *P.upper_bound(6) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(7) != P.end()) std::cout << *P.upper_bound(7) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(8) != P.end()) std::cout << *P.upper_bound(8) << " "; else std::cout << "X" << " ";
+		if (P.upper_bound(9) != P.end()) std::cout << *P.upper_bound(9) << " "; else std::cout << "X" << " ";
+		std::cout << std::endl;
+		typedef NS::map<size_t, std::string>::iterator iterator;
+		std::cout << "--- Equal rage --- " << std::endl;
+		NS::pair<iterator, iterator> p = N.equal_range(0);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+		p = N.equal_range(1);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+		p = N.equal_range(2);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+		p = N.equal_range(3);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+		p = N.equal_range(4);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+		p = N.equal_range(7);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+		p = N.equal_range(8);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+		p = N.equal_range(9);
+		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
+	}
 }
 
 // See avl_test for more details concerning the structure

@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 19:34:03 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 21:25:01 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,12 +238,42 @@ public:
 
 	//[equal_range](https://en.cppreference.com/w/cpp/container/map/equal_range "cpp/container/map/equal range")
 	//returns range of elements matching a specific key
+	ft::pair<iterator,iterator> equal_range( const Key& key ) {
+		return (ft::make_pair<iterator, iterator>(lower_bound(key), upper_bound(key)));
+	}
+	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
+		return (ft::make_pair<iterator, iterator>(lower_bound(key), upper_bound(key)));
+	}
 
 	//[lower_bound](https://en.cppreference.com/w/cpp/container/map/lower_bound "cpp/container/map/lower bound")
 	//returns an iterator to the first element _not less_ than the given key
+	iterator lower_bound( const Key& key ) {
+		iterator it = begin();
+		while (it != end() && _key_comp(it->first, key))
+			it++;
+		return (it);
+	}
+	const_iterator lower_bound( const Key& key ) const {
+		const_iterator it = begin();
+		while (it != end() && _key_comp(it->first, key))
+			it++;
+		return (it);
+	}
 
 	//[upper_bound](https://en.cppreference.com/w/cpp/container/map/upper_bound "cpp/container/map/upper bound")
 	//returns an iterator to the first element _greater_ than the given key
+	iterator upper_bound( const Key& key ) {
+		iterator it = begin();
+		while (it != end() && !_key_comp(key, it->first))
+			it++;
+		return (it);
+	}
+	const_iterator upper_bound( const Key& key ) const {
+		const_iterator it = begin();
+		while (it != end() && !_key_comp(key, it->first))
+			it++;
+		return (it);
+	}
 
 
 	//##### OBSERVERS //////////////////////////////////////////////////////////
