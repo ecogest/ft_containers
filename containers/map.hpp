@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 18:04:02 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 19:27:02 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,9 +202,15 @@ public:
 
 	//[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
 	//erases elements
+	// 1) Removes the element at pos
+	// 2) Removes the elements in the range [first; last)
+	// 3) Removes the element (if one exists) with the key equivalent to key.
 	void erase( iterator pos ) { _tree.erase(pos); } // (1)
-	// void erase( iterator first, iterator last ); // (2) TODO:
-	size_type erase( const Key& key ) { // (3)
+	void erase( iterator first, iterator last ) {    // (2)
+		while (first != last)
+			erase(first++);
+	}
+	size_type erase( const Key& key ) {              // (3)
 		iterator it = find(key);
 		if (it != end()) {
 			erase(it);

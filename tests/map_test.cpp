@@ -180,6 +180,32 @@ void constructor_insert_and_iterator_test(void) {
 		}
 		std::cout << std::endl;
 	}
+	{ // erase
+		NS::map<size_t, std::string> N;
+		for (size_t i = 0; i < 12; i++)
+			N[i] = "hello";
+		N.erase(++(N.begin()), --(N.end()));
+		for (NS::map<size_t, std::string>::const_iterator it = N.begin(); it != N.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		N.erase(N.begin(), N.end());
+		for (NS::map<size_t, std::string>::const_iterator it = N.begin(); it != N.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		for (size_t i = 0; i < 12; i++)
+			N[i] = "hello";
+		std::cout << N.erase(7) << std::endl;
+		std::cout << N.erase(0) << std::endl;
+		for (NS::map<size_t, std::string>::const_iterator it = N.begin(); it != N.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		std::cout << N.erase(0) << std::endl;
+		N.erase(--(N.end()));
+		N.erase(N.begin());
+		for (NS::map<size_t, std::string>::const_iterator it = N.begin(); it != N.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
 }
 
 // See avl_test for more details concerning the structure
