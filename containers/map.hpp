@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 17:46:15 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 17:59:22 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ public:
 
 	//[max_size](https://en.cppreference.com/w/cpp/container/map/max_size "cpp/container/map/max size")
 	//returns the maximum possible number of elements
-
+	size_type max_size() const { return _tree.get_node_allocator().max_size(); }
 
 	//##### MODIFIERS //////////////////////////////////////////////////////////
 	//
@@ -202,7 +202,7 @@ public:
 	//[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
 	//erases elements
 	void erase( iterator pos ) { _tree.erase(pos); } // (1)
-	// void erase( iterator first, iterator last ); // (2)
+	// void erase( iterator first, iterator last ); // (2) TODO:
 	size_type erase( const Key& key ) { // (3)
 		iterator it = find(key);
 		if (it != end()) {

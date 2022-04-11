@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 17:43:59 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 18:00:28 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,10 @@ public:
 
 	// METHODS /////////////////////////////////////////////////////////////////
 	//
-	allocator_type	get_allocator() const { return _alloc; }
-	void			clear()               { _clear(_head); }
-	size_type		size() const          { return (_size(_head)); }
+	allocator_type		get_allocator() const      { return _alloc; }
+	node_allocator_type	get_node_allocator() const { return _node_alloc; }
+	void				clear()                    { _clear(_head); }
+	size_type			size() const               { return (_size(_head)); }
 
 	template <class Key, class KeyGetter, class Comp>
 	iterator find( const Key& k, KeyGetter const &key, Comp const &comp ) const {
