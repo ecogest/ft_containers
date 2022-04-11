@@ -99,6 +99,33 @@ void constructor_insert_and_iterator_test(void) {
 		else
 			std::cout << "NOT FOUND" << std::endl;
 	}
+	{ // at
+		std::cout << M.at(0) << std::endl;
+		std::cout << M.at(1) << std::endl;
+		std::cout << M.at(2) << std::endl;
+		std::cout << M.at(7) << std::endl;
+		M.at(7) = "WWW";
+		std::cout << M.at(7) << std::endl;
+		try {
+			std::cout << M.at(42) << std::endl;
+		}
+		catch (std::out_of_range const &except) {
+			std::cout << except.what() << std::endl;
+		}
+	}
+	{ // const at
+		NS::map<size_t, std::string> const N(M);
+		std::cout << N.at(0) << std::endl;
+		std::cout << N.at(1) << std::endl;
+		std::cout << N.at(2) << std::endl;
+		std::cout << N.at(7) << std::endl;
+		try {
+			std::cout << N.at(42) << std::endl;
+		}
+		catch (std::out_of_range const &except) {
+			std::cout << except.what() << std::endl;
+		}
+	}
 }
 
 // See avl_test for more details concerning the structure

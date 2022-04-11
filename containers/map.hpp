@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 15:04:11 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:20:43 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,20 @@ public:
 	//
 	//[at](https://en.cppreference.com/w/cpp/container/map/at "cpp/container/map/at")
 	//access specified element with bounds checking
-	// T& at( const Key& key );
+	T& at( const Key& key ) {
+		iterator	it = find(key);
+		if (it == end())
+			throw std::out_of_range("map::at:  key not found"); // TODO: check if same error on linux
+		else
+			return (it->second);
+	}
+	const T& at( const Key& key ) const {
+		const_iterator	it = find(key);
+		if (it == end())
+			throw std::out_of_range("map::at:  key not found");
+		else
+			return (it->second);
+	}
 
 	//[operator[]](https://en.cppreference.com/w/cpp/container/map/operator_at "cpp/container/map/operator at")
 	//access or insert specified element
