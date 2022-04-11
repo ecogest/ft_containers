@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 15:42:51 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 17:43:59 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,29 +192,9 @@ public:
 
 	// METHODS /////////////////////////////////////////////////////////////////
 	//
-	node_allocator_type get_allocator() const { return _alloc; }
-
-	// Remove everything except the end
-	void clear(void) { clear(_head); }
-	void clear(node_type *node) {
-		if (!node)
-			return ;
-		if (node->left)
-			clear(node->left);
-		if (node->right)
-			clear(node->right);
-		if (node == _end) {
-			node->left = NULL; node->right = NULL; node->parent = NULL;
-			_head = _end;
-		}
-		else
-			_delete_node(node);
-	}
-
-	size_type	height(void) const { return(height(_head)); }
-	size_type	height(node_type *node) const {
-		return (node ? 1 + std::max(height(node->left), height(node->right)): 0);
-	}
+	allocator_type	get_allocator() const { return _alloc; }
+	void			clear()               { _clear(_head); }
+	size_type		size() const          { return (_size(_head)); }
 
 	template <class Key, class KeyGetter, class Comp>
 	iterator find( const Key& k, KeyGetter const &key, Comp const &comp ) const {
@@ -353,6 +333,33 @@ public:
 			root = &node->parent->right;
 		return (root);
 	}
+	size_type	_size(node_type *node) const {
+		if (!node)
+			return (0);
+		else if (node == _end)
+			return (_size(node->left));
+		else
+			return (1 + _size(node->left) + _size(node->right));
+	}
+	// size_type	_height(void) const { return(_height(_head)); }
+	size_type	_height(node_type *node) const {
+		return (node ? 1 + std::max(_height(node->left), _height(node->right)): 0);
+	}
+	// Remove everything except the end
+	void _clear(node_type *node) {
+		if (!node)
+			return ;
+		if (node->left)
+			_clear(node->left);
+		if (node->right)
+			_clear(node->right);
+		if (node == _end) {
+			node->left = NULL; node->right = NULL; node->parent = NULL;
+			_head = _end;
+		}
+		else
+			_delete_node(node);
+	}
 	// Right son takes place of the node
 	node_type	*_left_rotate(node_type *old_parent) {
 		node_type	*new_parent = old_parent->right;
@@ -381,18 +388,18 @@ public:
 	}
 	void	_balance(node_type *node) {
 		// RIGHT IMBALANCE / LEFT ROTATION
-		if (height(node->right) > height(node->left) + 1 && height(node->right->right) >= height(node->right->left))
+		if (_height(node->right) > _height(node->left) + 1 && _height(node->right->right) >= _height(node->right->left))
 			node = _left_rotate(node);
 		// LEFT IMBALANCE / RIGHT ROTATION
-		else if (height(node->left) > height(node->right) + 1 && height(node->left->left) >= height(node->left->right))
+		else if (_height(node->left) > _height(node->right) + 1 && _height(node->left->left) >= _height(node->left->right))
 			node = _right_rotate(node);
 		// RL IMBALANCE / RL ROTATION
-		else if (height(node->right) > height(node->left) + 1 && height(node->right->right) < height(node->right->left)) {
+		else if (_height(node->right) > _height(node->left) + 1 && _height(node->right->right) < _height(node->right->left)) {
 			_right_rotate(node->right);
 			node = _left_rotate(node);
 		}
 		// LR IMBALANCE / LR ROTATION
-		else if (height(node->left) > height(node->right) + 1 && height(node->left->left) < height(node->left->right)) {
+		else if (_height(node->left) > _height(node->right) + 1 && _height(node->left->left) < _height(node->left->right)) {
 			_left_rotate(node->left);
 			node = _right_rotate(node);
 		}

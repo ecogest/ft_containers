@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 17:09:31 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 17:46:15 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ public:
 
 	//[size](https://en.cppreference.com/w/cpp/container/map/size "cpp/container/map/size")
 	//returns the number of elements
+	size_type size() const { return _tree.size(); }
 
 	//[max_size](https://en.cppreference.com/w/cpp/container/map/max_size "cpp/container/map/max size")
 	//returns the maximum possible number of elements
@@ -189,7 +190,7 @@ public:
 		return (_tree.insert(value));
 	}
 
-	// iterator insert( iterator hint, const value_type& value ) { // (4)
+	// iterator insert( iterator hint, const value_type& value ) { // (4) TODO:
 	// }
 
 	template< class InputIt >
@@ -200,7 +201,17 @@ public:
 
 	//[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
 	//erases elements
-	void erase( iterator pos ) { _tree.erase(pos); }
+	void erase( iterator pos ) { _tree.erase(pos); } // (1)
+	// void erase( iterator first, iterator last ); // (2)
+	size_type erase( const Key& key ) { // (3)
+		iterator it = find(key);
+		if (it != end()) {
+			erase(it);
+			return (1);
+		}
+		else
+			return (0);
+	}
 
 	//[swap](https://en.cppreference.com/w/cpp/container/map/swap "cpp/container/map/swap")
 	//swaps the contents

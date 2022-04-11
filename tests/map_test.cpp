@@ -81,12 +81,6 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << *M.find(42) << std::endl;
 		else
 			std::cout << "NOT FOUND" << std::endl;
-		// try {
-		// 	std::cout << *M.find(42) << std::endl;
-		// }
-		// catch (std::out_of_range const &except) {
-		// 	std::cout << except.what() << std::endl;
-		// }
 	}
 	{ // const find
 		NS::map<size_t, std::string> const N(M);
@@ -163,6 +157,23 @@ void constructor_insert_and_iterator_test(void) {
 		std::cout << (N[42] = "!!") << std::endl;
 		for (NS::map<size_t, std::string>::const_iterator it = N.begin(); it != N.end(); it++)
 			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+	{ // size()
+		NS::map<size_t, std::string> N;
+		for (size_t i = 0; i < 12; i++) {
+			N[i] = "hello";
+			std::cout << N.size() << " ";
+		}
+		std::cout << std::endl;
+		N.clear();
+		std::cout << N.size() << std::endl;;
+		for (size_t i = 0; i < 12; i++) { N[i] = "hello"; }
+		std::cout << N.size() << std::endl;;
+		for (size_t i = 0; i < 12; i++) {
+			N.erase(i);
+			std::cout << N.size() << " ";
+		}
 		std::cout << std::endl;
 	}
 }

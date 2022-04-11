@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/10 10:53:13 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 11:20:48 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 17:26:22 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	testAVLTree(void) {
 	{ // EMPTY TREE
 		std::cout << "-------------------" << std::endl;
 		ft::AVLTree<std::string >	tree;
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -27,7 +27,7 @@ void	testAVLTree(void) {
 		tree.insert("d");
 		tree.insert("a");
 		tree.insert("b");
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -43,7 +43,7 @@ void	testAVLTree(void) {
 		tree.insert("c");
 		tree.insert("b");
 		tree.insert("a");
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -57,7 +57,7 @@ void	testAVLTree(void) {
 		tree.insert(32);
 		tree.insert(12);
 		tree.insert(42);
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -74,7 +74,7 @@ void	testAVLTree(void) {
 		tree.insert(42);
 		tree.insert(42);
 		tree.insert(42);
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -92,7 +92,7 @@ void	testAVLTree(void) {
 		tree.insert(42);
 		tree.insert(42);
 		tree.insert(42);
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -112,7 +112,7 @@ void	testAVLTree(void) {
 		tree.insert(ft::make_pair<std::string, int>("c", 100));
 		tree.insert(ft::make_pair<std::string, int>("e", 0));
 		tree.insert(ft::make_pair<std::string, int>("Z", 23));
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -128,7 +128,7 @@ void	testAVLTree(void) {
 		tree.insert("c");
 		tree.insert("b");
 		tree.insert("a");
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
@@ -199,7 +199,7 @@ void	testAVLTree(void) {
 		tree.insert(2); // should not insert, it is just a check
 		tree.insert(3);
 		tree.insert(-4);
-		std::cout << "height: " << tree.height() << std::endl;
+		// std::cout << "height: " << tree._height() << std::endl;
 		tree.print_infix();
 		tree.print_2d();
 		std::cout << "-------------------" << std::endl;
