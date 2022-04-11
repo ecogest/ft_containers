@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 15:20:43 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:43:28 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ public:
 
 	//[operator[]](https://en.cppreference.com/w/cpp/container/map/operator_at "cpp/container/map/operator at")
 	//access or insert specified element
-
+	// T& operator[]( const Key& key );
 
 	//##### ITERATORS //////////////////////////////////////////////////////////
 	//
@@ -176,13 +176,21 @@ public:
 	//[insert](https://en.cppreference.com/w/cpp/container/map/insert "cpp/container/map/insert")
 	//inserts elements or nodes (since C++17)
 	// 1) insert value
-	// Returns a pair consisting of an iterator to the inserted element (or to the element that prevented the insertion)
-	// and a bool denoting whether the insertion took place.
-	// std::pair<iterator, bool> insert( const value_type& value );
-	void insert( const value_type& value ) { _tree.insert(value); }// TODO: remove
-	// 7)
+	//   Returns a pair consisting of an iterator to the inserted element
+	//   (or to the element that prevented the insertion)
+	//   and a bool denoting whether the insertion took place.
+	// 4) Inserts value in the position as close as possible, just prior(since C++11), to hint.
+	//   Returns an iterator to the inserted element,
+	//   or to the element that prevented the insertion.
+	// 7) Inserts elements from range [first, last).
+	ft::pair<iterator, bool> insert( const value_type& value ) { //(1)
+		return (_tree.insert(value));
+	}
+
+	iterator insert( iterator hint, const value_type& value ); // (4)
+
 	template< class InputIt >
-	void insert( InputIt first, InputIt last ) {
+	void insert( InputIt first, InputIt last ) { // (7)
 		while (first != last)
 			insert(*first++);
 	}

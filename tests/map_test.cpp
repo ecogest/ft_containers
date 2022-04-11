@@ -126,6 +126,34 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << except.what() << std::endl;
 		}
 	}
+	{ // insert
+		NS::map<size_t, std::string> N(M);
+		NS::pair<NS::map<size_t, std::string>::iterator, bool> result = N.insert(NS::make_pair<size_t, std::string>(42, "yo"));
+		std::cout << std::boolalpha;
+		std::cout << "(" << *result.first << ", " << result.second << ")" << std::endl;
+		result = N.insert(NS::make_pair<size_t, std::string>(42, "lo"));
+		std::cout << "(" << *result.first << ", " << result.second << ")" << std::endl;
+		for (NS::map<size_t, std::string>::const_iterator it = N.begin(); it != N.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		for (size_t i = 0; i <= 12; i++) {
+			result = N.insert(NS::make_pair<size_t, std::string>(i, "INSERT"));
+			std::cout << "(" << *result.first << ", " << result.second << ")" << std::endl;
+		}
+		for (NS::map<size_t, std::string>::iterator it = N.begin(); it != N.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+	{ // insert (from scratch)
+		NS::map<size_t, std::string> N;
+		NS::pair<NS::map<size_t, std::string>::iterator, bool> result = N.insert(NS::make_pair<size_t, std::string>(42, "yo"));
+		std::cout << "(" << *result.first << ", " << result.second << ")" << std::endl;
+		N.clear();
+		result = N.insert(NS::make_pair<size_t, std::string>(42, "lo"));
+		std::cout << "(" << *result.first << ", " << result.second << ")" << std::endl;
+		result = N.insert(NS::make_pair<size_t, std::string>(42, "lo"));
+		std::cout << "(" << *result.first << ", " << result.second << ")" << std::endl;
+	}
 }
 
 // See avl_test for more details concerning the structure

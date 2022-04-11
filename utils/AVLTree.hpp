@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 15:08:56 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:42:51 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,7 @@ public:
 			return (_end);
 	}
 
-	void	insert(value_type const &data) {
+	ft::pair<iterator, bool>	insert(value_type const &data) {
 		node_type	*node = _head;
 		node_type	*parent = NULL;
 		node_type	**anode = NULL;
@@ -236,13 +236,15 @@ public:
 			else if (_comp(node->data, data) || !_are_keys_unique)
 				anode = &node->right;
 			else
-				return ;
+				return ft::make_pair<iterator, bool>(node, false);
 			node = *anode;
 		}
 		*anode = _new_node(data);
+		iterator	it_ret(*anode);
 		(*anode)->parent = parent;
 		if (parent->parent)
 			_balance(parent->parent);
+		return (ft::make_pair<iterator, bool>(it_ret, true));
 	}
 
 	void	erase(iterator it) {
