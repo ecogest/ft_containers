@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 09:14:40 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 10:22:18 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,9 @@ namespace ft {
 template <class Data, class Compare = std::less<Data>, class Allocator = std::allocator<Data>, bool AreKeysUnique = true >
 class AVLTree {
 
-public:
-	typedef Data				value_type;
-	typedef Compare				value_compare;
-	typedef std::size_t			size_type; // check type
-	typedef std::ptrdiff_t		difference_type; // check type
-	typedef value_type&			reference;
-	typedef const value_type&	const_reference;
-
 private:
+	// AVL Node ////////////////////////////////////////////////////////////////
+	//
 	struct AVLNode {
 		typedef Data	value_type;
 		typedef AVLNode	Node;
@@ -63,105 +57,116 @@ private:
 	}; // AVLNode
 
 
+	// AVL ITERATOR ////////////////////////////////////////////////////////////
+	//
 	template <class NodeType, class ValueType>	// NOTE: we need to specify ValueType in order to apply constness if necessary
 	class AVLIterator {
 
-public:
-	typedef typename std::ptrdiff_t					difference_type;
-	typedef ValueType								value_type;
-	typedef value_type*								pointer;
-	typedef value_type&								reference;
-	typedef typename ft::bidirectional_iterator_tag	iterator_category;
+	public:
+		typedef typename std::ptrdiff_t					difference_type;
+		typedef ValueType								value_type;
+		typedef value_type*								pointer;
+		typedef value_type&								reference;
+		typedef typename ft::bidirectional_iterator_tag	iterator_category;
 
-private:
-	typedef NodeType	node_type;
-	typedef NodeType&	node_reference;
-	typedef NodeType*	node_pointer;
+	private:
+		typedef NodeType										node_type;
+		typedef NodeType&										node_reference;
+		typedef NodeType*										node_pointer;
+		typedef AVLIterator										iterator;
+		typedef AVLIterator<const NodeType, const ValueType>	const_iterator;
 
-	typedef AVLIterator<const NodeType, const ValueType>	const_iterator;
+		node_pointer	_node;
 
-	node_pointer	_node;
+	public:
+		AVLIterator(): _node(0)                              { }
+		AVLIterator(node_pointer ptr): _node(ptr)            { }
+		AVLIterator(AVLIterator const &it): _node(it.base()) { }
+		~AVLIterator()                                       { }
 
-public:
-	AVLIterator(): _node(0)                              { }
-	AVLIterator(node_pointer ptr): _node(ptr)            { }
-	AVLIterator(AVLIterator const &it): _node(it.base()) { }
-	~AVLIterator()                                       { }
+		AVLIterator	&operator=(AVLIterator const &it) { _node = it._node; return (*this); }
 
-	AVLIterator	&operator=(AVLIterator const &it) { _node = it._node; return (*this); }
+		operator const_iterator() const { return (_node); }
+		// Same as:
+		// operator AVLIterator<const NodeType, const ValueType>() const {
+		// 	return AVLIterator<const NodeType, const ValueType>(_node); }
 
-	// operator AVLIterator<const NodeType, const ValueType>() const {
-	// 	return AVLIterator<const NodeType, const ValueType>(_node); }
-	operator const_iterator() const { return (_node); }
+		// (1) [LegacyBidirectionalIterator] < LegacyForwardIterator
+		// (2) [LegacyForwardIterator] < LegacyIterator, LegacyInputOperator, DefaultConstructible
+		// (3) [LegacyInputOperator] < (LegacyOperator), EquallyComparable
+		// (4) [EquallyComparable]
+		// (5) [LegacyIterator]
+		iterator	&operator--()                               { _node = _prev(_node) ; return (*this); }                   // (1)
+		iterator	operator--(int)                             { iterator tmp(_node); _node = _prev(_node); return (tmp); } // (1)
+		iterator	operator++(int)                             { iterator tmp(_node); _node = _next(_node); return (tmp); } // (2)
+		bool		operator!=(const_iterator const &rhs) const { return (_node != rhs.base()); }                            // (3)
+		pointer		operator->() const                          { return (&_node->data); }                                   // (3)
+		bool		operator==(const_iterator const &rhs) const { return (_node == rhs.base()); }                            // (4)
+		reference	operator*(void) const                       { return _node->data; }                                      // (5)
+		iterator	&operator++()                               { _node = _next(_node); return (*this); }                    // (5)
 
-	// (1) [LegacyBidirectionalIterator] < LegacyForwardIterator
-	// (2) [LegacyForwardIterator] < LegacyIterator, LegacyInputOperator, DefaultConstructible
-	// (3) [LegacyInputOperator] < (LegacyOperator), EquallyComparable
-	// (4) [EquallyComparable]
-	// (5) [LegacyIterator]
-	AVLIterator	&operator--()                               { _node = _prev(_node) ; return (*this); }                      // (1)
-	AVLIterator	operator--(int)                             { AVLIterator tmp(_node); _node = _prev(_node); return (tmp); } // (1)
-	AVLIterator	operator++(int)                             { AVLIterator tmp(_node); _node = _next(_node); return (tmp); } // (2)
-	bool		operator!=(const_iterator const &rhs) const { return (_node != rhs.base()); }                               // (3)
-	pointer		operator->() const                          { return (&_node->data); }                                      // (3)
-	bool		operator==(const_iterator const &rhs) const { return (_node == rhs.base()); }                               // (4)
-	reference	operator*(void) const                       { return _node->data; }                                         // (5)
-	AVLIterator	&operator++()                               { _node = _next(_node); return (*this); }                       // (5)
+		node_pointer	base(void) const  { return _node; } // (getter)
 
-	// Getter:
-	node_pointer	base(void) const  { return _node; }
-
-private:
-	node_pointer	_next(node_pointer node) {
-		if (node->right) {
-			node = node->right;
-			while (node->left)
-				node = node->left;
-			return (node);
-		}
-		else {
-			while (node->parent) {
-				if (node == node->parent->right)
-					node = node->parent;
-				else
-					return (node->parent);
-			}
-			return (NULL);
-		}
-	}
-	node_pointer	_prev(node_pointer node) {
-		if (node->left) {
-			node = node->left;
-			while (node->right)
+	private:
+		node_pointer	_next(node_pointer node) {
+			if (node->right) {
 				node = node->right;
-			return (node);
-		}
-		else {
-			while (node->parent) {
-				if (node == node->parent->left)
-					node = node->parent;
-				else
-					return (node->parent);
+				while (node->left)
+					node = node->left;
+				return (node);
 			}
-			return (NULL);
+			else {
+				while (node->parent) {
+					if (node == node->parent->right)
+						node = node->parent;
+					else
+						return (node->parent);
+				}
+				return (NULL);
+			}
 		}
-	}
+		node_pointer	_prev(node_pointer node) {
+			if (node->left) {
+				node = node->left;
+				while (node->right)
+					node = node->right;
+				return (node);
+			}
+			else {
+				while (node->parent) {
+					if (node == node->parent->left)
+						node = node->parent;
+					else
+						return (node->parent);
+				}
+				return (NULL);
+			}
+		}
 	}; // AVLIterator
 
 public:
 
-	typedef AVLNode	Node;
+	// TYPEDEFS ////////////////////////////////////////////////////////////////
+	//
+	typedef Data				value_type;
+	typedef Compare				value_compare;
+	typedef std::size_t			size_type; // check type
+	typedef std::ptrdiff_t		difference_type; // check type
+	typedef value_type&			reference;
+	typedef const value_type&	const_reference;
 
-	// https://www.cplusplus.com/reference/memory/allocator/rebind/
 	typedef Allocator											allocator_type;
 	typedef typename Allocator::pointer		 					pointer;
 	typedef typename Allocator::const_pointer		 			const_pointer;
-	typedef typename Allocator::template rebind<Node>::other	node_allocator_type;
 
-	typedef AVLIterator<Node, value_type> 				iterator;
-	typedef AVLIterator<Node const, value_type const>	const_iterator;
-	typedef ft::reverse_iterator<iterator>		 		reverse_iterator;
-	typedef ft::reverse_iterator<const_iterator> 		const_reverse_iterator;
+	typedef AVLNode													node_type;
+	typedef typename Allocator::template rebind<node_type>::other	node_allocator_type;
+	// (https://www.cplusplus.com/reference/memory/allocator/rebind/)
+
+	typedef AVLIterator<node_type, value_type> 				iterator;
+	typedef AVLIterator<node_type const, value_type const>	const_iterator;
+	typedef ft::reverse_iterator<iterator>		 			reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator> 			const_reverse_iterator;
 
 	// CANONICAL FORM //////////////////////////////////////////////////////////
 	//
@@ -179,13 +184,9 @@ public:
 		for (const_iterator it = copy.begin(); it != copy.end(); it++)
 			insert(*it);
 		return (*this);
-		// Rq:If trees are the same type, the following are already true
-		// _comp = copy._comp; _alloc = copy._alloc; _node_alloc = copy._node_alloc;
-		// _are_keys_unique = copy._are_keys_unique;
+		// Rq: If trees are the same type then _comp, _alloc, and _are_keys_unique are properly initialized
 	}
-	virtual ~AVLTree(void) {
-		_delete_subtree(_head);
-	}
+	virtual ~AVLTree(void) { _delete_subtree(_head); }
 
 	// METHODS /////////////////////////////////////////////////////////////////
 	//
@@ -193,7 +194,7 @@ public:
 
 	// Remove everything except the end
 	void clear(void) { clear(_head); }
-	void clear(Node *node) {
+	void clear(node_type *node) {
 		if (!node)
 			return ;
 		if (node->left)
@@ -208,19 +209,15 @@ public:
 			_delete_node(node);
 	}
 
-	size_t	height(void) const { return(height(_head)); }
-	size_t	height(Node *node) const {
-		// if (node == _end) // if we wanted to skip the END node
-		// 	return (height(node->left));
-		if (!node)
-			return (0);
-		return (1 + std::max(height(node->left), height(node->right)));
+	size_type	height(void) const { return(height(_head)); }
+	size_type	height(node_type *node) const {
+		return (node ? 1 + std::max(height(node->left), height(node->right)): 0);
 	}
 
 	void	insert(value_type const &data) {
-		Node	*node = _head;
-		Node	*parent = NULL;
-		Node	**anode = NULL;
+		node_type	*node = _head;
+		node_type	*parent = NULL;
+		node_type	**anode = NULL;
 		while (node) {
 			parent = node;
 			if (node == _end || _comp(data, node->data))
@@ -236,13 +233,14 @@ public:
 		if (parent->parent)
 			_balance(parent->parent);
 	}
+
 	void	erase(iterator it) {
-		Node	*node = it.base();
+		node_type	*node = it.base();
 		if (node == _end)
 			return ;
 		if (node) {
-			Node	*parent = node->parent;
-			Node	**parent_anchor = NULL;
+			node_type	*parent = node->parent;
+			node_type	**parent_anchor = NULL;
 			if (parent) {
 				if (node == node->parent->left)
 					parent_anchor = &node->parent->left;
@@ -265,7 +263,7 @@ public:
 			}
 			else { // 2 children
 				++it;
-				Node	*next_node = it.base();
+				node_type	*next_node = it.base();
 				*parent_anchor = next_node;
 				if (next_node == next_node->parent->left)
 					next_node->parent->left = next_node->left;
@@ -289,6 +287,8 @@ public:
 	}
 
 
+	// ITERATORS ///////////////////////////////////////////////////////////////
+	//
 	iterator				begin()        { return (iterator(_min_node())); }
 	const_iterator			begin() const  { return (const_iterator(_min_node())); }
 	iterator				end()          { return (_end); }
@@ -298,6 +298,8 @@ public:
 	reverse_iterator		rend()         { return (reverse_iterator(begin())); }
 	const_reverse_iterator	rend() const   { return (const_reverse_iterator(begin())); }
 
+	// PRINT ///////////////////////////////////////////////////////////////////
+	//
 	void		print_infix(void) const {
 		if (_head != _end || _end->left)
 			_print_infix(_head);
@@ -311,10 +313,9 @@ public:
 			std::cout << output_vector[i] << std::endl;
 	}
 
-	private:
-
 	// PRIVATE METHODS /////////////////////////////////////////////////////////
 	//
+	private:
 
 	void	_init_end(void) {
 		_end = _node_alloc.allocate(1);
@@ -322,15 +323,15 @@ public:
 		_end->right = NULL;
 		_end->parent = NULL;
 	}
-	void	_set_end_parentage(Node *parent) {
+	void	_set_end_parentage(node_type *parent) {
 		_end->parent = parent;
 		parent->right = _end;
 	}
 	// Returns the address of the branch where the node is attached
 	// can be &_head, &node->parent->left or &node->parent->right
 	// It is used to perform rotations
-	Node	**_node_branch_address(Node const *node) {
-		Node	**root;
+	node_type	**_node_branch_address(node_type const *node) {
+		node_type	**root;
 		if (node == _head)
 			root = &_head;
 		else if (node == node->parent->left)
@@ -340,9 +341,9 @@ public:
 		return (root);
 	}
 	// Right son takes place of the node
-	Node	*_left_rotate(Node *old_parent) {
-		Node	*new_parent = old_parent->right;
-		Node	**root = _node_branch_address(old_parent);
+	node_type	*_left_rotate(node_type *old_parent) {
+		node_type	*new_parent = old_parent->right;
+		node_type	**root = _node_branch_address(old_parent);
 		*root = new_parent;
 		new_parent->parent = old_parent->parent;
 		old_parent->parent = new_parent;
@@ -353,9 +354,9 @@ public:
 		return (*root);
 	}
 	// Left son takes place of the node
-	Node	*_right_rotate(Node *old_parent) {
-		Node	*new_parent = old_parent->left;
-		Node	**root = _node_branch_address(old_parent);
+	node_type	*_right_rotate(node_type *old_parent) {
+		node_type	*new_parent = old_parent->left;
+		node_type	**root = _node_branch_address(old_parent);
 		*root = new_parent;
 		new_parent->parent = old_parent->parent;
 		old_parent->parent = new_parent;
@@ -365,7 +366,7 @@ public:
 		new_parent->right = old_parent;
 		return (*root);
 	}
-	void	_balance(Node *node) {
+	void	_balance(node_type *node) {
 		// RIGHT IMBALANCE / LEFT ROTATION
 		if (height(node->right) > height(node->left) + 1 && height(node->right->right) >= height(node->right->left))
 			node = _left_rotate(node);
@@ -386,17 +387,17 @@ public:
 		if (node->parent)
 			_balance(node->parent);
 	}
-	Node	*_new_node(value_type const &data) {
-		Node	*node = _node_alloc.allocate(1);
+	node_type	*_new_node(value_type const &data) {
+		node_type	*node = _node_alloc.allocate(1);
 		_node_alloc.construct(node, data);
 		return (node);
 	}
-	void	_delete_node(Node *node) {
+	void	_delete_node(node_type *node) {
 		if (node != _end)
 			_node_alloc.destroy(node);
 		_node_alloc.deallocate(node, 1);
 	}
-	void	_delete_subtree(Node *node) {
+	void	_delete_subtree(node_type *node) {
 		if (!node)
 			return ;
 		if (node->left)
@@ -405,13 +406,13 @@ public:
 			_delete_subtree(node->right);
 		_delete_node(node);
 	}
-	Node	*_min_node(void) const {
-		Node *node(_head);
+	node_type	*_min_node(void) const {
+		node_type *node(_head);
 		while (node->left)
 			node = node->left;
 		return (node);
 	}
-	void	_print_infix(Node *node) const {
+	void	_print_infix(node_type *node) const {
 		if (!node)
 			return ;
 		_print_infix(node->left);
@@ -431,7 +432,7 @@ public:
 	static bool _utf8_cmp(std::string a, std::string b) {
 		return _utf8_len(a) < _utf8_len(b);
 	}
-	void	_print_2d(Node *node, ft::vector<std::string> &v, size_t level) const {
+	void	_print_2d(node_type *node, ft::vector<std::string> &v, size_t level) const {
 		if (!node)
 			return ;
 		// if (node == _end)
@@ -460,8 +461,8 @@ public:
 	}
 
 	// ATTRIBUTES //////////////////////////////////////////////////////////////
-	Node				*_head;
-	Node				*_end;
+	node_type			*_head;
+	node_type			*_end;
 	value_compare		_comp;
 	allocator_type		_alloc; // we could probably drop this attribute and rebind _node_alloc in get_allocator()
 	node_allocator_type	_node_alloc;
