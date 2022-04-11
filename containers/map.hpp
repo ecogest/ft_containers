@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 10:38:08 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:04:11 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,14 @@ public:
 	//returns the number of elements matching specific key
 
 	//[find](https://en.cppreference.com/w/cpp/container/map/find "cpp/container/map/find")
-	//finds element with specific key
+	// Finds element with specific key
+	// If no such element is found, past-the-end iterator is returned.
+	iterator find( const Key& key ) {
+		return (_tree.find(key, _get_key, _key_comp));
+	}
+	const_iterator find( const Key& key ) const {
+		return (_tree.find(key, _get_key, _key_comp));
+	}
 
 	//[equal_range](https://en.cppreference.com/w/cpp/container/map/equal_range "cpp/container/map/equal range")
 	//returns range of elements matching a specific key
@@ -214,6 +221,8 @@ private:
 	key_compare		_key_comp;
 	value_compare	_value_comp;
 	tree_type		_tree;
+
+	static key_type const &_get_key(value_type const &v) { return (v.first); }
 
 };
 

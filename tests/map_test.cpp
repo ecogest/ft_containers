@@ -70,6 +70,35 @@ void constructor_insert_and_iterator_test(void) {
 		std::cout << std::endl;
 
 	}
+	{ // find
+		std::cout << *M.find(0) << std::endl;
+		std::cout << *M.find(1) << std::endl;
+		std::cout << *M.find(2) << std::endl;
+		std::cout << *M.find(7) << std::endl;
+		(*M.find(7)).second = "AAA";
+		std::cout << *M.find(7) << std::endl;
+		if (M.find(42) != M.end())
+			std::cout << *M.find(42) << std::endl;
+		else
+			std::cout << "NOT FOUND" << std::endl;
+		// try {
+		// 	std::cout << *M.find(42) << std::endl;
+		// }
+		// catch (std::out_of_range const &except) {
+		// 	std::cout << except.what() << std::endl;
+		// }
+	}
+	{ // const find
+		NS::map<size_t, std::string> const N(M);
+		std::cout << *N.find(0) << std::endl;
+		std::cout << *N.find(1) << std::endl;
+		std::cout << *N.find(2) << std::endl;
+		std::cout << *N.find(7) << std::endl;
+		if (N.find(42) != N.end())
+			std::cout << *N.find(42) << std::endl;
+		else
+			std::cout << "NOT FOUND" << std::endl;
+	}
 }
 
 // See avl_test for more details concerning the structure

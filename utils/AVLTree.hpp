@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 10:51:49 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 15:08:56 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,15 @@ public:
 		return (node ? 1 + std::max(height(node->left), height(node->right)): 0);
 	}
 
+	template <class Key, class KeyGetter, class Comp>
+	iterator find( const Key& k, KeyGetter const &key, Comp const &comp ) const {
+		node_type * node = _find_node(_head, k, key, comp);
+		if (node)
+			return (node);
+		else
+			return (_end);
+	}
+
 	void	insert(value_type const &data) {
 		node_type	*node = _head;
 		node_type	*parent = NULL;
@@ -413,6 +422,19 @@ public:
 		while (node->left)
 			node = node->left;
 		return (node);
+	}
+	template <class Key, class KeyGetter, class Comp>
+	node_type	*_find_node(node_type *begin, const Key &k, KeyGetter const &key, Comp const &comp) const {
+		if (!begin)
+			return (NULL);
+		if (begin == _end)
+			return (_find_node(begin->left, k, key, comp));
+		else if (comp(k, key(begin->data)))
+			return (_find_node(begin->left, k, key, comp));
+		else if (comp(key(begin->data), k))
+			return (_find_node(begin->right, k, key, comp));
+		else
+			return (begin);
 	}
 	void	_print_infix(node_type *node) const {
 		if (!node)
