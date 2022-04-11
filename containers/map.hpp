@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 21:25:01 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 22:11:29 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,12 @@ public:
 
 	//[swap](https://en.cppreference.com/w/cpp/container/map/swap "cpp/container/map/swap")
 	//swaps the contents
+	void swap( map& other ) {
+		// _swap(_tree, other._tree);
+		_tree.swap(other._tree);
+		_swap(_key_comp, other._key_comp);
+		_swap(_value_comp, other._value_comp);
+	}
 
 
 	//##### LOOKUP /////////////////////////////////////////////////////////////
@@ -292,6 +298,9 @@ private:
 	tree_type		_tree;
 
 	static key_type const &_get_key(value_type const &v) { return (v.first); }
+
+	template <typename U>
+	void	_swap(U &a, U &b) { U tmp(a); a = b; b = tmp; }
 
 };
 

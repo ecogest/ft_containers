@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 18:04:33 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 22:17:48 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,11 @@ public:
 			_init_end(); _head = _end;
 		}
 	AVLTree(AVLTree const &copy)
-		: _head(copy.head), _end(copy.end), _comp(copy._comp), _alloc(copy._alloc),
-		_node_alloc(copy.alloc), _are_keys_unique(AreKeysUnique) { }
+		: _comp(copy._comp), _alloc(copy._alloc), _node_alloc(copy._alloc), _are_keys_unique(AreKeysUnique) {
+			_init_end(); _head = _end;
+			for (const_iterator it = copy.begin(); it != copy.end(); it++)
+				insert(*it);
+		}
 	AVLTree	&operator=(AVLTree const &copy) { // deep copy
 		if (this == &copy)
 			return (*this);
@@ -281,6 +284,7 @@ public:
 		}
 	}
 
+	void swap( AVLTree& other ) { (void)other; }
 
 	// ITERATORS ///////////////////////////////////////////////////////////////
 	//

@@ -281,6 +281,26 @@ void constructor_insert_and_iterator_test(void) {
 		p = N.equal_range(9);
 		for (iterator it = p.first; it != p.second; it++) std::cout << *it << " "; std::cout << std::endl;
 	}
+	{ // swap
+		NS::map<size_t, std::string> N;
+		for (size_t i = 0; i < 5; i+=2)
+			N[i] = "hello";
+		NS::map<size_t, std::string> P;
+		for (size_t i = 1; i < 5; i+=3)
+			P[i] = "world";
+		typedef NS::map<size_t, std::string>::iterator iterator;
+		for (iterator it = N.begin(); it != N.end(); it++) std::cout << *it << " "; std::cout << std::endl;
+		for (iterator it = P.begin(); it != P.end(); it++) std::cout << *it << " "; std::cout << std::endl;
+		iterator nbegin_before = N.begin();
+		iterator pbegin_before = P.begin();
+		N.swap(P);
+		iterator nbegin_after = N.begin();
+		iterator pbegin_after = P.begin();
+		for (iterator it = N.begin(); it != N.end(); it++) std::cout << *it << " "; std::cout << std::endl;
+		for (iterator it = P.begin(); it != P.end(); it++) std::cout << *it << " "; std::cout << std::endl;
+		std::cout << (nbegin_before == pbegin_after) << std::endl;
+		std::cout << (pbegin_before == nbegin_after) << std::endl;
+	}
 }
 
 // See avl_test for more details concerning the structure
