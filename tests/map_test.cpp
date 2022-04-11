@@ -154,6 +154,17 @@ void constructor_insert_and_iterator_test(void) {
 		result = N.insert(NS::make_pair<size_t, std::string>(42, "lo"));
 		std::cout << "(" << *result.first << ", " << result.second << ")" << std::endl;
 	}
+	{ // operator[]
+		NS::map<size_t, std::string> N;
+		std::cout << (N[42] = "!") << std::endl;
+		std::cout << (N[2] = "hello") << std::endl;
+		std::cout << (N[12] = "tada") << std::endl;
+		std::cout << (N[12] = "world") << std::endl;
+		std::cout << (N[42] = "!!") << std::endl;
+		for (NS::map<size_t, std::string>::const_iterator it = N.begin(); it != N.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
 }
 
 // See avl_test for more details concerning the structure
