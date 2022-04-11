@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 10:30:06 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 10:38:08 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,6 @@ public:
 		while (first != last)
 			insert(*first++);
 	}
-	// void print(void) const { _tree.print_2d(); } // TODO: remove
 
 	//[erase](https://en.cppreference.com/w/cpp/container/map/erase "cpp/container/map/erase")
 	//erases elements

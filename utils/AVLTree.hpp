@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 10:22:18 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 10:51:49 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,12 @@ public:
 		if (this == &copy)
 			return (*this);
 		clear();
+		_comp = copy._comp;
+		_alloc = copy._alloc;
+		_node_alloc = copy._node_alloc;
 		for (const_iterator it = copy.begin(); it != copy.end(); it++)
 			insert(*it);
 		return (*this);
-		// Rq: If trees are the same type then _comp, _alloc, and _are_keys_unique are properly initialized
 	}
 	virtual ~AVLTree(void) { _delete_subtree(_head); }
 
