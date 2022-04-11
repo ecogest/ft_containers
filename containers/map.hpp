@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/10 15:50:44 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 09:15:11 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ public:
 	//
 	//[at](https://en.cppreference.com/w/cpp/container/map/at "cpp/container/map/at")
 	//access specified element with bounds checking
+	// T& at( const Key& key );
 
 	//[operator[]](https://en.cppreference.com/w/cpp/container/map/operator_at "cpp/container/map/operator at")
 	//access or insert specified element
