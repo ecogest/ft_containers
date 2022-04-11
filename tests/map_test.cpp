@@ -70,17 +70,24 @@ void constructor_insert_and_iterator_test(void) {
 		std::cout << std::endl;
 
 	}
-	{ // find
+	{ // find, count
 		std::cout << *M.find(0) << std::endl;
+		std::cout << M.count(0) << std::endl;
 		std::cout << *M.find(1) << std::endl;
 		std::cout << *M.find(2) << std::endl;
 		std::cout << *M.find(7) << std::endl;
+		std::cout << M.count(7) << std::endl;
 		(*M.find(7)).second = "AAA";
 		std::cout << *M.find(7) << std::endl;
 		if (M.find(42) != M.end())
 			std::cout << *M.find(42) << std::endl;
 		else
 			std::cout << "NOT FOUND" << std::endl;
+		std::cout << M.count(42) << std::endl;
+		std::cout << M.count(1) << std::endl;
+		M.erase(1);
+		std::cout << M.count(1) << std::endl;
+		M[1] = "BACK";
 	}
 	{ // const find
 		NS::map<size_t, std::string> const N(M);

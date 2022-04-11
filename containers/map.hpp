@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 19:27:02 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 19:34:03 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,17 +227,14 @@ public:
 	//##### LOOKUP /////////////////////////////////////////////////////////////
 	//
 	//[count](https://en.cppreference.com/w/cpp/container/map/count "cpp/container/map/count")
-	//returns the number of elements matching specific key
+	//returns the number of elements matching specific key (0 on 1)
+	size_type count( const Key& key ) const { return (find(key) != end()); }
 
 	//[find](https://en.cppreference.com/w/cpp/container/map/find "cpp/container/map/find")
 	// Finds element with specific key
 	// If no such element is found, past-the-end iterator is returned.
-	iterator find( const Key& key ) {
-		return (_tree.find(key, _get_key, _key_comp));
-	}
-	const_iterator find( const Key& key ) const {
-		return (_tree.find(key, _get_key, _key_comp));
-	}
+	iterator		find(const Key& key)       { return (_tree.find(key, _get_key, _key_comp)); }
+	const_iterator	find(const Key& key) const { return (_tree.find(key, _get_key, _key_comp)); }
 
 	//[equal_range](https://en.cppreference.com/w/cpp/container/map/equal_range "cpp/container/map/equal range")
 	//returns range of elements matching a specific key
