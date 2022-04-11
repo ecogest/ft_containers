@@ -159,7 +159,7 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << *it << " ";
 		std::cout << std::endl;
 	}
-	{ // size(), max_size()
+	{ // size(), max_size(), empty()
 		NS::map<size_t, std::string> N;
 		for (size_t i = 0; i < 12; i++) {
 			N[i] = "hello";
@@ -167,9 +167,11 @@ void constructor_insert_and_iterator_test(void) {
 		}
 		std::cout << std::endl;
 		std::cout << N.max_size() << std::endl;;
+		std::cout << N.empty() << std::endl;;
 		N.clear();
-		std::cout << N.max_size() << std::endl;;
 		std::cout << N.size() << std::endl;;
+		std::cout << N.empty() << std::endl;;
+		std::cout << N.max_size() << std::endl;;
 		for (size_t i = 0; i < 12; i++) { N[i] = "hello"; }
 		std::cout << N.size() << std::endl;;
 		for (size_t i = 0; i < 12; i++) {

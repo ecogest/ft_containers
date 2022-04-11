@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/11 17:59:22 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/11 18:04:02 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,7 @@ public:
 	//
 	//[empty](https://en.cppreference.com/w/cpp/container/map/empty "cpp/container/map/empty")
 	//checks whether the container is empty
+	bool empty() const { return _tree.empty(); }
 
 	//[size](https://en.cppreference.com/w/cpp/container/map/size "cpp/container/map/size")
 	//returns the number of elements
