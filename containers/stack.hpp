@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:13:08 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 14:48:25 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 14:53:35 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ public:
 	// ##### Capacity
 	// [empty](https://en.cppreference.com/w/cpp/container/stack/empty "cpp/container/stack/empty")
 	// checks whether the underlying container is empty  
-	// 
+	bool empty() const { return (c.empty()); }
 	// [size](https://en.cppreference.com/w/cpp/container/stack/size "cpp/container/stack/size")
 	// returns the number of elements  
+	size_type size() const { return (c.size()); }
 
 
 	// ##### Modifiers
@@ -72,6 +73,7 @@ public:
 
 	// [pop](https://en.cppreference.com/w/cpp/container/stack/pop "cpp/container/stack/pop")
 	// removes the top element  
+	void pop() { c.pop_back(); }
 
 
 	// ### Member objects

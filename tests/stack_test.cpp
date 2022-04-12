@@ -9,11 +9,24 @@ void test_stack() {
 	}
 	{ // push and top
 		NS::stack<int> s;
+		std::cout << s.empty() << " " << s.size() << std::endl;
 		s.push(2);
-		std::cout << s.top() << std::endl;
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
 		s.push(6);
-		std::cout << s.top() << std::endl;
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
 		s.push(51);
-		std::cout << s.top() << std::endl;
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
+		s.pop();
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
+		s.push(42);
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
+		s.pop();
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
+		s.pop();
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
+		s.pop();
+		std::cout << s.empty() << " " << s.size() << std::endl;
+		s.push(42);
+		std::cout << s.top() << " " << s.empty() << " " << s.size() << std::endl;
 	}
 }
