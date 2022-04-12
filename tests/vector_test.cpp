@@ -479,6 +479,29 @@ void	non_member() {
 	}
 }
 
+void	more_tests() {
+// #define TESTED_TYPE int
+// 	NS::vector<TESTED_TYPE> vct(7);
+// 	NS::vector<TESTED_TYPE> vct_two(4);
+// 	NS::vector<TESTED_TYPE> vct_three;
+// 	NS::vector<TESTED_TYPE> vct_four;
+//
+// 	for (unsigned long int i = 0; i < vct.size(); ++i)
+// 		vct[i] = (vct.size() - i) * 3;
+// 	for (unsigned long int i = 0; i < vct_two.size(); ++i)
+// 		vct_two[i] = (vct_two.size() - i) * 5;
+// 	print_vector(vct);
+// 	print_vector(vct_two);
+//
+// 	vct_three.assign(vct.begin(), vct.end());
+// 	vct.assign(vct_two.begin(), vct_two.end());
+// 	vct_two.assign(2, 42);
+// 	vct_four.assign(4, 21);
+//
+// 	std::cout << "\t### After assign(): ###" << std::endl;
+
+}
+
 void	test_vector(void) {
 	constructors();
 	element_access();
@@ -487,4 +510,5 @@ void	test_vector(void) {
 	iterators();
 	modifiers();
 	non_member();
+	more_tests();
 }

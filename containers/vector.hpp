@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 09:29:15 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 11:06:14 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -321,7 +321,7 @@ public:
 	// clears the contents (erase all, size = 0, capacity unchanged)
 	void clear() {
 		for (size_type i = 0; i < _size; i++)
-			_allocator.destroy(_array + 1);
+			_allocator.destroy(_array + i);
 		_size = 0;
 	}
 
