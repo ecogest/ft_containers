@@ -19,7 +19,6 @@ UTILS=$(addprefix utils/, \
 			type_traits.hpp \
 			lexicographical_compare.hpp \
 			iterator.hpp \
-			make_pair.hpp \
 			pair.hpp \
 			vectorIterator.hpp \
 			AVLTree.hpp \
