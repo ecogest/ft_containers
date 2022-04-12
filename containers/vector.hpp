@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 13:12:19 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 13:18:55 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ public:
 
 	// 2) Constructs an empty container with the given allocator alloc.
 	explicit vector(const Allocator& alloc):
-		// _array(alloc.allocate(0)), // NO! we want our copy _allocator
 		_array(0),
 		_allocator(alloc),
 		_capacity(0),
@@ -167,9 +166,7 @@ public:
 
 	// [get_allocator](https://en.cppreference.com/w/cpp/container/vector/get_allocator)
 	// returns the associated allocator
-	allocator_type get_allocator() const {
-		return (_allocator);
-	}
+	allocator_type get_allocator() const { return (_allocator); }
 
 	// ##### Element access ////////////////////////////////////////////////////
 	//
@@ -204,89 +201,62 @@ private:
 public:
 	// [operator[]](https://en.cppreference.com/w/cpp/container/vector/operator_at)
 	// access specified element (no bound checking)
-	reference operator[]( size_type pos ) {
-		return (_array[pos]);
-	}
-	const_reference operator[]( size_type pos ) const {
-		return (_array[pos]);
-	}
+	reference operator[]( size_type pos )             { return (_array[pos]); }
+	const_reference operator[]( size_type pos ) const { return (_array[pos]); }
 
 	// [front](https://en.cppreference.com/w/cpp/container/vector/front)
 	// access the first element
-	reference front() {
-		return (_array[0]);
-	}
-	const_reference front() const {
-		return (_array[0]);
-	}
+	reference front()             { return (_array[0]); }
+	const_reference front() const { return (_array[0]); }
 
 	// [back](https://en.cppreference.com/w/cpp/container/vector/back)
 	// access the last element
-	reference back() {
-		return (_array[_size - 1]);
-	}
-	const_reference back() const {
-		return (_array[_size - 1]);
-	}
+	reference back()             { return (_array[_size - 1]); }
+	const_reference back() const { return (_array[_size - 1]); }
 
 	// [data](https://en.cppreference.com/w/cpp/container/vector/data)
 	// direct access to the underlying array
-	T* data() {
-		return (_array);
-	}
-	const T* data() const {
-		return (_array);
-	}
+	T* data()             { return (_array); }
+	const T* data() const { return (_array); }
+
 
 	// ##### Iterators /////////////////////////////////////////////////////////
 	//
 	// [begin](https://en.cppreference.com/w/cpp/container/vector/begin)
 	// returns an iterator to the beginning
-	iterator begin() { return (iterator(_array)); }
+	iterator begin()             { return (iterator(_array)); }
 	const_iterator begin() const { return (const_iterator(_array)); };
 	//
 	// [end](https://en.cppreference.com/w/cpp/container/vector/end)
 	// returns an iterator to the end (actually past the end)
-	iterator end() { return (iterator(_array + _size)); }
+	iterator end()             { return (iterator(_array + _size)); }
 	const_iterator end() const { return (const_iterator(_array + _size)); }
 
 	// [rbegin](https://en.cppreference.com/w/cpp/container/vector/rbegin)
 	// returns a reverse iterator to the beginning
-	reverse_iterator rbegin() {
-		return (reverse_iterator(end()));
-	}
-	const_reverse_iterator rbegin() const {
-		return (const_reverse_iterator(end()));
-	}
+	reverse_iterator rbegin()             { return (reverse_iterator(end())); }
+	const_reverse_iterator rbegin() const { return (const_reverse_iterator(end())); }
 	// [rend](https://en.cppreference.com/w/cpp/container/vector/rend)
 	// returns a reverse iterator to the end
-	reverse_iterator rend() {
-		return (reverse_iterator(begin()));
-	}
-	const_reverse_iterator rend() const {
-		return (const_reverse_iterator(begin()));
-	}
+	reverse_iterator rend()             { return (reverse_iterator(begin())); }
+	const_reverse_iterator rend() const { return (const_reverse_iterator(begin())); }
+
+
 	// ##### Capacity //////////////////////////////////////////////////////////
 	//
 	// [empty](https://en.cppreference.com/w/cpp/container/vector/empty)
 	// checks whether the container is empty
-	bool empty() const {
-		return (_size == 0);
-	}
+	bool empty() const { return (_size == 0); }
 
 	// [size](https://en.cppreference.com/w/cpp/container/vector/size)
 	// returns the number of elements
-	size_type size() const {
-		return (_size);
-	}
+	size_type size() const { return (_size); }
 
 	// [max_size](https://en.cppreference.com/w/cpp/container/vector/max_size)
 	// returns the maximum possible number of elements
-	size_type max_size() const {
-		return (_allocator.max_size());
-		// for some reason the following returns half the max size (probably a matter of sign)
-		// return (std::numeric_limits<difference_type>::max());
-	}
+	size_type max_size() const { return (_allocator.max_size()); }
+	// for some reason the following returns half the max size (probably a matter of sign)
+	// return (std::numeric_limits<difference_type>::max());
 
 	// [reserve](https://en.cppreference.com/w/cpp/container/vector/reserve)
 	// reserves storage if new_cap > capacity()
@@ -313,9 +283,8 @@ public:
 
 	// [capacity](https://en.cppreference.com/w/cpp/container/vector/capacity)
 	// returns the number of elements that can be held in currently allocated storage
-	size_type capacity() const {
-		return (_capacity);
-	}
+	size_type capacity() const { return (_capacity); }
+
 
 	// ##### Modifiers /////////////////////////////////////////////////////////
 	//
@@ -375,11 +344,9 @@ public:
 	// [erase](https://en.cppreference.com/w/cpp/container/vector/erase)
 	// erases elements. returns the iterator following the last removed element
 	// 1) Removes the element at pos.
-	iterator erase( iterator pos ) {
-		return (erase(pos, pos + 1));
-	}
 	// 2) Removes the elements in the range [first, last).
-	iterator erase( iterator first, iterator last ) {
+	iterator erase( iterator pos ) { return (erase(pos, pos + 1)); } // (1)
+	iterator erase( iterator first, iterator last ) {                // (2)
 		size_type start = first - this->begin();
 		size_type end = last - this->begin();
 		if (end == start)
