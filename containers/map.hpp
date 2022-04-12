@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 13:28:00 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 13:37:25 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,6 +317,18 @@ private:
 //
 //[operators](https://en.cppreference.com/w/cpp/container/map/operator_cmp "cpp/container/map/operator cmp")
 //lexicographically compares the values in the map
+template< class Key, class T, class Compare, class Alloc >
+bool operator==(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+template< class Key, class T, class Compare, class Alloc >
+bool operator!=(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+template< class Key, class T, class Compare, class Alloc >
+bool operator<(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+template< class Key, class T, class Compare, class Alloc >
+bool operator<=(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+template< class Key, class T, class Compare, class Alloc >
+bool operator>(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
+template< class Key, class T, class Compare, class Alloc >
+bool operator>=(const ft::map<Key,T,Compare,Alloc>& lhs, const ft::map<Key,T,Compare,Alloc>& rhs);
 
 // [swap](https://en.cppreference.com/w/cpp/container/map/swap2)
 template< class Key, class T, class Compare, class Alloc >
