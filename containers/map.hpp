@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 09:12:49 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 09:22:41 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,14 +116,22 @@ public:
 	T& at( const Key& key ) {
 		iterator	it = find(key);
 		if (it == end())
-			throw std::out_of_range("map::at:  key not found"); // TODO: check if same error on linux
+#ifdef __APPLE__
+			throw std::out_of_range("map::at:  key not found");
+#else
+			throw std::out_of_range("map::at");
+#endif
 		else
 			return (it->second);
 	}
 	const T& at( const Key& key ) const {
 		const_iterator	it = find(key);
 		if (it == end())
+#ifdef __APPLE__
 			throw std::out_of_range("map::at:  key not found");
+#else
+			throw std::out_of_range("map::at");
+#endif
 		else
 			return (it->second);
 	}

@@ -404,8 +404,15 @@ void	modifiers() {
 		NS::vector<std::string>	v(arr, arr + sizeof(arr) / sizeof(arr[0]));
 		std::string	arr2[] = { "xx", "pp" };
 		NS::vector<std::string>	v2(arr2, arr2 + sizeof(arr2) / sizeof(arr2[0]));
+		typedef NS::vector<std::string>::iterator	iterator;
+		iterator vbegin_before = v.begin();
+		iterator v2begin_before = v2.begin();
 		v.swap(v2);
+		iterator vbegin_after = v.begin();
+		iterator v2begin_after = v2.begin();
 		print_vector(v);
+		std::cout << (vbegin_before == v2begin_after) << std::endl;
+		std::cout << (v2begin_before == vbegin_after) << std::endl;
 		std::cout << v.size() << " " << v.capacity() << std::endl;
 		print_vector(v2);
 		std::cout << v2.size() << " " << v2.capacity() << std::endl;
