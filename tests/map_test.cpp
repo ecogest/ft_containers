@@ -316,6 +316,40 @@ void constructor_insert_and_iterator_test(void) {
 		for (iterator it = N.begin(); it != N.end(); it++) std::cout << *it << " "; std::cout << std::endl;
 		for (iterator it = P.begin(); it != P.end(); it++) std::cout << *it << " "; std::cout << std::endl;
 	}
+	{ // comparisons (from cpprefrence)
+		NS::map<int, char> alice;
+		alice[1] = 'a';
+		alice[2] = 'b';
+		alice[3] = 'c';
+		NS::map<int, char> bob;
+		bob[7] = 'Z';
+		bob[8] = 'Y';
+		bob[9] = 'X';
+		bob[10] = 'W';
+		NS::map<int, char> eve;
+		eve[1] = 'a';
+		eve[2] = 'b';
+		eve[3] = 'c';
+		std::cout << std::boolalpha;
+
+		// Compare non equal containers
+		std::cout << "alice == bob returns " << (alice == bob) << '\n';
+		std::cout << "alice != bob returns " << (alice != bob) << '\n';
+		std::cout << "alice <  bob returns " << (alice < bob) << '\n';
+		std::cout << "alice <= bob returns " << (alice <= bob) << '\n';
+		std::cout << "alice >  bob returns " << (alice > bob) << '\n';
+		std::cout << "alice >= bob returns " << (alice >= bob) << '\n';
+
+		std::cout << '\n';
+
+		// Compare equal containers
+		std::cout << "alice == eve returns " << (alice == eve) << '\n';
+		std::cout << "alice != eve returns " << (alice != eve) << '\n';
+		std::cout << "alice <  eve returns " << (alice < eve) << '\n';
+		std::cout << "alice <= eve returns " << (alice <= eve) << '\n';
+		std::cout << "alice >  eve returns " << (alice > eve) << '\n';
+		std::cout << "alice >= eve returns " << (alice >= eve) << '\n';
+	}
 }
 
 // See avl_test for more details concerning the structure
