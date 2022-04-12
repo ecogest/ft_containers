@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 10:08:16 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 13:28:00 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,7 +257,7 @@ public:
 		return (ft::make_pair<iterator, iterator>(lower_bound(key), upper_bound(key)));
 	}
 	ft::pair<const_iterator,const_iterator> equal_range( const Key& key ) const {
-		return (ft::make_pair<iterator, iterator>(lower_bound(key), upper_bound(key)));
+		return (ft::make_pair<const_iterator, const_iterator>(lower_bound(key), upper_bound(key)));
 	}
 
 	//[lower_bound](https://en.cppreference.com/w/cpp/container/map/lower_bound "cpp/container/map/lower bound")
