@@ -144,6 +144,18 @@ void constructor_insert_and_iterator_test(void) {
 		for (NS::map<size_t, std::string>::iterator it = N.begin(); it != N.end(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
+		NS::map<size_t, std::string> P;
+		for (size_t i = 0; i < 5; i+=2)
+			P[i] = "hello";
+		typedef NS::map<size_t, std::string>::iterator iterator;
+		iterator hint = ++(P.begin());
+		iterator ret = P.insert(hint, NS::make_pair<size_t, std::string>(42, "hello"));
+		if (ret != P.end())
+			std::cout << *ret << std::endl;
+		hint = ++(P.begin()); hint++;
+		ret = P.insert(hint, NS::make_pair<size_t, std::string>(1, "hello"));
+		if (ret != P.end())
+			std::cout << *ret << std::endl;
 	}
 	{ // insert (from scratch)
 		NS::map<size_t, std::string> N;

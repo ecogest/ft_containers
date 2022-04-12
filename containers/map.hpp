@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 09:30:40 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 10:08:16 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ namespace ft {
 template<
 	class Key,
 	class T,
-	class Compare = std::less<Key>, // check if allowed
+	class Compare = std::less<Key>,
 	class Allocator = std::allocator<ft::pair<const Key, T> >
 > class map {
 
@@ -195,15 +195,17 @@ public:
 	//   Returns an iterator to the inserted element,
 	//   or to the element that prevented the insertion.
 	// 7) Inserts elements from range [first, last).
-	ft::pair<iterator, bool> insert( const value_type& value ) { //(1)
+	ft::pair<iterator, bool> insert( const value_type& value ) { // (1)
 		return (_tree.insert(value));
 	}
 
-	// iterator insert( iterator hint, const value_type& value ) { // (4) TODO:
-	// }
+	iterator insert( iterator hint, const value_type& value ) {  // (4)
+		(void)hint;
+		return insert(value).first;
+	}
 
 	template< class InputIt >
-	void insert( InputIt first, InputIt last ) { // (7)
+	void insert( InputIt first, InputIt last ) {                 // (7)
 		while (first != last)
 			insert(*first++);
 	}
