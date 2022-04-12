@@ -6,23 +6,23 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:43:05 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 16:58:42 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 17:34:22 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
 #include <deque>
-#if 1 //CREATE A REAL STL EXAMPLE
+// #if 1 //CREATE A REAL STL EXAMPLE
 	#include <map>
 	#include <stack>
 	#include <vector>
-	namespace ft = std;
-#else
+	// namespace ft = std;
+// #else
 	#include <map.hpp>
 	#include <stack.hpp>
 	#include <vector.hpp>
-#endif
+// #endif
 
 #include <stdlib.h>
 
@@ -38,7 +38,7 @@ struct Buffer
 #define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
 template<typename T>
-class MutantStack : public ft::stack<T>
+class MutantStack : public NS::stack<T>
 {
 public:
 	MutantStack() {}
@@ -50,7 +50,7 @@ public:
 	}
 	~MutantStack() {}
 
-	typedef typename ft::stack<T>::container_type::iterator iterator;
+	typedef typename NS::stack<T>::container_type::iterator iterator;
 
 	iterator begin() { return this->c.begin(); }
 	iterator end() { return this->c.end(); }
@@ -67,17 +67,17 @@ int subject_tests(int argc, const char** argv) {
 	const int seed = atoi(argv[1]);
 	srand(seed);
 
-	ft::vector<std::string> vector_str;
-	ft::vector<int> vector_int;
-	ft::stack<int> stack_int;
-	ft::vector<Buffer> vector_buffer;
-	ft::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
-	ft::map<int, int> map_int;
+	NS::vector<std::string> vector_str;
+	NS::vector<int> vector_int;
+	NS::stack<int> stack_int;
+	NS::vector<Buffer> vector_buffer;
+	NS::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
+	NS::map<int, int> map_int;
 
-	// for (int i = 0; i < COUNT; i++)
-	// {
-	// 	vector_buffer.push_back(Buffer());
-	// }
+	for (int i = 0; i < COUNT; i++)
+	{
+		vector_buffer.push_back(Buffer());
+	}
 
 	// for (int i = 0; i < COUNT; i++)
 	// {

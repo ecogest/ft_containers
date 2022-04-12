@@ -44,7 +44,9 @@ $(NAME): $(CONTAINERS) $(UTILS) $(TESTS) tests/tests.hpp
 	$(CXX) -DNS=ft $(CPPFLAGS) $(CXXFLAGS) $(TESTS) -o $@
 
 test: all
-	diff --color=always <(./$(NAME) 2>&1) <(./std_containers 2>&1)
+	./$(NAME) &> output_ft
+	./std_containers &> output_std
+	diff --color=always output_ft output_std && rm output_ft output_std && echo Same Output !
 	@cat timing; rm timing;
 
 fclean:
