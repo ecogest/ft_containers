@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:35:45 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/01 14:58:31 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 12:48:31 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,7 @@ public:
 
 // [RandomAccessIterator]
 template < class T >
-vectorIterator<T>	operator+(
-		typename vectorIterator<T>::difference_type n,
-		vectorIterator<T> const &a) {
+vectorIterator<T>	operator+(typename vectorIterator<T>::difference_type n, vectorIterator<T> const &a) {
 	return (a + n);
 }
 
