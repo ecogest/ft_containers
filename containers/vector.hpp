@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 11:24:47 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 12:09:51 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,7 +390,7 @@ public:
 			_allocator.construct(_array + start + i, _array[end + i]);
 		}
 		_size -= (end - start);
-		return (first + 1);
+		return (first);
 	}
 
 	// [push_back](https://en.cppreference.com/w/cpp/container/vector/push_back)
