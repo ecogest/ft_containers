@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 09:22:41 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 09:30:40 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,12 +309,16 @@ private:
 	// template <typename U>
 	// void	_swap(U &a, U &b) { U tmp(a); a = b; b = tmp; }
 
-};
+}; // map
 
- //### NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////
- //
- //[operators](https://en.cppreference.com/w/cpp/container/map/operator_cmp "cpp/container/map/operator cmp")
- //lexicographically compares the values in the map
+//### NON-MEMBER FUNCTIONS ////////////////////////////////////////////////////
+//
+//[operators](https://en.cppreference.com/w/cpp/container/map/operator_cmp "cpp/container/map/operator cmp")
+//lexicographically compares the values in the map
 
-}
+// [swap](https://en.cppreference.com/w/cpp/container/map/swap2)
+template< class Key, class T, class Compare, class Alloc >
+void swap(ft::map<Key,T,Compare,Alloc>& lhs, ft::map<Key,T,Compare,Alloc>& rhs) { lhs.swap(rhs); }
+
+} // ft
 #endif

@@ -300,6 +300,9 @@ void constructor_insert_and_iterator_test(void) {
 		for (iterator it = P.begin(); it != P.end(); it++) std::cout << *it << " "; std::cout << std::endl;
 		std::cout << (nbegin_before == pbegin_after) << std::endl;
 		std::cout << (pbegin_before == nbegin_after) << std::endl;
+		NS::swap(N, P);
+		for (iterator it = N.begin(); it != N.end(); it++) std::cout << *it << " "; std::cout << std::endl;
+		for (iterator it = P.begin(); it != P.end(); it++) std::cout << *it << " "; std::cout << std::endl;
 	}
 }
 
