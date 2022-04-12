@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:13:08 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 15:04:31 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 15:25:41 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ namespace ft {
 template<class T, class Container = std::deque<T> >
 class stack {
 public:
-	// ### Member types ////////////////////////////////////////////////////////////
+	// ### Member types
 	//
 	typedef 			Container					container_type;
 	typedef typename	Container::value_type		value_type;
@@ -60,6 +60,7 @@ public:
 	// [empty](https://en.cppreference.com/w/cpp/container/stack/empty "cpp/container/stack/empty")
 	// checks whether the underlying container is empty
 	bool empty() const { return (c.empty()); }
+
 	// [size](https://en.cppreference.com/w/cpp/container/stack/size "cpp/container/stack/size")
 	// returns the number of elements
 	size_type size() const { return (c.size()); }
@@ -82,32 +83,28 @@ public:
 	// the underlying container
 protected:
 	container_type	c;
-};
 
-template< class T, class Container >
-bool operator==( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {
-	return (lhs.c == rhs.c);
-}
-template< class T, class Container >
-bool operator!=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {
-	return (lhs.c != rhs.c);
-}
-template< class T, class Container >
-bool operator<( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {
-	return (lhs.c < rhs.c);
-}
-template< class T, class Container >
-bool operator<=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {
-	return (lhs.c <= rhs.c);
-}
-template< class T, class Container >
-bool operator>( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {
-	return (lhs.c > rhs.c);
-}
-template< class T, class Container >
-bool operator>=( const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs ) {
-	return (lhs.c >= rhs.c);
-}
+	// ### Operators
+	// friend is needed to acces protected attribute
+	friend bool operator==(const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs) {
+		return (lhs.c == rhs.c);
+	}
+	friend bool operator!=(const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs) {
+		return (lhs.c != rhs.c);
+	}
+	friend bool operator<(const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs) {
+		return (lhs.c < rhs.c);
+	}
+	friend bool operator<=(const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs) {
+		return (lhs.c <= rhs.c);
+	}
+	friend bool operator>(const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs) {
+		return (lhs.c > rhs.c);
+	}
+	friend bool operator>=(const ft::stack<T,Container>& lhs, const ft::stack<T,Container>& rhs) {
+		return (lhs.c >= rhs.c);
+	}
+};
 
 } // ft
 
