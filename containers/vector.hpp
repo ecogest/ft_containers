@@ -325,6 +325,8 @@ public:
 	template< class InputIt >
 	typename ft::enable_if<!ft::is_integral<InputIt>::value >::type insert( iterator pos, InputIt first, InputIt last ) {
 		// size_t	count = last - first; // not necessary implemented by a basic InputIt
+		if (first == last)
+			return ;
 		size_t	count = 0;
 		for (InputIt it = first; it != last; it++)
 			count++;
