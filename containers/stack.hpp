@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:13:08 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 14:40:19 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 14:48:25 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,23 @@ public:
 	// 4) Copy constructor. The adaptor is copy-constructed with the contents of other.c.
 	explicit stack(const Container& cont = Container()) : c(cont)    { } // (2)
 	stack( const stack& other )                         : c(other.c) { } // (4)
+
 	// [(destructor)](https://en.cppreference.com/w/cpp/container/stack/~stack "cpp/container/stack/~stack")
 	// destructs the `stack`  
-	// 
+	~stack() { }
+
 	// [operator=](https://en.cppreference.com/w/cpp/container/stack/operator%3D "cpp/container/stack/operator=")
 	// assigns values to the container adaptor  
+	// IMPLICITLY DECLARED
+	// stack& operator=( const stack& other ) { c = other.c; }
 
 
 	// ##### Element access
 	// 
 	// [top](https://en.cppreference.com/w/cpp/container/stack/top "cpp/container/stack/top")
 	// accesses the top element  
+	reference top()             { return (c.back()); }
+	const_reference top() const { return (c.back()); }
 
 
 	// ##### Capacity
@@ -62,6 +68,7 @@ public:
 	// 
 	// [push](https://en.cppreference.com/w/cpp/container/stack/push "cpp/container/stack/push")
 	// inserts element at the top  
+	void push( const value_type& value ) { c.push_back(value); }
 
 	// [pop](https://en.cppreference.com/w/cpp/container/stack/pop "cpp/container/stack/pop")
 	// removes the top element  
@@ -71,6 +78,7 @@ public:
 	// 
 	// Container c
 	// the underlying container  
+protected:
 	container_type	c;
 
 private:
