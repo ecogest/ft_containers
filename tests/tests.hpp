@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:20:04 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 14:21:26 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 16:45:31 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ std::ostream	&operator<<(std::ostream &os, std::pair<Key, Value> const &p) {
 void	test_avl(void);
 void	test_map(void);
 void	test_stack(void);
+void	subject_tests(int, const char **);
 
 #endif

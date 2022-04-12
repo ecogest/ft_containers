@@ -32,6 +32,7 @@ TESTS=$(addprefix tests/, \
 			vector_test.cpp \
 			utils_test.cpp \
 			avl_test.cpp \
+			subject_tests.cpp \
 			)
 
 all: $(NAME) std_containers
