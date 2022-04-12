@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 12:09:51 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 13:12:19 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,10 @@ public:
 	// 5) Constructs the container with the contents of the range [first, last).
 	// This constructor has the same effect as:
 	// vector(static_cast<size_type>(first), static_cast<value_type>(last), a)
-	// if InputIt is an integral type. // TODO:
+	// if InputIt is an integral type.
 	template< class InputIt >
-	vector(InputIt first, InputIt last, const Allocator& alloc = Allocator()):
+	vector(typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first,
+			InputIt last, const Allocator& alloc = Allocator()):
 		_allocator(alloc),
 		_size(0)
 	{

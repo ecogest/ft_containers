@@ -479,7 +479,7 @@ void	non_member() {
 	}
 }
 
-void	more_tests() {
+void	more_tests() { // inspired by other testers
 	{ // assign-insert special case
 		NS::vector<int> vct(7);
 		NS::vector<int> vct_two(4);
@@ -523,7 +523,10 @@ void	more_tests() {
 		std::cout << "(it == const_it): " << (ite == it) << std::endl;
 		std::cout << "(const_ite - it): " << (ite - it) << std::endl;
 		std::cout << "(ite + 3 == it): " << (ite + 3 == it) << std::endl;
-
+	}
+	{ // ensure InputIt is integral in the constructor
+		const int start_size = 7;
+		NS::vector<int> vct(start_size, 20);
 	}
 }
 
