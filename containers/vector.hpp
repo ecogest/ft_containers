@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 11:06:14 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/12 11:24:47 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "iterator.hpp"
 # include "vectorIterator.hpp"
 # include "lexicographical_compare.hpp"
+# include "type_traits.hpp"
 # include <iostream>
 # include <stdexcept>
 # include <sstream>
@@ -349,8 +350,10 @@ public:
 			_allocator.construct(_array + index + i, value);
 	}
 	// 4) inserts elements from range [first, last) before pos.
+	// note: we do not want this template to overshadow the one above
+	// simplest way to ensure that is to make sure the InputIt is not an integral
 	template< class InputIt >
-	void insert( iterator pos, InputIt first, InputIt last ) {
+	typename ft::enable_if<!ft::is_integral<InputIt>::value >::type insert( iterator pos, InputIt first, InputIt last ) {
 		// size_t	count = last - first; // not necessary implemented by a basic InputIt
 		size_t	count = 0;
 		for (InputIt it = first; it != last; it++)
