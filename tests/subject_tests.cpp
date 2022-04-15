@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:43:05 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/15 12:03:08 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/15 13:31:44 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,18 @@ int subject_tests(int argc, const char** argv) {
 	NS::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
 	NS::map<int, int> map_int;
 
-	for (int i = 0; i < COUNT; i++)
-	{
-		vector_buffer.push_back(Buffer());
-	}
-
+	// for (int i = 0; i < COUNT; i++)
+	// {
+	// 	vector_buffer.push_back(Buffer());
+	// }
+    //
 	// for (int i = 0; i < COUNT; i++)
 	// {
 	// 	const int idx = rand() % COUNT;
 	// 	vector_buffer[idx].idx = 5;
 	// }
-	// ft::vector<Buffer>().swap(vector_buffer);
-    //
+	// NS::vector<Buffer>().swap(vector_buffer);
+
 	// try
 	// {
 	// 	for (int i = 0; i < COUNT; i++)
@@ -99,11 +99,11 @@ int subject_tests(int argc, const char** argv) {
 	// {
 	// 	//NORMAL ! :P
 	// }
-	//
-	// for (int i = 0; i < COUNT; ++i)
-	// {
-	// 	map_int.insert(ft::make_pair(rand(), rand()));
-	// }
+
+	for (int i = 0; i < COUNT; ++i)
+	{
+		map_int.insert(NS::make_pair(rand(), rand()));
+	}
     //
 	// int sum = 0;
 	// for (int i = 0; i < 10000; i++)
@@ -114,7 +114,7 @@ int subject_tests(int argc, const char** argv) {
 	// std::cout << "should be constant with the same seed: " << sum << std::endl;
     //
 	// {
-	// 	ft::map<int, int> copy = map_int;
+	// 	NS::map<int, int> copy = map_int;
 	// }
 	// MutantStack<char> iterable_stack;
 	// for (char letter = 'a'; letter <= 'z'; letter++)
@@ -123,6 +123,6 @@ int subject_tests(int argc, const char** argv) {
 	// {
 	// 	std::cout << *it;
 	// }
-	// std::cout << std::endl;
+	std::cout << std::endl;
 	return (0);
 }

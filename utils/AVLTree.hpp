@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 09:40:45 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/15 13:34:09 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,21 +399,27 @@ public:
 		return (*root);
 	}
 	void	_balance(node_type *node) {
-		// RIGHT IMBALANCE / LEFT ROTATION
-		if (_height(node->right) > _height(node->left) + 1 && _height(node->right->right) >= _height(node->right->left))
-			node = _left_rotate(node);
-		// LEFT IMBALANCE / RIGHT ROTATION
-		else if (_height(node->left) > _height(node->right) + 1 && _height(node->left->left) >= _height(node->left->right))
-			node = _right_rotate(node);
-		// RL IMBALANCE / RL ROTATION
-		else if (_height(node->right) > _height(node->left) + 1 && _height(node->right->right) < _height(node->right->left)) {
-			_right_rotate(node->right);
-			node = _left_rotate(node);
+		size_type	hr = _height(node->right);
+		size_type	hl = _height(node->left);
+		if (hr > hl + 1) {
+			// RIGHT IMBALANCE / LEFT ROTATION
+			if (_height(node->right->right) >= _height(node->right->left))
+				node = _left_rotate(node);
+			// RL IMBALANCE / RL ROTATION
+			else {
+				_right_rotate(node->right);
+				node = _left_rotate(node);
+			}
 		}
-		// LR IMBALANCE / LR ROTATION
-		else if (_height(node->left) > _height(node->right) + 1 && _height(node->left->left) < _height(node->left->right)) {
-			_left_rotate(node->left);
-			node = _right_rotate(node);
+		else if (hl > hr + 1) {
+			// LEFT IMBALANCE / RIGHT ROTATION
+			if (_height(node->left->left) >= _height(node->left->right))
+				node = _right_rotate(node);
+			// LR IMBALANCE / LR ROTATION
+			else {
+				_left_rotate(node->left);
+				node = _right_rotate(node);
+			}
 		}
 
 		if (node->parent)
