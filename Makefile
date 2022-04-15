@@ -2,9 +2,10 @@ NAME=ft_containers
 
 CXX=c++
 CPPFLAGS=-Icontainers -Iutils -Itests
-CXXFLAGS=-std=c++98 -Wall -Werror -Wextra -g
-# TODO: remove -g
+CXXFLAGS=-std=c++98 -Wall -Werror -Wextra
+CXXFLAGS+= -g
 CXXFLAGS+=-fsanitize=address
+# TODO: remove -g and -fsanitize
 
 SHELL=/usr/bin/env zsh
 
@@ -47,7 +48,7 @@ test: all
 	./$(NAME) &> output_ft
 	./std_containers &> output_std
 	diff --color=always output_ft output_std && rm output_ft output_std && echo Same Output !
-	@cat timing; rm timing;
+	@cat timing;sleep 1; rm timing;
 
 fclean:
 	$(RM) $(NAME) std_containers

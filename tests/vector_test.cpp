@@ -127,6 +127,8 @@ void capacity() {
 	std::cout << "cap:" << v_3_hello_copy_const.capacity() << ",size:" << v_3_hello_copy_const.size() << ",max_size:" << v_3_hello_copy_const.max_size() << ",empty:" << v_3_hello_copy_const.empty() << std::endl;
 	v_3_hello_copy.reserve(142);
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
+	NS::vector<std::string>	copied_after_reserve(v_3_hello_copy); // capacity should be the size of the copied object
+	std::cout << "cap:" << copied_after_reserve.capacity() << ",size:" << copied_after_reserve.size() << ",max_size:" << copied_after_reserve.max_size() << ",empty:" << copied_after_reserve.empty() << std::endl;
 	v_3_hello_copy.reserve(1);
 	std::cout << "cap:" << v_3_hello_copy.capacity() << ",size:" << v_3_hello_copy.size() << ",max_size:" << v_3_hello_copy.max_size() << ",empty:" << v_3_hello_copy.empty() << std::endl;
 	v_3_hello_copy.reserve(9);

@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 13:18:55 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/15 12:24:08 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ public:
 	// (until C++20)
 	vector(const vector& other):
 		_allocator(other.get_allocator()),
-		_capacity(other.capacity()),
+		_capacity(other.size()), // not capacity!
 		_size(other.size())
 	{
 		_array = _allocator.allocate(_size);
@@ -366,8 +366,12 @@ public:
 	// [push_back](https://en.cppreference.com/w/cpp/container/vector/push_back)
 	// adds an element to the end
 	void push_back( const T& value ) {
-		if (_size <= _capacity)
-			reserve(_size + 1);  // some implementations reserve more, OS dependant, no such behaviour required in the doc
+		if (_size == _capacity) {
+			if (_size && _size * 2 < max_size())
+				reserve(_size * 2);  // reserving _size + 1 is ineffecient when running a lot of push_back
+			else
+				reserve(_size + 1);
+		}
 		_allocator.construct(_array + _size, value);
 		_size++;
 	}
