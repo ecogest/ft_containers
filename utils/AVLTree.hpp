@@ -6,18 +6,18 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/16 12:47:12 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 13:29:15 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AVLTREE_HPP
 # define AVLTREE_HPP
 
-# include <iostream>
-# include <sstream>
+# include <iostream> // std::cout
+// # include <sstream>
 # include "vector.hpp" // to print the avl tree
 # include "iterator.hpp"
-# include <algorithm>
+# include <algorithm> // max_element
 # include "pair.hpp"
 
 namespace ft {

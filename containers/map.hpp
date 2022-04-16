@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/16 12:46:53 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 13:26:40 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include "pair.hpp"
 #include "iterator.hpp"
-#include <memory>
+#include <memory> // std::allocator
 #include <functional> // std::less
 #include "AVLTree.hpp"
 

@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/16 12:52:33 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 13:32:16 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <cstddef>
-# include <memory>
-# include "iterator.hpp"
+# include <cstddef> // std::ptrdiff_t
+# include <memory> // std::allocator
+# include "iterator.hpp" // reverse_iterator
 # include "vectorIterator.hpp"
 # include "lexicographical_compare.hpp"
 # include "type_traits.hpp"
-# include <iostream>
-# include <stdexcept>
-# include <sstream>
-# include <cstring>
+// # include <iostream>
+# include <stdexcept> // std::out_of_range
+# include <sstream> // string operator <<
+// # include <cstring>
 # include "swap.hpp"
 // # include <vector>
 // # include <iterator> // check __normal_iterator in it
