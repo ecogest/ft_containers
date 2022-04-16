@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/16 11:22:17 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 12:52:33 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stdexcept>
 # include <sstream>
 # include <cstring>
+# include "swap.hpp"
 // # include <vector>
 // # include <iterator> // check __normal_iterator in it
 
@@ -406,11 +407,11 @@ public:
 	}
 	// [swap](https://en.cppreference.com/w/cpp/container/vector/swap)
 	// swaps the contents
-	void swap( vector& other ) { // TODO: use ft:swap and check iterators !
-		std::swap(_array, other._array);  // allowed, defined in <move.h>, standard library, not the container method
-		std::swap(_allocator, other._allocator);
-		std::swap(_capacity, other._capacity);
-		std::swap(_size, other._size);
+	void swap( vector& other ) {
+		ft::swap(_array, other._array);  // std::swap would probably be allowed too, defined in <move.h>, standard library, not the container method
+		ft::swap(_allocator, other._allocator);
+		ft::swap(_capacity, other._capacity);
+		ft::swap(_size, other._size);
 	}
 
 private:

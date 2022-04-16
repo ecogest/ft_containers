@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/07 14:12:18 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 14:12:31 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 12:46:53 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,8 +234,8 @@ public:
 	//swaps the contents
 	void swap( map& other ) {
 		_tree.swap(other._tree); // do not std::swap(_tree, other._tree), otherwise it would do 2 deep copy...
-		std::swap(_key_comp, other._key_comp);
-		std::swap(_value_comp, other._value_comp);
+		ft::swap(_key_comp, other._key_comp);
+		ft::swap(_value_comp, other._value_comp);
 	}
 
 

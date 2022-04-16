@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/16 11:54:30 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 12:47:12 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,11 +292,11 @@ public:
 	}
 
 	void swap( AVLTree& other ) {
-		std::swap(_head, other._head);
-		std::swap(_end, other._end);
-		std::swap(_comp, other._comp);
-		std::swap(_alloc, other._alloc);
-		std::swap(_node_alloc, other._node_alloc);
+		ft::swap(_head, other._head);
+		ft::swap(_end, other._end);
+		ft::swap(_comp, other._comp);
+		ft::swap(_alloc, other._alloc);
+		ft::swap(_node_alloc, other._node_alloc);
 	}
 
 	// ITERATORS ///////////////////////////////////////////////////////////////
