@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:35:45 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/12 12:48:31 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 11:01:18 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ public:
 	difference_type	operator-(vectorIterator<const T> const &a) const  { return (_ptr - a.base()); }
 	reference		operator[](difference_type n) const                { return _ptr[n]; }
 	bool			operator<(vectorIterator<const T> const &b) const  { return (b - *this > 0); }
-	bool			operator>(vectorIterator<const T> const &b) const  { return (b - *this < 0); };
+	bool			operator>(vectorIterator<const T> const &b) const  { return (b - *this < 0); }
 	bool			operator<=(vectorIterator<const T> const &b) const { return (b - *this >= 0); }
-	bool			operator>=(vectorIterator<const T> const &b) const { return (b - *this <= 0); };
+	bool			operator>=(vectorIterator<const T> const &b) const { return (b - *this <= 0); }
 
 	// [LegacyBidirectionalIterator] < LegacyForwardIterator
 	vectorIterator	&operator--()   { --_ptr; return (*this); }

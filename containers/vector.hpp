@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/06 15:10:26 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/15 12:24:08 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 11:22:17 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ public:
 		if (this == &other)
 			return (*this);
 		this->clear();
-		this->reserve(other.capacity());
+		this->reserve(other.size());
 		_size = other.size();
 		for (size_t i = 0; i < _size; i++)
 			_allocator.construct(_array + i, other[i]);
@@ -307,6 +307,8 @@ public:
 	}
 	// 3) inserts count copies of the value before pos.
 	void insert( iterator pos, size_type count, const T& value ) {
+		if (!count)
+			return ;
 		size_t	index = pos - iterator(_array);  // implicit casting from difference_type
 
 		if (_capacity < _size + count)
