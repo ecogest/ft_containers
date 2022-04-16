@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/15 13:34:09 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 09:32:32 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,22 @@ private:
 	// AVL Node ////////////////////////////////////////////////////////////////
 	//
 	struct AVLNode {
-		typedef Data	value_type;
-		typedef AVLNode	Node;
+		typedef Data		value_type;
+		typedef AVLNode		Node;
+		typedef std::size_t	size_type;
 
 		Data		data;
 		Node		*left;
 		Node		*right;
 		Node		*parent;
+		size_type	height;
 
 		AVLNode(void)
-			: data(), left(NULL), right(NULL), parent(NULL) { }
+			: data(), left(NULL), right(NULL), parent(NULL), height(1) { }
 		AVLNode(const Data &data)
-			: data(data), left(NULL), right(NULL), parent(NULL) { }
+			: data(data), left(NULL), right(NULL), parent(NULL), height(1) { }
 		AVLNode(Node const &copy)
-			: data(copy.data), left(copy.left), right(copy.right), parent(copy.parent) { }
+			: data(copy.data), left(copy.left), right(copy.right), parent(copy.parent), height(copy.height) { }
 		Node	&operator=(Node const &copy) {
 			if (this == &copy)
 				return (*this);
@@ -51,6 +53,7 @@ private:
 			left = copy.left;
 			right = copy.right;
 			parent = copy.parent;
+			height = copy.height;
 			return (*this);
 		}
 		virtual ~AVLNode() { }
@@ -227,6 +230,9 @@ public:
 		*anode = _new_node(data);
 		iterator	it_ret(*anode);
 		(*anode)->parent = parent;
+		node = *anode;
+		while ((node = node->parent))
+			set_height(node);
 		if (parent->parent)
 			_balance(parent->parent);
 		return (ft::make_pair<iterator, bool>(it_ret, true));
@@ -327,6 +333,7 @@ public:
 		_end->left = NULL;
 		_end->right = NULL;
 		_end->parent = NULL;
+		_end->height = 1;
 	}
 	void	_set_end_parentage(node_type *parent) {
 		_end->parent = parent;
@@ -354,8 +361,15 @@ public:
 			return (1 + _size(node->left) + _size(node->right));
 	}
 	// size_type	_height(void) const { return(_height(_head)); }
+	// size_type	_height(node_type *node) const {
+	// 	return (node ? 1 + std::max(_height(node->left), _height(node->right)): 0);
+	// } // far too slow if there is a lot of iterations
 	size_type	_height(node_type *node) const {
-		return (node ? 1 + std::max(_height(node->left), _height(node->right)): 0);
+		if (!node)
+			return (0);
+		size_type	hl = (node->left ? node->left->height : 0);
+		size_type	hr = (node->right ? node->right->height : 0);
+		return (1 + std::max(hl, hr));
 	}
 	// Remove everything except the end
 	void _clear(node_type *node) {
@@ -372,6 +386,9 @@ public:
 		else
 			_delete_node(node);
 	}
+	void	set_height(node_type *node) {
+		node->height = _height(node);
+	}
 	// Right son takes place of the node
 	node_type	*_left_rotate(node_type *old_parent) {
 		node_type	*new_parent = old_parent->right;
@@ -383,6 +400,8 @@ public:
 		if (old_parent->right)
 			old_parent->right->parent = old_parent;
 		new_parent->left = old_parent;
+		set_height(old_parent);
+		set_height(new_parent);
 		return (*root);
 	}
 	// Left son takes place of the node
@@ -396,6 +415,8 @@ public:
 		if (old_parent->left)
 			old_parent->left->parent = old_parent;
 		new_parent->right = old_parent;
+		set_height(old_parent);
+		set_height(new_parent);
 		return (*root);
 	}
 	void	_balance(node_type *node) {

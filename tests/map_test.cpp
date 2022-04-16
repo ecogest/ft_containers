@@ -185,12 +185,13 @@ void constructor_insert_and_iterator_test(void) {
 			std::cout << N.size() << " ";
 		}
 		std::cout << std::endl;
-		std::cout << N.max_size() << std::endl;;
+		// node_size differ, hence max_size will differ too
+		// std::cout << N.max_size() << std::endl;;
 		std::cout << N.empty() << std::endl;;
 		N.clear();
 		std::cout << N.size() << std::endl;;
 		std::cout << N.empty() << std::endl;;
-		std::cout << N.max_size() << std::endl;;
+		// std::cout << N.max_size() << std::endl;;
 		for (size_t i = 0; i < 12; i++) { N[i] = "hello"; }
 		std::cout << N.size() << std::endl;;
 		for (size_t i = 0; i < 12; i++) {

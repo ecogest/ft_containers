@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 16:43:05 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/15 13:31:44 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 09:30:57 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,55 +74,55 @@ int subject_tests(int argc, const char** argv) {
 	NS::stack<Buffer, std::deque<Buffer> > stack_deq_buffer;
 	NS::map<int, int> map_int;
 
-	// for (int i = 0; i < COUNT; i++)
-	// {
-	// 	vector_buffer.push_back(Buffer());
-	// }
-    //
-	// for (int i = 0; i < COUNT; i++)
-	// {
-	// 	const int idx = rand() % COUNT;
-	// 	vector_buffer[idx].idx = 5;
-	// }
-	// NS::vector<Buffer>().swap(vector_buffer);
+	for (int i = 0; i < COUNT; i++)
+	{
+		vector_buffer.push_back(Buffer());
+	}
 
-	// try
-	// {
-	// 	for (int i = 0; i < COUNT; i++)
-	// 	{
-	// 		const int idx = rand() % COUNT;
-	// 		vector_buffer.at(idx);
-	// 		std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
-	// 	}
-	// }
-	// catch(const std::exception& e)
-	// {
-	// 	//NORMAL ! :P
-	// }
+	for (int i = 0; i < COUNT; i++)
+	{
+		const int idx = rand() % COUNT;
+		vector_buffer[idx].idx = 5;
+	}
+	NS::vector<Buffer>().swap(vector_buffer);
+
+	try
+	{
+		for (int i = 0; i < COUNT; i++)
+		{
+			const int idx = rand() % COUNT;
+			vector_buffer.at(idx);
+			std::cerr << "Error: THIS VECTOR SHOULD BE EMPTY!!" <<std::endl;
+		}
+	}
+	catch(const std::exception& e)
+	{
+		//NORMAL ! :P
+	}
 
 	for (int i = 0; i < COUNT; ++i)
 	{
 		map_int.insert(NS::make_pair(rand(), rand()));
 	}
-    //
-	// int sum = 0;
-	// for (int i = 0; i < 10000; i++)
-	// {
-	// 	int access = rand();
-	// 	sum += map_int[access];
-	// }
-	// std::cout << "should be constant with the same seed: " << sum << std::endl;
-    //
-	// {
-	// 	NS::map<int, int> copy = map_int;
-	// }
-	// MutantStack<char> iterable_stack;
-	// for (char letter = 'a'; letter <= 'z'; letter++)
-	// 	iterable_stack.push(letter);
-	// for (MutantStack<char>::iterator it = iterable_stack.begin(); it != iterable_stack.end(); it++)
-	// {
-	// 	std::cout << *it;
-	// }
+
+	int sum = 0;
+	for (int i = 0; i < 10000; i++)
+	{
+		int access = rand();
+		sum += map_int[access];
+	}
+	std::cout << "should be constant with the same seed: " << sum << std::endl;
+
+	{
+		NS::map<int, int> copy = map_int;
+	}
+	MutantStack<char> iterable_stack;
+	for (char letter = 'a'; letter <= 'z'; letter++)
+		iterable_stack.push(letter);
+	for (MutantStack<char>::iterator it = iterable_stack.begin(); it != iterable_stack.end(); it++)
+	{
+		std::cout << *it;
+	}
 	std::cout << std::endl;
 	return (0);
 }
