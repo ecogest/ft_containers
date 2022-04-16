@@ -6,17 +6,17 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/04 14:09:49 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/16 09:32:32 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 11:54:30 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AVLTREE_HPP
 # define AVLTREE_HPP
 
-# include <string> // TODO: Remove
 # include <iostream>
 # include <sstream>
-# include "vector.hpp"
+# include "vector.hpp" // to print the avl tree
+# include "iterator.hpp"
 # include <algorithm>
 # include "pair.hpp"
 
@@ -66,11 +66,12 @@ private:
 	class AVLIterator {
 
 	public:
-		typedef typename std::ptrdiff_t					difference_type;
-		typedef ValueType								value_type;
-		typedef value_type*								pointer;
-		typedef value_type&								reference;
-		typedef typename ft::bidirectional_iterator_tag	iterator_category;
+		typedef typename std::ptrdiff_t						difference_type;
+		typedef ValueType									value_type;
+		typedef value_type*									pointer;
+		typedef value_type&									reference;
+		typedef typename std::bidirectional_iterator_tag	iterator_category;
+		// typedef typename ft::bidirectional_iterator_tag		iterator_category;  // we could implement our own, but we want a standard interface
 
 	private:
 		typedef NodeType										node_type;

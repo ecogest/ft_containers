@@ -6,7 +6,7 @@
 /*   By: mjacq <mjacq@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 16:35:45 by mjacq             #+#    #+#             */
-/*   Updated: 2022/04/16 11:01:18 by mjacq            ###   ########.fr       */
+/*   Updated: 2022/04/16 11:52:12 by mjacq            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,22 @@
 # define VECTORITERATOR_HPP
 
 # include <memory>
-// # include <type_traits>
+// # include "iterator.hpp"
 
 namespace ft {
 
 // 	Satisfies: LegacyRandomAccessIterator and LegacyContiguousIterator to value_type
 //  In the headers, it is a typedef to __gnu_cxx::__normal_iterator
 template < class T >
-class vectorIterator // public ft::iterator<T>  // TODO: check if we can use it
+class vectorIterator // public ft::iterator<T>  // we could try inheritate from a generic iterator
 {
 public:
-	typedef typename std::ptrdiff_t                  difference_type; // TODO: see if possible https://en.cppreference.com/w/cpp/named_req/RandomAccessIterator
+	typedef typename std::ptrdiff_t                  difference_type;
 	typedef T                                        value_type;
 	typedef value_type*                              pointer;
 	typedef value_type&                              reference;
-	typedef typename std::random_access_iterator_tag iterator_category;  // TODO: check if ft::random_access_iterator_tag is OK
+	typedef typename std::random_access_iterator_tag iterator_category;
+	// typedef typename ft::random_access_iterator_tag iterator_category;  // we could implement our own, but we want a standard interface
 private:
 	pointer	_ptr;
 public:
